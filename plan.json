@@ -291,7 +291,8 @@
       "coverage_targets": [
         "part",
         "torus-cut"
-      ]
+      ],
+      "recipe": "recipes/part-torus-cut-001.json"
     },
     {
       "id": "part-fillet-001",

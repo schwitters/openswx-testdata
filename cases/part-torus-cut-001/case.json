@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "id": "part-torus-cut-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-torus-cut-001.json",
+  "tags": [
+    "torus-cut",
+    "partial-revolution",
+    "meridional-circle-cuts",
+    "planar-end-disks",
+    "periodic-tube-seam",
+    "rational-bezier-oracle",
+    "expected-invalid-record",
+    "expected-step-unsupported",
+    "material-normals",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T22:20:14.618008+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original first-quadrant 90-degree torus segment with major radius 20 mm, minor radius 5 mm, document +Z axis and center at document origin generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 1e-09,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type, Default configuration and saved mass properties."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; three faces, two cut rings, zero native vertices."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint matches native toroidal geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "unsupported",
+      "reason": "Exporter currently rejects valid meridional torus cut circles; native reference is checked separately.",
+      "issue": "docs/known_limits.md#meridional-torus-cut-step-export",
+      "error_code": "invalid_record"
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#meridional-torus-cut-step-export",
+      "scope": "selected partition 0 BODY 2",
+      "error_code": "invalid_record",
+      "reason": "Valid meridional cuts are rejected as tilted or degenerate at partition byte 2398, STEP node 41."
+    },
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 784,
+      "sha256": "3b4b2e6ae24f47cfaf127db21c1f7cd56c64d575bf527084423d43f4dcf78fb4"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 3865,
+      "sha256": "72e762a193f8a2b1063c790f5a82cfed7994e682d97bfbebec8c51c42d3c1105"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 927843,
+      "sha256": "9daa4cfab8c26e9b5faaa29c3788e81ea6b0f94ebdf2c2f0386ac5129abc6d01"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1492,
+      "sha256": "88e67283431736305e4a6926633fb836e392385123cba69091f0ed4cb40ad4e1"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2377,
+      "sha256": "5f39ac36788f7e0517bb01fc507739639f95dbf2705f93b0f85bf93fafaa6281"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 6677,
+      "sha256": "0fe1b5fb7014422b7a148ac82c17031d4cd07b937b3fb17578decfd1c49435ad"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 3854,
+      "sha256": "6f5cd79f965c194c066b88414e5c279742258e46ddab9cd38617d97a7a0ec4d3"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 4264,
+      "sha256": "a854930eb39a0b36036d3bab3ce31b2d8974144592b8521ccd435aba5d643c24"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 244253,
+      "sha256": "17ef5f28677ae6460d5075f2534e1e747280e90b36d59d4bcc35191deac319ff"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 120011,
+      "sha256": "8768e99395ef39e02d80a5a4ef199a60fa456a3f1813f94e20b37ed7dbdaf927"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 119327,
+      "sha256": "d698c8cc7549ec825823ac6a2e2f3612d9aa83dc924b83cb24b3c5938e002be0"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1420,
+      "sha256": "3e775293353882ec64b8e35f5d43022ee0ca6465f45860375d74474d57d9876a"
+    },
+    {
+      "path": "validation/export-error.json",
+      "role": "validation_report",
+      "bytes": 126,
+      "sha256": "e8d00cd1de87b4c1d215cdf885b0c51d5b555670122a49e978c3cebbd1345ae7"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1851,
+      "sha256": "37c8f5dd2a011864893aa1a12eb403829b7030197aac6f28f5d66eecb06ef4e8"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 1958,
+      "sha256": "01d9c575b3c7b876bb48f169b6031e2518aca201b5adda54a0a8618fd954fe8e"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 2075,
+      "sha256": "21ec535a4aed38954b3ae13a5a7e7f6d4d03bf5b000ac73280cf1e5d2fa6c996"
+    }
+  ]
+}

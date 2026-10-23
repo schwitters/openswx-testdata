@@ -1,7 +1,7 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector, a full sphere, a minor spherical cap and a ring torus. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector, a full sphere, a minor spherical cap, a ring torus and a quarter-torus segment. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
 [blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md),
 [stepped-bore](stepped_bore_capture.md), [two-bores](two_holes_capture.md) and
@@ -9,7 +9,8 @@ six-stage runner for the captured cylinder, block, tube, blind hole, through hol
 [multiple solids](multiple_solids_capture.md),
 [thin wall](thin_wall_capture.md), [cone frustum](cone_frustum_capture.md) and
 [cone sector](cone_sector_capture.md), [sphere](sphere_capture.md) and
-[sphere cap](sphere_cap_capture.md) and [torus](torus_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[sphere cap](sphere_cap_capture.md), [torus](torus_capture.md) and
+[torus segment](torus_cut_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
@@ -160,3 +161,17 @@ the typed error and absence of output before validating the native torus oracle.
 That oracle must preserve both full periodic directions, two exact circular
 seams and their common vertex, with no degenerate pole edges. An expected
 rejection is never counted as a successful library STEP export.
+
+## Expected meridional torus rejection
+
+`part-torus-cut-001` passes the five reader stages and records a STEP export
+limitation. Its actual API error is `invalid_record` at partition byte 2398,
+node 41: valid meridional circles are currently rejected as tilted. The frozen
+rejection is checked exactly, separately from native-oracle validation. The
+corpus outcome `unsupported` does not rewrite the actual API error code.
+
+The native oracle requires two independent meridional disks, proper material
+normals and the correct clipped quadrant. Its parallel seam must have an exact
+constant-V torus pcurve. Positive-weight rational Beziers additionally require a
+homogeneous Bernstein whole-curve radius bound within fixed tolerances.
+Periodic UV probes are lifted into the actual unwrapped trimmed chart.

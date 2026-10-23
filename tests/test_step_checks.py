@@ -22,6 +22,8 @@ try:
     from check_thin_wall_step import check_thin_wall_shape
     from check_sphere_cap_step import check_sphere_cap_shape, repair_native_cap_pcurve, spherical_bezier_radial_bound
     from step_check import read_step
+    from check_torus_cut_step import check_torus_cut_shape
+    from bezier_check import bezier_radial_bound
     from check_torus_step import check_torus_shape
     from OCP.BRepPrimAPI import BRepPrimAPI_MakeTorus
     from check_sphere_step import check_sphere_shape
@@ -668,6 +670,76 @@ class TorusGeometryTest(unittest.TestCase):
     def test_partial_major_revolution_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError,"incomplete natural torus"):
             check_torus_shape(BRepPrimAPI_MakeTorus(20,5,math.pi).Shape())
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class TorusCutGeometryTest(unittest.TestCase):
+    @staticmethod
+    def segment():
+        return BRepPrimAPI_MakeTorus(20,5,math.pi/2).Shape()
+
+    def test_expected_segment_with_analytic_parallel_seam(self):
+        report = check_torus_cut_shape(self.segment())
+        self.assertEqual(report["seam"]["representation"],"circle")
+        self.assertTrue(report["trim_membership_verified"])
+
+    def test_wrong_angle_with_same_topology_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"UV span"):
+            check_torus_cut_shape(BRepPrimAPI_MakeTorus(20,5,math.pi/3).Shape())
+
+    def test_rotated_quadrant_with_equal_measures_is_rejected(self):
+        from OCP.gp import gp_Ax1, gp_Dir
+        transform = gp_Trsf()
+        transform.SetRotation(gp_Ax1(gp_Pnt(0,0,0),gp_Dir(0,0,1)),math.pi/2)
+        expected = self.segment()
+        moved = expected.Moved(TopLoc_Location(transform))
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(moved,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"quadrant"):
+            check_torus_cut_shape(moved)
+
+    def test_wrong_radii_are_rejected(self):
+        for major,minor in ((21,5),(20,4)):
+            with self.subTest(major=major,minor=minor), self.assertRaisesRegex(RuntimeError,"radii"):
+                check_torus_cut_shape(BRepPrimAPI_MakeTorus(major,minor,math.pi/2).Shape())
+
+    def test_translation_is_rejected(self):
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(1,0,0))
+        with self.assertRaisesRegex(RuntimeError,"center or axis"):
+            check_torus_cut_shape(self.segment().Moved(TopLoc_Location(transform)))
+
+    def test_oblique_axis_is_rejected(self):
+        from OCP.gp import gp_Ax2, gp_Dir
+        shape = BRepPrimAPI_MakeTorus(gp_Ax2(gp_Pnt(0,0,0),gp_Dir(0,1,0)),20,5,math.pi/2).Shape()
+        with self.assertRaisesRegex(RuntimeError,"center or axis"):
+            check_torus_cut_shape(shape)
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_torus_cut_shape(self.segment().Reversed())
+
+    def test_full_torus_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete torus segment"):
+            check_torus_cut_shape(BRepPrimAPI_MakeTorus(20,5).Shape())
+
+    def test_rational_bezier_bound_rejects_interior_weight_corruption(self):
+        import json
+        path = Path(__file__).resolve().parents[1] / "cases/part-torus-cut-001/validation/occt.json"
+        seam = json.loads(path.read_text())["native_reference"]["seam"]
+        poles,weights = seam["poles_mm"],seam["weights"]
+        center = (0,0,seam["z_mm"])
+        original = bezier_radial_bound(poles,center,seam["radius_mm"],weights)
+        self.assertLessEqual(original,1e-5)
+        scaled = bezier_radial_bound(poles,center,seam["radius_mm"],[7*w for w in weights])
+        self.assertLessEqual(scaled,1e-5)
+        self.assertAlmostEqual(original,scaled,delta=1e-12)
+        changed = list(weights)
+        changed[len(changed)//2] *= 1.01
+        self.assertGreater(bezier_radial_bound(poles,center,seam["radius_mm"],changed),1e-5)
+        changed[1] = 0
+        with self.assertRaisesRegex(RuntimeError,"positive finite weights"):
+            bezier_radial_bound(poles,center,seam["radius_mm"],changed)
 
 
 if __name__ == "__main__":

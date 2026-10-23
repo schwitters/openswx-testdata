@@ -211,3 +211,19 @@ degeneracies. A future complete-surface export must preserve its central hole,
 both periodic directions and material orientation. Unexpected success requires
 review and independent equivalence before changing the expectation. See the
 [torus capture](torus_capture.md).
+
+## Meridional torus-cut STEP export
+
+`part-torus-cut-001` is a valid 90-degree R20/r5 mm torus segment with two
+meridional circle boundaries and planar end disks. All five reader stages pass.
+At library commit `1607ee9`, export returns `invalid_record` at partition byte
+2398: `STEP node 41: Torus cut circle is tilted or degenerate`. The current
+`torus_boundary.cc` path handles circle normals aligned with the torus axis;
+meridional cut normals are perpendicular and need a separate supported boundary
+family. The error does not indicate malformed native input.
+
+The corpus records outcome `unsupported` with the actual `invalid_record` API
+code. It requires the exact rejection and no output, then validates the native
+segment independently against analytic geometry. A future fix must preserve
+both radial caps, angular trims and material orientation, and review the error
+classification. See the [torus-segment capture](torus_cut_capture.md).

@@ -556,7 +556,8 @@
             "cone_sector",
             "sphere",
             "sphere_cap",
-            "torus"
+            "torus",
+            "torus_cut"
           ]
         },
         "dimensions_m": {
@@ -582,7 +583,10 @@
           "if": {
             "properties": {
               "shape": {
-                "const": "cone_sector"
+                "enum": [
+                  "cone_sector",
+                  "torus_cut"
+                ]
               }
             }
           },

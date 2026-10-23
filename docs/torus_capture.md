@@ -118,5 +118,6 @@ new output directory:
   --output results/torus-run-001
 ```
 
-The corpus now contains thirteen complete passing export cases and two
-expected unsupported exports: the complete sphere and complete torus.
+The corpus contains thirteen complete passing export cases. The complete
+sphere, complete torus and meridionally trimmed torus segment have expected
+export limitations.

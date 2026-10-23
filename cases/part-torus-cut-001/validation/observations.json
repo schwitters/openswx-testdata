@@ -1,0 +1,45 @@
+{
+  "library_commit": "1607ee9a22b1aba7e2a6607061c209845d591dd0",
+  "case": "part-torus-cut-001",
+  "selected_payload_index": 0,
+  "selected_body_id": 2,
+  "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+  "stages": {
+    "metadata": "pass: native part, Default configuration and saved mass properties agree",
+    "extraction": "pass: partition and delta, no extraction issues",
+    "decode": "pass: both embedded streams complete, no uninterpreted bytes",
+    "topology": "pass: recorded ownership/incidence checked by body binding",
+    "binding": "pass: 3 faces and 2 vertex-free meridional circles, no interval overrides",
+    "step": "unsupported: meridional torus boundary rejected as invalid_record at partition byte 2398, STEP node 41"
+  },
+  "source_topology": {
+    "bodies": 1,
+    "edges": 2,
+    "faces": 3,
+    "loops": 4,
+    "shell_provenance": "connected_native_face_edge_incidence",
+    "shells": 1,
+    "vertices": 0
+  },
+  "export_error": {
+    "error_code": "invalid_record",
+    "offset": 2398,
+    "message": "STEP node 41: Torus cut circle is tilted or degenerate"
+  },
+  "library_step_produced": false,
+  "topology_notes": [
+    "Native API reports one connected shell; XT records both material and void-side shell uses.",
+    "The native segment retains two meridional cut circles and two planar caps. OCCT adds one parallel seam and two rim vertices. The seam has an exact constant-V torus pcurve and a bounded rational Bezier 3D representation."
+  ],
+  "known_limits": [
+    {
+      "scope": "original reference/model.x_b",
+      "error_code": "unsupported_format",
+      "offset": 0,
+      "message": "Reader requires binary PS prologue at byte zero; native file has an ASCII header."
+    }
+  ],
+  "native_sample_count": 45,
+  "mcp_documents_closed": true,
+  "occt_report": "validation/occt.json"
+}

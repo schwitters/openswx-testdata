@@ -24,6 +24,7 @@ from OCP.TopoDS import TopoDS
 from OCP.TopTools import TopTools_IndexedMapOfShape
 from OCP.gp import gp_Pnt, gp_Pnt2d
 
+from bezier_check import bezier_radial_bound
 from step_check import compare_solids, measure, read_step, require, topology_counts
 
 RIM_RADIUS = math.sqrt(75)
@@ -35,20 +36,7 @@ def xyz(point):
 
 
 def spherical_bezier_radial_bound(poles):
-    """Bound radial deviation over a whole polynomial Bezier via Bernstein products."""
-    degree = len(poles)-1
-    require(1<=degree<=7 and all(len(p)==3 and all(math.isfinite(v) for v in p) for p in poles),
-            "invalid importer Bezier poles")
-    coefficients = []
-    for k in range(2*degree+1):
-        terms = [math.comb(degree,i)*math.comb(degree,k-i)/math.comb(2*degree,k)*
-                 math.fsum(a*b for a,b in zip(poles[i],poles[k-i]))
-                 for i in range(max(0,k-degree),min(degree,k)+1)]
-        coefficients.append(math.fsum(terms)-100)
-    # Convex-hull bound on squared radius, with a conservative roundoff allowance.
-    squared_bound = max(abs(v) for v in coefficients)+1e-9
-    require(squared_bound<100,"unbounded importer meridian")
-    return squared_bound/(math.sqrt(100-squared_bound)+10)
+    return bezier_radial_bound(poles,(0,0,0),10)
 
 
 def classify(face,surface,point):

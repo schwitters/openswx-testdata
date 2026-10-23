@@ -120,5 +120,5 @@ updated `case_export` driver and a new output directory:
 
 Exit zero means all declared expectations matched, including the known export
 rejection. It does not mean the STEP stage passed. Thirteen captured cases have
-complete passing STEP regressions; the full torus is a second expected
-unsupported export.
+complete passing STEP regressions; the full torus and meridionally trimmed
+torus segment are two further expected export limitations.

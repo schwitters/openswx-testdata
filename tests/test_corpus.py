@@ -257,6 +257,31 @@ class CorpusTest(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
                 corpus.read_recipe(self.root,relative,"part-torus-001")
 
+    def test_torus_cut_formulas_include_end_disks(self):
+        recipe = corpus.read_recipe(self.root,"recipes/part-torus-cut-001.json","part-torus-cut-001")
+        actual = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(actual["volume_m3"],250*math.pi**2*1e-9,delta=1e-17)
+        self.assertAlmostEqual(actual["area_m2"],(100*math.pi**2+50*math.pi)*1e-6,delta=1e-14)
+
+    def test_torus_cut_angle_and_profile_must_match(self):
+        relative = "recipes/part-torus-cut-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-torus-cut-001")
+        for mutation in ("offset","radius","angle-mismatch","full-angle","missing-angle"):
+            recipe = copy.deepcopy(original)
+            if mutation=="offset":
+                recipe["steps"][1]["parameters"]["radial_offset_m"] = .021
+            elif mutation=="radius":
+                recipe["steps"][1]["parameters"]["radius_m"] = .004
+            elif mutation=="angle-mismatch":
+                recipe["steps"][-1]["parameters"]["angle_rad"] = math.pi
+            elif mutation=="full-angle":
+                recipe["analytic"]["angle_rad"] = 2*math.pi
+            else:
+                recipe["analytic"].pop("angle_rad")
+            self.write_json(self.root / relative,recipe)
+            with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
+                corpus.read_recipe(self.root,relative,"part-torus-cut-001")
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -1251,6 +1276,65 @@ class CapturedTorusTest(unittest.TestCase):
             self.assertLess(math.dist(samples[offset]["position"],samples[20+offset]["position"]),1e-12)
         for block in range(5):
             self.assertLess(math.dist(samples[5*block]["position"],samples[5*block+4]["position"]),1e-12)
+
+
+class CapturedTorusCutTest(unittest.TestCase):
+    def test_valid_torus_segment_retains_actual_invalid_record_rejection(self):
+        corpus.audit(ROOT,require_ready=True)
+        case = ROOT / "cases/part-torus-cut-001"
+        manifest = corpus.load_json(case / "case.json")
+        self.assertEqual(manifest["expectations"]["step"]["outcome"],"unsupported")
+        self.assertEqual(manifest["expectations"]["step"]["error_code"],"invalid_record")
+        self.assertEqual(corpus.load_json(case / "validation/export-error.json"),
+                         {"error_code":"invalid_record","offset":2398,
+                          "message":"STEP node 41: Torus cut circle is tilted or degenerate"})
+        report = corpus.load_json(case / "validation/occt.json")
+        self.assertTrue(report["native_reference"]["brep_valid"])
+        self.assertEqual(report["analytic_reference_difference_volume_mm3"],[0,0])
+
+    def test_native_torus_segment_trims_centroid_and_cut_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-torus-cut-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":3,"edges":2,"vertices":0,"shells":1})
+        self.assertLess(math.dist(body["measurements_si"]["centroid_m"],(.040625/math.pi,.040625/math.pi,0)),1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        byref = {e["ref"]:e for e in entities}
+        torus = next(e for e in entities if e["kind"]=="surface" and e["geometry"]["type"]=="torus")
+        trim = byref[torus["owner"]]["trim_uv_bounds"]
+        self.assertTrue(torus["geometry"]["u_periodic"])
+        self.assertAlmostEqual(trim[1]-trim[0],math.pi/2,delta=1e-12)
+        self.assertAlmostEqual(trim[3]-trim[2],2*math.pi,delta=1e-12)
+        count=mantle_count=0
+        normals = set()
+        for label,evaluation in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            g = entity["geometry"]
+            for sample in evaluation["samples"]:
+                point = sample["position"]
+                x,y,z = point
+                rho = math.hypot(x,y)
+                self.assertGreaterEqual(x,-1e-12)
+                self.assertGreaterEqual(y,-1e-12)
+                self.assertLessEqual((rho-.02)**2+z*z,.005**2+1e-15)
+                if entity["kind"]=="curve":
+                    self.assertEqual(g["type"],"circle")
+                    self.assertAlmostEqual(math.dist(point,g["center"]),.005,delta=1e-12)
+                    self.assertAlmostEqual(sum((a-b)*d for a,b,d in zip(point,g["center"],g["axis"])),0,delta=1e-12)
+                else:
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    if g["type"]=="torus":
+                        self.assertAlmostEqual((rho-.02)**2+z*z,.005**2,delta=1e-15)
+                        expected = [(rho-.02)*x/(.005*rho),(rho-.02)*y/(.005*rho),z/.005]
+                        mantle_count += 1
+                    else:
+                        self.assertEqual(g["type"],"plane")
+                        self.assertAlmostEqual(sum((a-b)*d for a,b,d in zip(point,g["origin"],g["normal"])),0,delta=1e-12)
+                        expected = [-1,0,0] if abs(g["normal"][0])>.9 else [0,-1,0]
+                        normals.add(tuple(expected))
+                    self.assertLess(math.dist(sample["face_normal"],expected),1e-12)
+                count += 1
+        self.assertEqual((count,mantle_count),(45,25))
+        self.assertEqual(normals,{(-1,0,0),(0,-1,0)})
 
 
 if __name__ == "__main__":
