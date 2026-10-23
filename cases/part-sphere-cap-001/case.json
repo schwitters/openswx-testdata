@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "id": "part-sphere-cap-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-sphere-cap-001.json",
+  "tags": [
+    "sphere-cap",
+    "full-revolution",
+    "spherical-pole",
+    "planar-base",
+    "vertex-free-rim",
+    "periodic-seam",
+    "bounded-importer-bezier",
+    "occt-reference-projection",
+    "material-normals",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T21:48:49.184293+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original minor spherical cap with sphere radius 10 mm, height 5 mm and base at document Z=5 mm generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 1e-09,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type, Default configuration and saved mass properties."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; two faces, one vertex-free rim and no native vertices."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint matches native sphere-cap geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "pass",
+      "reason": "Complete selected checkpoint; analytic spherical cap, native STEP and OCCT equivalence."
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 724,
+      "sha256": "7776cc8845c18927584e732006e44756b27e347e554bdf2471df1b469b7efbb0"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 3344,
+      "sha256": "683b67f975c8f6c9a729e9c83e2728626fdb20a352aa849536e0892c22525a73"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 724931,
+      "sha256": "552cee5caad12682188ab9a865b5145954cb3e63ff237c33f1deba5e4acd995a"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1492,
+      "sha256": "81c158512df1e61f825b70c6c0a9379e76634d2181e4e07d8fee1eb63d2c76ef"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2376,
+      "sha256": "4f911347c3c8ebff6441988c031821bce24913a38f319dd70399b1a0fefaf282"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 5293,
+      "sha256": "d3619646006c82c60f20b66ad9c7d0198b44865d91fbe640a0d7ac9ec5244600"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 3359,
+      "sha256": "72364f49d26b69ac4a40199addcc5e19e24a1301f07c1c3a0f9f85f235d516d7"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 3736,
+      "sha256": "e2b936c745751c6c5042be007a006a89e88a10fe4a10b622028b9c1e8b55a78e"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 145537,
+      "sha256": "bb337dfa97288a4841dd8449c60c156ac6cbd889eda1431c6a7feb0bff3fe92e"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 95188,
+      "sha256": "5e9027d9cd1b44c8118d389ba56ad44250823fa7c617cc4510d134e96018f349"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 96940,
+      "sha256": "f2603615b9b6b6c587509cbaba04bbcde47f90989aed40535aa8f4eb8b57f149"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1420,
+      "sha256": "13ee6fe22f5d638a9f763b3fb3ecda136c7b77928d50064407d414b6c01e9bda"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1733,
+      "sha256": "276bba398d76801fc4fbe22a75d8469d9a7ae3c9da28a8651c4af2202bdeed94"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 3008,
+      "sha256": "2aa9a8e22678bd80591142c9bb71ee63a1d0bd3081b0fa4954ff8b53e7d884c2"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 2076,
+      "sha256": "8ca96e9cb2dd6aa33cddce046c0c7aac556987bdd269ee592b2d579485145fa1"
+    }
+  ]
+}

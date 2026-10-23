@@ -257,7 +257,8 @@
       "coverage_targets": [
         "part",
         "sphere-cap"
-      ]
+      ],
+      "recipe": "recipes/part-sphere-cap-001.json"
     },
     {
       "id": "part-torus-001",

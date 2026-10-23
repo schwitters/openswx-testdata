@@ -377,6 +377,63 @@
                 "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
               },
               "operation": {
+                "const": "sketch_spherical_cap"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "plane": {
+                    "const": "XZ"
+                  },
+                  "center_m": {
+                    "const": [
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  "radius_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "sketch_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+                  },
+                  "half_plane": {
+                    "const": "positive_x"
+                  },
+                  "cap_height_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "plane",
+                  "center_m",
+                  "radius_m",
+                  "sketch_id",
+                  "half_plane",
+                  "cap_height_m"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
                 "const": "revolve"
               },
               "parameters": {
@@ -452,7 +509,8 @@
             "multiple_solids",
             "cone_frustum",
             "cone_sector",
-            "sphere"
+            "sphere",
+            "sphere_cap"
           ]
         },
         "dimensions_m": {

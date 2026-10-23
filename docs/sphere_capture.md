@@ -119,5 +119,5 @@ updated `case_export` driver and a new output directory:
 ```
 
 Exit zero means all declared expectations matched, including the known export
-rejection. It does not mean the STEP stage passed. The other twelve captured
+rejection. It does not mean the STEP stage passed. The other thirteen captured
 cases retain their complete passing STEP regressions.

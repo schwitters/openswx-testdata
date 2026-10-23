@@ -125,6 +125,14 @@ def analytic_measures(recipe):
     values = recipe["analytic"]["dimensions_m"]
     if kind == "multiple_solids":
         return aggregate_measures(multiple_solid_measures(recipe).values())
+    if kind == "sphere_cap":
+        if set(values) != {"radius", "cap_height"}:
+            raise CorpusError("sphere cap: expected radius and cap height")
+        radius,height = values["radius"],values["cap_height"]
+        if not height < radius:
+            raise CorpusError("minor sphere cap requires height smaller than radius")
+        return {"volume_m3":math.pi*height**2*(radius-height/3),
+                "area_m2":math.pi*height*(4*radius-height)}
     if kind == "sphere":
         if set(values) != {"radius"}:
             raise CorpusError("sphere: expected one radius")
@@ -256,7 +264,7 @@ def read_recipe(root, relative, case_id):
                 raise CorpusError("extrusion references an unknown or later sketch")
             if step["operation"] == "revolve":
                 profile = sketches[step["parameters"]["profiles"][0]]
-                if profile["operation"] not in ("sketch_polygon", "sketch_semicircle") or profile["parameters"]["plane"] != "XZ":
+                if profile["operation"] not in ("sketch_polygon", "sketch_semicircle", "sketch_spherical_cap") or profile["parameters"]["plane"] != "XZ":
                     raise CorpusError("starter revolution requires an XZ polygon or semicircle")
             if step["parameters"]["operation"] == "cut" and not has_solid:
                 raise CorpusError("cut requires an earlier solid-body extrusion")
@@ -267,15 +275,18 @@ def read_recipe(root, relative, case_id):
     if recipe["steps"][-1]["operation"] not in ("extrude", "revolve"):
         raise CorpusError("starter recipe must end with an extrusion or revolution")
     kind = recipe["analytic"]["shape"]
-    if kind in ("cone_frustum", "cone_sector", "sphere"):
+    if kind in ("cone_frustum", "cone_sector", "sphere", "sphere_cap"):
         revolutions = [step for step in recipe["steps"] if step["operation"] == "revolve"]
         expected_angle = recipe["analytic"].get("angle_rad",2*math.pi)
         if len(revolutions) != 1 or revolutions[0]["parameters"]["angle_rad"] != expected_angle:
             raise CorpusError("revolution construction angle differs from analytic angle")
-        if kind == "sphere":
+        if kind in ("sphere", "sphere_cap"):
             profile = sketches[revolutions[0]["parameters"]["profiles"][0]]
-            if profile["operation"] != "sketch_semicircle" or profile["parameters"]["radius_m"] != recipe["analytic"]["dimensions_m"]["radius"]:
-                raise CorpusError("sphere construction requires the matching semicircle radius")
+            expected_profile = "sketch_semicircle" if kind == "sphere" else "sketch_spherical_cap"
+            if profile["operation"] != expected_profile or profile["parameters"]["radius_m"] != recipe["analytic"]["dimensions_m"]["radius"]:
+                raise CorpusError("sphere construction requires the matching profile radius")
+            if kind == "sphere_cap" and profile["parameters"]["cap_height_m"] != recipe["analytic"]["dimensions_m"]["cap_height"]:
+                raise CorpusError("sphere cap construction height differs from analytic height")
     analytic_measures(recipe)
     return recipe
 

@@ -180,3 +180,20 @@ material orientation, and require independent native/library equivalence when
 changing the expectation. Unexpected success is currently a regression requiring
 review; a matched unsupported result is not counted as a passing STEP stage.
 See the [sphere capture](sphere_capture.md) for the complete reproduction.
+
+## OCCT sphere-cap reference projection
+
+`part-sphere-cap-001` reveals a native-reference import defect in OCCT 7.9.3.1.1: the
+exact rim circle receives an inaccurate sphere-side pcurve. Raw mass properties
+miss the analytic cap values even though B-rep validity and the Boolean
+difference test pass. The validator records those raw values, then rebuilds
+only that reference pcurve on a deep copy using precise projection. It records
+the achieved sampled correspondence and the adjusted import-only edge tolerance,
+which must stay below the fixed source binding tolerance. Original STEP bytes,
+3D rim/support geometry and the library output remain unchanged.
+
+This reviewed oracle workaround is specific to the captured cap and its
+one-circle native import; it does not mask library geometry failures. The
+passing cap leaves the complete sphere's unsupported STEP expectation unchanged.
+See [sphere-cap capture](sphere_cap_capture.md) for the full evidence, error
+bounds and representation accounting.

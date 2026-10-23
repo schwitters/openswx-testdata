@@ -20,6 +20,8 @@ try:
     from OCP.BRep import BRep_Builder
     from OCP.TopoDS import TopoDS_Compound
     from check_thin_wall_step import check_thin_wall_shape
+    from check_sphere_cap_step import check_sphere_cap_shape, repair_native_cap_pcurve, spherical_bezier_radial_bound
+    from step_check import read_step
     from check_sphere_step import check_sphere_shape
     from OCP.BRepPrimAPI import BRepPrimAPI_MakeSphere
     from check_cone_sector_step import check_cone_sector_shape
@@ -541,6 +543,74 @@ class SphereGeometryTest(unittest.TestCase):
     def test_inverted_material_orientation_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError,"material normal"):
             check_sphere_shape(BRepPrimAPI_MakeSphere(10).Shape().Reversed())
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class SphereCapGeometryTest(unittest.TestCase):
+    @staticmethod
+    def cap():
+        return BRepPrimAPI_MakeSphere(10,math.pi/6,math.pi/2).Shape()
+
+    def test_expected_cap_with_analytic_meridian(self):
+        report = check_sphere_cap_shape(self.cap())
+        self.assertEqual(report["seams"][0]["representation"],"circle")
+
+    def test_opposite_cap_with_equal_measures_is_rejected(self):
+        expected = self.cap()
+        opposite = BRepPrimAPI_MakeSphere(10,-math.pi/2,-math.pi/6).Shape()
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(opposite,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"cap"):
+            check_sphere_cap_shape(opposite)
+
+    def test_wrong_base_height_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"cap"):
+            check_sphere_cap_shape(BRepPrimAPI_MakeSphere(10,math.asin(.4),math.pi/2).Shape())
+
+    def test_translated_cap_is_rejected(self):
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(1,0,0))
+        with self.assertRaisesRegex(RuntimeError,"radius or center"):
+            check_sphere_cap_shape(self.cap().Moved(TopLoc_Location(transform)))
+
+    def test_wrong_sphere_radius_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"radius or center"):
+            check_sphere_cap_shape(BRepPrimAPI_MakeSphere(11,math.asin(5/11),math.pi/2).Shape())
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_sphere_cap_shape(self.cap().Reversed())
+
+    def test_missing_planar_base_is_rejected(self):
+        from OCP.TopExp import TopExp_Explorer
+        from OCP.TopAbs import TopAbs_FACE
+        explorer = TopExp_Explorer(self.cap(),TopAbs_FACE)
+        with self.assertRaisesRegex(RuntimeError,"incomplete sphere cap"):
+            check_sphere_cap_shape(explorer.Current())
+
+    def test_native_reference_reprojection_preserves_original_import(self):
+        reference = Path(__file__).resolve().parents[1] / "cases/part-sphere-cap-001/reference/model.step"
+        original,_ = read_step(reference)
+        before = measure(original,True)
+        with self.assertRaisesRegex(RuntimeError,"wrong cap volume"):
+            check_sphere_cap_shape(original)
+        corrected,report = repair_native_cap_pcurve(original)
+        self.assertTrue(report["projection_rebuilt"])
+        self.assertEqual(measure(original,True),before)
+        self.assertLessEqual(report["repaired_edge_tolerance_mm"],1e-5)
+        check_sphere_cap_shape(corrected)
+
+    def test_bernstein_bound_rejects_an_interior_pole_excursion(self):
+        import json
+        report_path = Path(__file__).resolve().parents[1] / "cases/part-sphere-cap-001/validation/occt.json"
+        poles = json.loads(report_path.read_text())["library_export"]["seams"][0]["poles_mm"]
+        self.assertLessEqual(spherical_bezier_radial_bound(poles),1e-5)
+        # Endpoints still agree; the changed interior pole bends the 3D seam away.
+        changed = [list(p) for p in poles]
+        changed[len(changed)//2][2] += .001
+        self.assertEqual(changed[0],poles[0])
+        self.assertEqual(changed[-1],poles[-1])
+        self.assertGreater(spherical_bezier_radial_bound(changed),1e-5)
 
 
 if __name__ == "__main__":

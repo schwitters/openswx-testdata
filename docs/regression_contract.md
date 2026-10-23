@@ -1,14 +1,15 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector and a full sphere. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector, a full sphere and a minor spherical cap. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
 [blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md),
 [stepped-bore](stepped_bore_capture.md), [two-bores](two_holes_capture.md) and
 [concave L-profile](concave_profile_capture.md),
 [multiple solids](multiple_solids_capture.md),
 [thin wall](thin_wall_capture.md), [cone frustum](cone_frustum_capture.md) and
-[cone sector](cone_sector_capture.md) and [sphere](sphere_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[cone sector](cone_sector_capture.md), [sphere](sphere_capture.md) and
+[sphere cap](sphere_cap_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
@@ -134,3 +135,18 @@ exact frozen error and no STEP output, then validates only the native spherical
 STEP oracle. Unexpected success or a changed failure requires review. Exit zero
 means expectations matched; the report still records STEP as `unsupported`, not
 `pass`, and library/native STEP equivalence as untested.
+
+## Spherical-cap oracle and importer seams
+
+`part-sphere-cap-001` exports successfully. Native and library STEP have
+different imported seam/pole topology, which the checker accounts for explicitly.
+An importer-created polynomial meridian requires an exact spherical pcurve and
+a whole-curve Bernstein radial bound within the fixed length tolerance.
+
+The native reference's default OCCT pcurve projection is inaccurate. The checker
+records raw geometry checks and measured disagreement, then reprojects only that
+pcurve on a deep copy. Corrected measures, retained source supports and rim,
+measured pcurve correspondence and a bounded import-only edge tolerance are
+required. Original source bytes and the library output are never repaired. Both
+original/corrected Boolean comparisons and all before/after import observations
+are recorded. See the [capture](sphere_cap_capture.md) for exact limits.

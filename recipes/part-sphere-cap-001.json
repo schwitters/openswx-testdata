@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "id": "part-sphere-cap-001",
+  "description": "Revolve a minor spherical-cap profile: R10 mm, height 5 mm, above Z=5 mm.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_spherical_cap",
+      "parameters": {
+        "plane": "XZ",
+        "center_m": [
+          0,
+          0,
+          0
+        ],
+        "radius_m": 0.01,
+        "half_plane": "positive_x",
+        "sketch_id": "main-profile",
+        "cap_height_m": 0.005
+      }
+    },
+    {
+      "id": "revolve-profile",
+      "operation": "revolve",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "axis_origin_m": [
+          0,
+          0,
+          0
+        ],
+        "axis_direction": [
+          0,
+          0,
+          1
+        ],
+        "angle_rad": 6.283185307179586,
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "sphere_cap",
+    "dimensions_m": {
+      "radius": 0.01,
+      "cap_height": 0.005
+    }
+  }
+}

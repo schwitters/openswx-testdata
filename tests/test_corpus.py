@@ -208,6 +208,30 @@ class CorpusTest(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
                 corpus.read_recipe(self.root,relative,"part-sphere-001")
 
+    def test_minor_sphere_cap_formulas_and_height_limit(self):
+        recipe = corpus.read_recipe(self.root,"recipes/part-sphere-cap-001.json","part-sphere-cap-001")
+        result = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(result["volume_m3"],625*math.pi/3*1e-9,delta=1e-17)
+        self.assertAlmostEqual(result["area_m2"],175*math.pi*1e-6,delta=1e-14)
+        recipe["analytic"]["dimensions_m"]["cap_height"] = .01
+        with self.assertRaisesRegex(corpus.CorpusError,"height smaller than radius"):
+            corpus.analytic_measures(recipe)
+
+    def test_sphere_cap_construction_dimensions_must_match(self):
+        relative = "recipes/part-sphere-cap-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-sphere-cap-001")
+        for mutation in ("radius","height","partial"):
+            recipe = copy.deepcopy(original)
+            if mutation=="radius":
+                recipe["steps"][1]["parameters"]["radius_m"] = .011
+            elif mutation=="height":
+                recipe["steps"][1]["parameters"]["cap_height_m"] = .004
+            else:
+                recipe["steps"][-1]["parameters"]["angle_rad"] = math.pi
+            self.write_json(self.root / relative,recipe)
+            with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
+                corpus.read_recipe(self.root,relative,"part-sphere-cap-001")
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -1101,6 +1125,58 @@ class ExpectedExportFailureTest(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(self.error_type):
                 self.verify(self.expectation,self.frozen,0 if mutation=="success" else 2,
                             actual,mutation=="partial-output")
+
+
+class CapturedSphereCapTest(unittest.TestCase):
+    def test_admitted_cap_integrity(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        self.assertIn("part-sphere-cap-001",{c["id"] for c in report["cases"]})
+
+    def test_native_cap_circle_pole_and_material_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-sphere-cap-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":2,"edges":1,"vertices":0,"shells":1})
+        self.assertLess(math.dist(body["measurements_si"]["centroid_m"],(0,0,.00675)),1e-12)
+        count=surface_count=0
+        entities = native["observations"]["brep"]["entities"]
+        for label,evaluation in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            g = entity["geometry"]
+            for sample in evaluation["samples"]:
+                point = sample["position"]
+                x,y,z = point
+                self.assertGreaterEqual(z,.005-1e-12)
+                self.assertLessEqual(z,.01+1e-12)
+                self.assertLessEqual(math.sqrt(sum(v*v for v in point)),.01+1e-12)
+                if entity["kind"]=="curve":
+                    self.assertEqual(g["type"],"circle")
+                    self.assertAlmostEqual(math.hypot(x,y),math.sqrt(75)*.001,delta=1e-12)
+                    self.assertAlmostEqual(z,.005,delta=1e-12)
+                else:
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    if g["type"]=="sphere":
+                        self.assertAlmostEqual(math.sqrt(sum(v*v for v in point)),.01,delta=1e-12)
+                        expected = [v/.01 for v in point]
+                        surface_count += 1
+                    else:
+                        self.assertEqual(g["type"],"plane")
+                        self.assertAlmostEqual(z,.005,delta=1e-12)
+                        expected = [0,0,-1]
+                    self.assertLess(math.dist(sample["face_normal"],expected),1e-12)
+                count += 1
+        self.assertEqual((count,surface_count),(30,20))
+
+    def test_oracle_projection_workaround_is_explicit_and_bounded(self):
+        report = corpus.load_json(ROOT / "cases/part-sphere-cap-001/validation/occt.json")
+        imported = report["native_reference_import"]
+        self.assertTrue(imported["projection_rebuilt"])
+        self.assertGreater(imported["raw_max_sampled_pcurve_error_mm"],.001)
+        self.assertLessEqual(imported["repaired_max_sampled_pcurve_error_mm"],1e-5)
+        self.assertLessEqual(imported["repaired_edge_tolerance_mm"],1e-5)
+        self.assertEqual(report["bidirectional_difference_volume_mm3"],[0,0])
+        seam = report["library_export"]["seams"][0]
+        self.assertTrue(seam["exact_sphere_pcurve"])
+        self.assertLessEqual(seam["radial_deviation_bound_mm"],seam["edge_tolerance_mm"])
 
 
 if __name__ == "__main__":
