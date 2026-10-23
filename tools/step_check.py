@@ -61,7 +61,7 @@ def compare_solids(native, exported):
     return differences
 
 
-def axial_seam_data(edge, curve, cylindrical_faces):
+def axial_seam_data(edge, curve, cylindrical_faces, axis_xy=(0,0)):
     """Certify an importer-created straight seam; leave its span to the caller."""
     require(any(BRep_Tool.IsClosed_s(edge, face) for face in cylindrical_faces),
             "extra edge is not a periodic cylinder seam")
@@ -76,6 +76,6 @@ def axial_seam_data(edge, curve, cylindrical_faces):
     first, last = curve.Value(curve.FirstParameter()), curve.Value(curve.LastParameter())
     require(math.hypot(first.X()-last.X(), first.Y()-last.Y()) < 1e-8,
             "unexpected nonaxial seam edge")
-    return {"radius_mm": math.hypot(first.X(), first.Y()),
+    return {"radius_mm": math.hypot(first.X()-axis_xy[0], first.Y()-axis_xy[1]),
             "z_span_mm": sorted((first.Z(), last.Z())),
             "representation": representation}

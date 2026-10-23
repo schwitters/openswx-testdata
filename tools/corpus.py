@@ -81,7 +81,8 @@ def analytic_measures(recipe):
     keys = {"block": {"width", "depth", "height"},
             "cylinder": {"radius", "height"},
             "tube": {"outer_radius", "inner_radius", "height"},
-            "blind_hole": {"outer_radius", "inner_radius", "height", "hole_depth"}}[kind]
+            "blind_hole": {"outer_radius", "inner_radius", "height", "hole_depth"},
+            "through_hole": {"width", "depth", "height", "bore_radius", "bore_x", "bore_y"}}[kind]
     if set(values) != keys:
         raise CorpusError(f"{kind}: expected dimensions {sorted(keys)}")
     height = values["height"]
@@ -89,6 +90,13 @@ def analytic_measures(recipe):
         width, depth = values["width"], values["depth"]
         volume = width * depth * height
         area = 2 * (width * depth + width * height + depth * height)
+    elif kind == "through_hole":
+        width, depth, radius = values["width"], values["depth"], values["bore_radius"]
+        x, y = values["bore_x"], values["bore_y"]
+        if not (radius < x < width-radius and radius < y < depth-radius):
+            raise CorpusError("through bore must have positive clearance from all block sides")
+        volume = (width * depth - math.pi * radius**2) * height
+        area = 2*(width*depth + width*height + depth*height) - 2*math.pi*radius**2 + 2*math.pi*radius*height
     elif kind == "blind_hole":
         radius, inner, depth = values["outer_radius"], values["inner_radius"], values["hole_depth"]
         if not inner < radius or not depth < height:

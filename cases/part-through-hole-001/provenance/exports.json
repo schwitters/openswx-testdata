@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "exports": [
+    {
+      "artifact_path": "reference/model.x_b",
+      "bytes": 7395,
+      "sha256": "e008eff143cd604c5736bad2329314ebb1b4de614e43e64bbd1502edd8914ca8",
+      "format": "parasolid_binary",
+      "configuration": "Default",
+      "document_revision": "0",
+      "selection_scope": "whole_document",
+      "length_unit": "metre",
+      "source_to_metre_scale": 1.0,
+      "format_version": "36.01.228",
+      "verification": "verified",
+      "warnings": []
+    },
+    {
+      "artifact_path": "reference/model.x_t",
+      "bytes": 7944,
+      "sha256": "d1525e71b76a111ce99f37e3e03d1e4b44f747ec84f12b508d097188134649e8",
+      "format": "parasolid_text",
+      "configuration": "Default",
+      "document_revision": "0",
+      "selection_scope": "whole_document",
+      "length_unit": "metre",
+      "source_to_metre_scale": 1.0,
+      "format_version": "36.01.228",
+      "verification": "verified",
+      "warnings": []
+    },
+    {
+      "artifact_path": "reference/model.step",
+      "bytes": 15873,
+      "sha256": "f3c47a6d9cfee86bfdb264bc86d552368c628cc1ed8864d4315e294c86a83224",
+      "format": "step_reference",
+      "configuration": "Default",
+      "document_revision": "0",
+      "selection_scope": "whole_document",
+      "length_unit": "millimetre",
+      "source_to_metre_scale": 0.001,
+      "format_version": "ISO-10303-21",
+      "verification": "verified",
+      "warnings": [],
+      "application_protocol": "AP214"
+    }
+  ]
+}

@@ -202,15 +202,51 @@
                       "new_body",
                       "cut"
                     ]
+                  },
+                  "end_condition": {
+                    "enum": [
+                      "blind",
+                      "through_all"
+                    ]
                   }
                 },
                 "required": [
                   "profiles",
-                  "height_m",
                   "direction",
                   "operation"
                 ],
-                "additionalProperties": false
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "required": [
+                        "end_condition"
+                      ],
+                      "properties": {
+                        "end_condition": {
+                          "const": "through_all"
+                        }
+                      }
+                    },
+                    "then": {
+                      "not": {
+                        "required": [
+                          "height_m"
+                        ]
+                      },
+                      "properties": {
+                        "operation": {
+                          "const": "cut"
+                        }
+                      }
+                    },
+                    "else": {
+                      "required": [
+                        "height_m"
+                      ]
+                    }
+                  }
+                ]
               }
             },
             "required": [
@@ -232,7 +268,8 @@
             "block",
             "cylinder",
             "tube",
-            "blind_hole"
+            "blind_hole",
+            "through_hole"
           ]
         },
         "dimensions_m": {

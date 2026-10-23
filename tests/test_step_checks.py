@@ -14,6 +14,7 @@ try:
     from check_block_step import check_block_shape
     from check_tube_step import check_tube_shape
     from check_blind_hole_step import check_blind_hole_shape
+    from check_through_hole_step import check_through_hole_shape
     from step_check import measure
     HAS_OCCT = True
 except ModuleNotFoundError as error:
@@ -118,6 +119,40 @@ class BlindHoleGeometryTest(unittest.TestCase):
             self.assertAlmostEqual(measure(reference,volume), measure(eccentric,volume), delta=1e-6)
         with self.assertRaisesRegex(RuntimeError, "eccentric bore"):
             check_blind_hole_shape(eccentric)
+
+
+@unittest.skipUnless(HAS_OCCT, "install requirements-occt.txt for kernel checks")
+class ThroughHoleGeometryTest(unittest.TestCase):
+    @staticmethod
+    def make_through_hole(x=10,y=15,depth=40):
+        stock = BRepPrimAPI_MakeBox(20,30,40).Shape()
+        bore = BRepPrimAPI_MakeCylinder(5,depth).Shape()
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(x,y,40-depth))
+        cut = BRepAlgoAPI_Cut(stock,bore.Moved(TopLoc_Location(transform)))
+        if not cut.IsDone():
+            raise RuntimeError("Test through-hole construction failed")
+        return cut.Shape()
+
+    def test_expected_through_hole(self):
+        report = check_through_hole_shape(self.make_through_hole())
+        self.assertEqual(report["ring_z_mm"],[0,40])
+        self.assertEqual(report["bore_center_xy_mm"],[10,15])
+
+    def test_shifted_bore_with_identical_measures_is_rejected(self):
+        reference,shifted = self.make_through_hole(),self.make_through_hole(x=11)
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(reference,volume),measure(shifted,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"bore position"):
+            check_through_hole_shape(shifted)
+
+    def test_blind_bore_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete through-hole"):
+            check_through_hole_shape(self.make_through_hole(depth=20))
+
+    def test_missing_bore_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete through-hole"):
+            check_through_hole_shape(BRepPrimAPI_MakeBox(20,30,40).Shape())
 
 
 if __name__ == "__main__":

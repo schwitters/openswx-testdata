@@ -89,3 +89,13 @@ checkpoint agrees with native/reference geometry, including the floor at Z=10 mm
 This adds a controlled subtractive-history example, without assigning unverified
 operation meanings to delta status bytes or claiming automatic state recovery.
 Its standalone native `.x_b` retains the ASCII-envelope limitation.
+
+## Rectangular through-hole capture confirmation
+
+`part-through-hole-001` uses a genuine through-all cut in rectangular stock.
+Its embedded partition and four-packet delta decode completely. The explicit
+checkpoint agrees with native/reference STEP, including circular holes in both
+rectangular caps, eight preserved outer corners and the offset bore axis at
+(10,15) mm. The shared seam checker uses that declared axis rather than assuming
+the global origin. Standalone native `.x_b` envelopes and automatic history
+resolution retain their previously documented limits.

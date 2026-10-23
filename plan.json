@@ -94,7 +94,8 @@
       "coverage_targets": [
         "part",
         "through-hole"
-      ]
+      ],
+      "recipe": "recipes/part-through-hole-001.json"
     },
     {
       "id": "part-stepped-bore-001",

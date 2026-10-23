@@ -5,9 +5,10 @@ An MIT-licensed test corpus repository for `libopenswx`,
 **SolidWorks 2025**. All future CAD fixtures must be original synthetic models
 with recorded authorship and generation provenance.
 
-**Current state: 50 planned cases, four recipes and four captured parts.**
+**Current state: 50 planned cases, five recipes and five captured parts.**
 The [cylinder](docs/cylinder_capture.md), [block](docs/block_capture.md),
-[tube](docs/tube_capture.md) and [blind-hole](docs/blind_hole_capture.md) captures
+[tube](docs/tube_capture.md), [blind-hole](docs/blind_hole_capture.md) and
+[through-hole](docs/through_hole_capture.md) captures
 include native SLDPRT, Parasolid binary/text and STEP AP214 references, full
 capture provenance and a shared offline check of
 all three libraries. The general MCP generation adapter is still pending.
@@ -34,13 +35,14 @@ the matching environment variables are `OPENSWX_CORPUS_ROOT` and
 - `plan.json`: 50 individually named cases, P0/P1/P2 priorities, coverage targets
   and semantic capabilities. Entries are plans, not coverage claims.
 - `recipes/`: declarative, metre/radian construction instructions for a block,
-  cylinder, tube and blind hole. Step names are not promises about deployed MCP
+  cylinder, tube, blind hole and through hole. Step names are not promises about
+  deployed MCP
   tool names.
 - `schemas/`: JSON Schema 2020-12 contracts for the plan, starter recipes,
   captured cases, native observations and export receipts. STEP protocol, file
   version and source-to-metre scale are recorded separately.
 - `cases/<id>/`: admitted immutable fixtures and `case.json`; currently `part-cylinder-001`,
-  `part-block-001`, `part-tube-001` and `part-blind-hole-001`.
+  `part-block-001`, `part-tube-001`, `part-blind-hole-001` and `part-through-hole-001`.
 - `tools/corpus.py`: offline contract, provenance-association and SHA-256 audit.
 - `tools/run_case.py`: shared six-stage offline regression runner, using explicit
   manifest selection and fixture-specific OCCT geometry checks.
@@ -84,7 +86,8 @@ options and version verification must come from the producer's response, not
 from file extensions or requested settings.
 
 The starter recipe language and analytic admission checks currently cover only
-one-body block/cylinder/tube parts and the top-entry cylindrical blind hole.
+one-body block/cylinder/tube parts, the top-entry cylindrical blind hole and
+the block with a through bore.
 Extend and test those contracts before capturing the other planned cases. Configuration, history, assembly and drawing
 cases are intentionally queued for later batches.
 

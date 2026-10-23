@@ -32,7 +32,7 @@ def main(fixed_case=None, legacy_exporter=False):
     parser.add_argument("--output", type=Path, default=Path(os.environ.get(
         "OPENSWX_CORPUS_OUTPUT", "results/cylinder" if fixed_case else "results/fixture")))
     if fixed_case is None:
-        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001"),
+        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001"),
                             default=os.environ.get("OPENSWX_CORPUS_CASE"))
     args = parser.parse_args()
     case_id = fixed_case if fixed_case is not None else args.case
@@ -94,6 +94,13 @@ def main(fixed_case=None, legacy_exporter=False):
         for actual_key, expected_key in (("volume", "volume_m3"), ("surface_area", "area_m2")):
             require(math.isclose(props[actual_key], expected["measurements_si"][expected_key],
                                  rel_tol=manifest["tolerances"]["measure_relative"]), "saved measure mismatch")
+        if "centroid_m" in expected["measurements_si"]:
+            center = props.get("center_of_gravity")
+            require(isinstance(center,dict) and all(axis in center for axis in ("x","y","z")),
+                    "missing saved centroid")
+            require(math.dist([center[axis] for axis in ("x","y","z")],
+                              expected["measurements_si"]["centroid_m"]) <=
+                    manifest["tolerances"]["length_absolute_m"], "saved centroid mismatch")
         report["stages"]["metadata"] = "pass"
         extracted = output / "extracted"
         inventory = checked_json("extraction", [dump, "--extract-parasolid", extracted, source])
@@ -153,7 +160,8 @@ def main(fixed_case=None, legacy_exporter=False):
         checker = {"part-cylinder-001": "check_cylinder_step.py",
                    "part-block-001": "check_block_step.py",
                    "part-tube-001": "check_tube_step.py",
-                   "part-blind-hole-001": "check_blind_hole_step.py"}[case_id]
+                   "part-blind-hole-001": "check_blind_hole_step.py",
+                   "part-through-hole-001": "check_through_hole_step.py"}[case_id]
         report["occt"] = checked_json("occt", [args.occt_python.absolute(), root / "tools" / checker,
                                                case / "reference/model.step", exported])
         report["stages"]["step"] = "pass"

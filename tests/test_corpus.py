@@ -224,6 +224,32 @@ class CorpusTest(unittest.TestCase):
         with self.assertRaisesRegex(corpus.CorpusError, "earlier solid-body"):
             corpus.audit(self.root)
 
+    def test_through_hole_analytic_measures(self):
+        recipe = corpus.load_json(self.root / "recipes/part-through-hole-001.json")
+        measures = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(measures["volume_m3"], (24000-1000*math.pi)*1e-9, delta=1e-17)
+        self.assertAlmostEqual(measures["area_m2"], (5200+350*math.pi)*1e-6, delta=1e-14)
+
+    def test_through_bore_requires_closed_side_clearance(self):
+        for field,value in (("bore_radius",.01),("bore_x",.005),("bore_y",.026)):
+            with self.subTest(field=field, value=value):
+                recipe = corpus.load_json(self.root / "recipes/part-through-hole-001.json")
+                recipe["analytic"]["dimensions_m"][field] = value
+                with self.assertRaisesRegex(corpus.CorpusError, "positive clearance"):
+                    corpus.analytic_measures(recipe)
+
+    def test_through_all_forbids_ambiguous_depth_and_boss(self):
+        for mutation in ("depth","boss"):
+            with self.subTest(mutation=mutation):
+                recipe = corpus.load_json(self.root / "recipes/part-through-hole-001.json")
+                cut = recipe["steps"][-1]["parameters"]
+                if mutation == "depth":
+                    cut["height_m"] = .04
+                else:
+                    cut["operation"] = "new_body"
+                with self.assertRaises(corpus.CorpusError):
+                    corpus.validate(self.root, "recipe", recipe)
+
     def test_missing_recipe_parameter(self):
         path = self.root / "recipes/part-cylinder-001.json"
         recipe = corpus.load_json(path)
@@ -391,6 +417,56 @@ class CapturedBlindHoleTest(unittest.TestCase):
                             self.assertLess(normal[2], 0)
                 count += 1
         self.assertEqual(count, 51)
+
+
+class CapturedThroughHoleTest(unittest.TestCase):
+    def test_admitted_through_hole_integrity(self):
+        report = corpus.audit(ROOT, require_ready=True)
+        self.assertIn("part-through-hole-001", {case["id"] for case in report["cases"]})
+
+    def test_native_through_hole_position_and_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-through-hole-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"], {"faces":7,"edges":14,"vertices":8,"shells":1})
+        for actual,expected in zip(body["measurements_si"]["centroid_m"],(.01,.015,.02)):
+            self.assertAlmostEqual(actual,expected,delta=1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        count = 0
+        for label,evaluated in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            geometry = entity["geometry"]
+            for sample in evaluated["samples"]:
+                point = sample["position"]
+                x,y,z = point
+                radius = math.hypot(x-.01,y-.015)
+                for coordinate,maximum in zip(point,(.02,.03,.04)):
+                    self.assertGreaterEqual(coordinate,-1e-12)
+                    self.assertLessEqual(coordinate,maximum+1e-12)
+                self.assertGreaterEqual(radius,.005-1e-12)
+                if entity["kind"] == "curve":
+                    if geometry["type"] == "line":
+                        target = [o+d*sample["parameter"] for o,d in zip(
+                            geometry["origin"],geometry["direction"])]
+                        self.assertLess(math.dist(point,target),1e-12)
+                    else:
+                        self.assertAlmostEqual(radius,.005,delta=1e-12)
+                        self.assertAlmostEqual(z,geometry["center"][2],delta=1e-12)
+                else:
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    normal = sample["face_normal"]
+                    if geometry["type"] == "cylinder":
+                        self.assertAlmostEqual(radius,.005,delta=1e-12)
+                        self.assertLess((x-.01)*normal[0]+(y-.015)*normal[1],0)
+                    else:
+                        residual = sum((a-o)*n for a,o,n in zip(point,geometry["origin"],geometry["normal"]))
+                        self.assertAlmostEqual(residual,0,delta=1e-12)
+                        axis = max(range(3),key=lambda i:abs(geometry["normal"][i]))
+                        if point[axis] > 1e-12:
+                            self.assertGreater(normal[axis],0)
+                        else:
+                            self.assertLess(normal[axis],0)
+                count += 1
+        self.assertEqual(count,108)
 
 
 if __name__ == "__main__":
