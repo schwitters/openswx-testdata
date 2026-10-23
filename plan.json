@@ -206,7 +206,8 @@
       "coverage_targets": [
         "part",
         "cone-frustum"
-      ]
+      ],
+      "recipe": "recipes/part-cone-frustum-001.json"
     },
     {
       "id": "part-cone-sector-001",

@@ -70,7 +70,7 @@ in the OCCT environment. The openswx build must provide `swx_dump` and
 `part-cylinder-001`, `part-tube-001`, `part-blind-hole-001` or
 `part-through-hole-001`, `part-stepped-bore-001`, `part-two-holes-001` or
 `part-concave-profile-001` or `part-multiple-solids-001` or
-`part-thin-wall-001` to run the other admitted starters through
+`part-thin-wall-001` or `part-cone-frustum-001` to run the other admitted starters through
 the same driver. The older
 `run_cylinder.py`/`cylinder_export` entry points remain supported.
 

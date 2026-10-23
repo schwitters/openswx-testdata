@@ -135,6 +135,36 @@ class CorpusTest(unittest.TestCase):
         with self.assertRaisesRegex(corpus.CorpusError,"self-intersect"):
             corpus.read_recipe(self.root,"recipes/part-concave-profile-001.json","part-concave-profile-001")
 
+    def test_frustum_analytic_measures_and_distinct_radii(self):
+        recipe = corpus.read_recipe(self.root,"recipes/part-cone-frustum-001.json","part-cone-frustum-001")
+        actual = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(actual["volume_m3"],3500*math.pi/3*1e-9,delta=1e-17)
+        self.assertAlmostEqual(actual["area_m2"],math.pi*(125+75*math.sqrt(17))*1e-6,delta=1e-14)
+        recipe["analytic"]["dimensions_m"]["top_radius"] = .01
+        with self.assertRaisesRegex(corpus.CorpusError,"smaller positive top radius"):
+            corpus.analytic_measures(recipe)
+
+    def test_full_revolution_contract_and_profile_reference(self):
+        relative = "recipes/part-cone-frustum-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-cone-frustum-001")
+        self.assertEqual(original["steps"][-1]["operation"],"revolve")
+        for mutation in ("partial","axis","origin","unknown-profile","wrong-plane"):
+            recipe = copy.deepcopy(original)
+            params = recipe["steps"][-1]["parameters"]
+            if mutation=="partial":
+                params["angle_rad"] = math.pi
+            elif mutation=="axis":
+                params["axis_direction"] = [1,0,0]
+            elif mutation=="origin":
+                params["axis_origin_m"] = [1,0,0]
+            elif mutation=="unknown-profile":
+                params["profiles"] = ["unknown-profile"]
+            else:
+                recipe["steps"][1]["parameters"]["plane"] = "XY"
+            self.write_json(self.root / relative,recipe)
+            with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
+                corpus.read_recipe(self.root,relative,"part-cone-frustum-001")
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -855,6 +885,52 @@ class CapturedThinWallTest(unittest.TestCase):
         self.assertEqual(count,90)
         self.assertEqual(short_edges,4)
         self.assertEqual(cap_normals,{(0,-1),(1e-5,1)})
+
+
+class CapturedConeFrustumTest(unittest.TestCase):
+    def test_admitted_frustum_integrity(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        self.assertIn("part-cone-frustum-001",{c["id"] for c in report["cases"]})
+
+    def test_native_frustum_radius_law_and_material_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-cone-frustum-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":3,"edges":2,"vertices":0,"shells":1})
+        for actual,expected in zip(body["measurements_si"]["centroid_m"],(0,0,.055/7)):
+            self.assertAlmostEqual(actual,expected,delta=1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        cone = next(e["geometry"] for e in entities if e["kind"]=="surface" and e["geometry"]["type"]=="cone")
+        self.assertAlmostEqual(cone["half_angle"],math.atan(.25),delta=1e-12)
+        count=mantle_samples=0
+        cap_normals = set()
+        for label,evaluation in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            g = entity["geometry"]
+            for sample in evaluation["samples"]:
+                x,y,z = sample["position"]
+                radius = math.hypot(x,y)
+                self.assertGreaterEqual(z,-1e-12)
+                self.assertLessEqual(z,.02+1e-12)
+                self.assertLessEqual(radius,.01-.25*z+1e-12)
+                if entity["kind"]=="curve":
+                    self.assertEqual(g["type"],"circle")
+                    self.assertAlmostEqual(radius,g["radius"],delta=1e-12)
+                    self.assertAlmostEqual(z,g["center"][2],delta=1e-12)
+                else:
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    if g["type"]=="cone":
+                        self.assertAlmostEqual(radius,.01-.25*z,delta=1e-12)
+                        expected = [x/radius/math.sqrt(1+.25**2),y/radius/math.sqrt(1+.25**2),.25/math.sqrt(1+.25**2)]
+                        mantle_samples += 1
+                    else:
+                        self.assertEqual(g["type"],"plane")
+                        self.assertAlmostEqual(z,g["origin"][2],delta=1e-12)
+                        expected = [0,0,-1 if abs(z)<1e-12 else 1]
+                        cap_normals.add((round(z,6),expected[2]))
+                    self.assertLess(math.dist(sample["face_normal"],expected),1e-12)
+                count += 1
+        self.assertEqual((count,mantle_samples),(28,8))
+        self.assertEqual(cap_normals,{(0,-1),(.02,1)})
 
 
 if __name__ == "__main__":

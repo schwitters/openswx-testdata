@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "id": "part-cone-frustum-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-cone-frustum-001.json",
+  "tags": [
+    "cone-frustum",
+    "full-revolution",
+    "conical-mantle",
+    "vertex-free-rings",
+    "periodic-seam",
+    "material-normals",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T21:05:54.035017+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original cone frustum with bottom radius 10 mm, top radius 5 mm and height 20 mm generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 1e-09,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type, Default configuration and saved mass properties."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; three faces, two vertex-free rings and no native vertices."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint matches native frustum geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "pass",
+      "reason": "Complete selected checkpoint; analytic frustum, native STEP and OCCT equivalence."
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 784,
+      "sha256": "d91669fb91580af22509236f1d2fcd09f4c6e9e243fc083ce019827b98380c92"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 3869,
+      "sha256": "e435137507cc509086b40dd5bbac306b04b6b6bf12bb84c67966989263ca6875"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 886089,
+      "sha256": "5ade30e45aca42e5c1abbc202c3646fc0c2f1d2f0ec51e3a5a10799086b39d1c"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1492,
+      "sha256": "ef299f668dabe616853be538da21c6987bef0c3704cc80403dfc63288183dd44"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2376,
+      "sha256": "a7c6296d7a1a5d5153a4c1c705e99fe38ca71f68c20d3768f3faee297a498e7e"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 6655,
+      "sha256": "94678e4a4a01c6af693f9ccca58c616197f02502e833fb38860e24548dbbcfc7"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 3866,
+      "sha256": "d3d4222294bd6a57dde1a92fb5de33ace20e0639c3826a390c0e43df0973acc6"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 4230,
+      "sha256": "fae437f93e7462798ea2e2516f0764db223d13a94468e6ca19408c5153db09b6"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 221055,
+      "sha256": "ae58fef558d8c33b6cf2f4742772763466e6cf5e998453f525d6c809b11a1be0"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 78789,
+      "sha256": "a28b8206d044847d66c0e8420715ae709d357948eef66d1625d0650e4eb91033"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 119264,
+      "sha256": "22addc4e15488589f27779d715a47cbcb7ae538d46605dc7932e0825d5ef881f"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1420,
+      "sha256": "3e775293353882ec64b8e35f5d43022ee0ca6465f45860375d74474d57d9876a"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1659,
+      "sha256": "bcc7aaf45874a3e0fdf9b2be6ecaaa8bd999552418d2aeee2d979524afe3a69a"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 1229,
+      "sha256": "00d573b78271e01b8980e67246f1048a4975bd10e1ec9fa74f5af4bd21dde0e6"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 2074,
+      "sha256": "73e77c0d5af7e44df6d8ab50f3ca5ae16106b127aed1662a543e12e19e05cc58"
+    }
+  ]
+}

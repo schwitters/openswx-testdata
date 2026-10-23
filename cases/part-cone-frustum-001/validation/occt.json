@@ -1,0 +1,67 @@
+{
+  "ocp_distribution_version": "7.9.3.1.1",
+  "native_reference": {
+    "topology": {
+      "faces": 3,
+      "edges": 3,
+      "vertices": 2,
+      "solids": 1
+    },
+    "volume_mm3": 3665.191429188091,
+    "area_mm2": 1364.1829574548635,
+    "ring_z_radius_mm": [
+      [
+        0.0,
+        10.0
+      ],
+      [
+        20.0,
+        5.0
+      ]
+    ],
+    "cone_half_angle_rad": 0.24497866312686414,
+    "outward_normals_verified": true,
+    "seam": {
+      "z_span_mm": [
+        0.0,
+        20.0
+      ],
+      "representation": "polynomial_degree_1_bspline"
+    },
+    "brep_valid": true
+  },
+  "library_export": {
+    "topology": {
+      "faces": 3,
+      "edges": 3,
+      "vertices": 2,
+      "solids": 1
+    },
+    "volume_mm3": 3665.191429188091,
+    "area_mm2": 1364.1829574548635,
+    "ring_z_radius_mm": [
+      [
+        0.0,
+        10.0
+      ],
+      [
+        20.0,
+        5.0
+      ]
+    ],
+    "cone_half_angle_rad": 0.24497866312686414,
+    "outward_normals_verified": true,
+    "seam": {
+      "z_span_mm": [
+        0.0,
+        20.0
+      ],
+      "representation": "polynomial_degree_1_bspline"
+    },
+    "brep_valid": true
+  },
+  "bidirectional_difference_volume_mm3": [
+    0.0,
+    0.0
+  ]
+}

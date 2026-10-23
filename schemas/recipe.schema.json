@@ -122,7 +122,10 @@
                 "type": "object",
                 "properties": {
                   "plane": {
-                    "const": "XY"
+                    "enum": [
+                      "XY",
+                      "XZ"
+                    ]
                   },
                   "origin_m": {
                     "type": "array",
@@ -313,6 +316,67 @@
               "parameters"
             ],
             "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
+                "const": "revolve"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "profiles": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "maxItems": 1
+                  },
+                  "operation": {
+                    "const": "new_body"
+                  },
+                  "axis_origin_m": {
+                    "const": [
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  "axis_direction": {
+                    "const": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "angle_rad": {
+                    "const": 6.283185307179586
+                  }
+                },
+                "required": [
+                  "profiles",
+                  "axis_origin_m",
+                  "axis_direction",
+                  "angle_rad",
+                  "operation"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ],
+            "additionalProperties": false
           }
         ]
       },
@@ -331,7 +395,8 @@
             "stepped_bore",
             "two_holes",
             "concave_profile",
-            "multiple_solids"
+            "multiple_solids",
+            "cone_frustum"
           ]
         },
         "dimensions_m": {

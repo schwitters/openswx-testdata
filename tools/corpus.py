@@ -125,7 +125,8 @@ def analytic_measures(recipe):
     values = recipe["analytic"]["dimensions_m"]
     if kind == "multiple_solids":
         return aggregate_measures(multiple_solid_measures(recipe).values())
-    keys = {"block": {"width", "depth", "height"},
+    keys = {"cone_frustum": {"bottom_radius", "top_radius", "height"},
+            "block": {"width", "depth", "height"},
             "cylinder": {"radius", "height"},
             "tube": {"outer_radius", "inner_radius", "height"},
             "blind_hole": {"outer_radius", "inner_radius", "height", "hole_depth"},
@@ -140,6 +141,12 @@ def analytic_measures(recipe):
         width, depth = values["width"], values["depth"]
         volume = width * depth * height
         area = 2 * (width * depth + width * height + depth * height)
+    elif kind == "cone_frustum":
+        bottom, top = values["bottom_radius"], values["top_radius"]
+        if not top < bottom:
+            raise CorpusError("cone frustum requires a smaller positive top radius")
+        volume = math.pi*height*(bottom**2+bottom*top+top**2)/3
+        area = math.pi*(bottom**2+top**2+(bottom+top)*math.hypot(height,bottom-top))
     elif kind == "concave_profile":
         width, depth = values["width"], values["depth"]
         leg, foot = values["vertical_leg_width"], values["horizontal_leg_depth"]
@@ -221,23 +228,29 @@ def read_recipe(root, relative, case_id):
     if recipe["steps"][0]["operation"] != "create_part":
         raise CorpusError("starter recipe must create a fresh part first")
     profiles = set()
+    sketches = {}
     has_solid = False
     for step in recipe["steps"][1:]:
         if step["operation"].startswith("sketch_"):
             if step["operation"] == "sketch_polygon":
                 check_polygon(step["parameters"]["vertices_m"])
             profiles.add(step["id"])
-        elif step["operation"] == "extrude":
+            sketches[step["id"]] = step
+        elif step["operation"] in ("extrude", "revolve"):
             if not set(step["parameters"]["profiles"]) <= profiles:
                 raise CorpusError("extrusion references an unknown or later sketch")
+            if step["operation"] == "revolve":
+                profile = sketches[step["parameters"]["profiles"][0]]
+                if profile["operation"] != "sketch_polygon" or profile["parameters"]["plane"] != "XZ":
+                    raise CorpusError("starter revolution requires an XZ polygon")
             if step["parameters"]["operation"] == "cut" and not has_solid:
                 raise CorpusError("cut requires an earlier solid-body extrusion")
             if step["parameters"]["operation"] == "new_body":
                 has_solid = True
         else:
             raise CorpusError("starter recipe must have exactly one create_part")
-    if recipe["steps"][-1]["operation"] != "extrude":
-        raise CorpusError("starter recipe must end with an extrusion")
+    if recipe["steps"][-1]["operation"] not in ("extrude", "revolve"):
+        raise CorpusError("starter recipe must end with an extrusion or revolution")
     analytic_measures(recipe)
     return recipe
 

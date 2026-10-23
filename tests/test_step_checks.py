@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 openswx contributors
 """Optional OCCT checks that distinguish equal measures from equal geometry."""
+import math
 from pathlib import Path
 import sys
 import unittest
@@ -19,6 +20,8 @@ try:
     from OCP.BRep import BRep_Builder
     from OCP.TopoDS import TopoDS_Compound
     from check_thin_wall_step import check_thin_wall_shape
+    from check_cone_frustum_step import check_cone_frustum_shape
+    from OCP.BRepPrimAPI import BRepPrimAPI_MakeCone
     from check_block_step import check_block_shape
     from check_tube_step import check_tube_shape
     from check_blind_hole_step import check_blind_hole_shape
@@ -408,6 +411,48 @@ class ThinWallGeometryTest(unittest.TestCase):
     def test_inverted_material_orientation_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError,"material normal"):
             check_thin_wall_shape(BRepPrimAPI_MakeBox(20,30,.01).Shape().Reversed())
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class ConeFrustumGeometryTest(unittest.TestCase):
+    def test_expected_frustum_and_analytic_line_seam(self):
+        report = check_cone_frustum_shape(BRepPrimAPI_MakeCone(10,5,20).Shape())
+        self.assertEqual(report["ring_z_radius_mm"],[(0,10),(20,5)])
+        self.assertEqual(report["seam"]["representation"],"line")
+
+    def test_reversed_taper_with_equal_measures_is_rejected(self):
+        expected = BRepPrimAPI_MakeCone(10,5,20).Shape()
+        reversed_taper = BRepPrimAPI_MakeCone(5,10,20).Shape()
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(reversed_taper,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"radius law or placement"):
+            check_cone_frustum_shape(reversed_taper)
+
+    def test_translated_frustum_with_equal_measures_is_rejected(self):
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(1,0,0))
+        shape = BRepPrimAPI_MakeCone(10,5,20).Shape().Moved(TopLoc_Location(transform))
+        with self.assertRaisesRegex(RuntimeError,"axis or placement"):
+            check_cone_frustum_shape(shape)
+
+    def test_wrong_cone_half_angle_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"half angle"):
+            check_cone_frustum_shape(BRepPrimAPI_MakeCone(10,4,20).Shape())
+
+    def test_partial_revolution_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete cone frustum"):
+            check_cone_frustum_shape(BRepPrimAPI_MakeCone(10,5,20,math.pi).Shape())
+
+    def test_cylinder_with_equal_volume_is_rejected(self):
+        frustum = BRepPrimAPI_MakeCone(10,5,20).Shape()
+        cylinder = BRepPrimAPI_MakeCylinder(math.sqrt(175/3),20).Shape()
+        self.assertAlmostEqual(measure(frustum,True),measure(cylinder,True),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"unexpected frustum surface"):
+            check_cone_frustum_shape(cylinder)
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_cone_frustum_shape(BRepPrimAPI_MakeCone(10,5,20).Shape().Reversed())
 
 
 if __name__ == "__main__":
