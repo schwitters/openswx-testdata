@@ -44,7 +44,9 @@ selection, not automatic delta/current-state reconstruction, and the standalone
 native `.x_b` still has an unsupported ASCII envelope before its binary PS
 prologue. See [known limits](known_limits.md).
 
-## Repeat either admitted case
+<a id="repeat-either-admitted-case"></a>
+
+## Repeat an admitted starter case
 
 The generic export driver accepts the manifest's explicit payload and body IDs.
 It uses metre coordinates and a 1e-8 m binding tolerance for these starter cases;
@@ -65,7 +67,8 @@ cmake --build /tmp/openswx-corpus-build --target case_export --parallel 4
 Install `requirements.txt` in the runner environment and `requirements-occt.txt`
 in the OCCT environment. The openswx build must provide `swx_dump` and
 `parasolid_inspect`. Use a new report directory for every run. Change `--case` to
-`part-cylinder-001` to run the cylinder through the same driver. The older
+`part-cylinder-001` or `part-tube-001` to run the other admitted starters through
+the same driver. The older
 `run_cylinder.py`/`cylinder_export` entry points remain supported.
 
 `--case` also accepts `OPENSWX_CORPUS_CASE`; the remaining options retain the

@@ -32,7 +32,7 @@ def main(fixed_case=None, legacy_exporter=False):
     parser.add_argument("--output", type=Path, default=Path(os.environ.get(
         "OPENSWX_CORPUS_OUTPUT", "results/cylinder" if fixed_case else "results/fixture")))
     if fixed_case is None:
-        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001"),
+        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001"),
                             default=os.environ.get("OPENSWX_CORPUS_CASE"))
     args = parser.parse_args()
     case_id = fixed_case if fixed_case is not None else args.case
@@ -150,7 +150,9 @@ def main(fixed_case=None, legacy_exporter=False):
             require(report["export_statistics"][key] == expected["counts"][key],
                     "export lost source topology")
         require(report["export_statistics"]["solids"] == 1, "expected one complete solid")
-        checker = "check_cylinder_step.py" if case_id == "part-cylinder-001" else "check_block_step.py"
+        checker = {"part-cylinder-001": "check_cylinder_step.py",
+                   "part-block-001": "check_block_step.py",
+                   "part-tube-001": "check_tube_step.py"}[case_id]
         report["occt"] = checked_json("occt", [args.occt_python.absolute(), root / "tools" / checker,
                                                case / "reference/model.step", exported])
         report["stages"]["step"] = "pass"

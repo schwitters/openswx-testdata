@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "id": "part-tube-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-tube-001.json",
+  "tags": [
+    "tube",
+    "annular-caps",
+    "inner-cylinder",
+    "vertex-free-edges",
+    "periodic-seams",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T20:12:27.259352+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original tube with outer radius 10 mm, inner radius 5 mm and height 20 mm generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 1e-09,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type, Default configuration and saved mass properties."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; four faces and four vertex-free circular edges."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint matches native tube geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "pass",
+      "reason": "Complete selected checkpoint; analytic tube, native STEP and OCCT equivalence."
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 868,
+      "sha256": "8e8397d76127104baf90481f7184bf887a2eec2283c091874fc485fc639d31bf"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 4587,
+      "sha256": "fe4c1e8da9cf453e6bcf9a4da2dd0a81fa2cbf9ffd38f124e451c5c1934939f1"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 1182198,
+      "sha256": "b85c46470465236a4a7c65a16c3fcd514ed2cc9ea49c161fec30efd949ebba8b"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1492,
+      "sha256": "6bc50896cb46abf48ea9e27a6bfce1f77e055c0e6b9f11df9b757823a95ea292"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2376,
+      "sha256": "814202e551c9d4c807dceb994e277c233988144a5b2c45e3b67864327e30d2fa"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 8933,
+      "sha256": "7cc43d872eb02d5ee797e521c36dd87ab0f562277cafa2a75c7a8159e57bf0c7"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 4558,
+      "sha256": "640ccde9428d2fe2b3aa2de1932e05fc48815c71f00f42a95134a291f95138b5"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 4851,
+      "sha256": "b31eeacc77242dde7c093d61c5a3d2a4aa24eec962f6915bc7987341ea91072d"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 370216,
+      "sha256": "28ed1f3cd1e545ca05a20422d09417d008734f0b6a34001f5826d6850c320954"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 97193,
+      "sha256": "99f16109b307d61e3204aa8fb2e6eee20cfb48684d3f19b767ed6568a6fa455e"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 152345,
+      "sha256": "ef84f21920434e81b0b3fd2e2f9035e4536067631efb8a404a24ff9988eef68b"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1425,
+      "sha256": "bc79fbe52e58529ec20383cd24353144a252faf55f1d6265fd9e48d9074b1c59"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1640,
+      "sha256": "76a33b2cd1204cf3f186f33edcbfed065a4da8f28be3d8c6e1ecf522a5c75e3e"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 1098,
+      "sha256": "f1bdae017c10ca9ddb34ff4088566cf1714955ab2b8cd2e68a7267b196dc9899"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 2080,
+      "sha256": "b6cbe4deb2e4ece3b4c99201af7182e928502fbf5b9d04688fa6f9e5c57b3f2f"
+    }
+  ]
+}

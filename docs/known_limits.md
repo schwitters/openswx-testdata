@@ -70,3 +70,13 @@ The block runner selects partition 0, BODY 2 explicitly and independently checks
 its shape against native/reference geometry. No automatic history resolution is
 claimed. Its six planar faces, twelve straight edges and eight named vertices
 survive export/import without additional periodic seam topology.
+
+## Tube capture confirmation
+
+`part-tube-001` confirms the same embedded partition/delta and standalone binary
+file-envelope distinction. Its explicit checkpoint export agrees with native
+geometry and native/reference STEP, including the through bore and both annular
+caps. OCCT adds two meridian seam edges as linear polynomial B-splines, absent
+from the serialized source edges. Their topology and exact linear basis are
+checked separately from the four original circular edges. No general spline
+seam acceptance, geometry fitting or automatic history resolution is claimed.

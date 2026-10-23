@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 openswx contributors
-"""Temporary dummy bytes test contracts; they are not CAD fixtures."""
+"""Admission contracts and native observations; dummy bytes stay temporary."""
 import hashlib
 import importlib.util
 import json
+import math
 from pathlib import Path
 import shutil
 import tempfile
@@ -273,6 +274,48 @@ class CapturedBlockTest(unittest.TestCase):
                     self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
                 count += 1
         self.assertEqual(count, 90)
+
+
+class CapturedTubeTest(unittest.TestCase):
+    def test_admitted_tube_integrity(self):
+        report = corpus.audit(ROOT, require_ready=True)
+        self.assertIn("part-tube-001", {case["id"] for case in report["cases"]})
+
+    def test_native_tube_samples_preserve_bore_and_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-tube-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"], {"faces": 4, "edges": 4, "vertices": 0, "shells": 1})
+        self.assertAlmostEqual(body["measurements_si"]["volume_m3"],
+                               1500*math.pi*1e-9, delta=1e-16)
+        self.assertAlmostEqual(body["measurements_si"]["area_m2"],
+                               750*math.pi*1e-6, delta=1e-14)
+        entities = native["observations"]["brep"]["entities"]
+        count = 0
+        for label, evaluated in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            geometry = entity["geometry"]
+            for sample in evaluated["samples"]:
+                x,y,z = sample["position"]
+                radius = math.hypot(x,y)
+                self.assertGreaterEqual(radius, .005-1e-12)
+                self.assertLessEqual(radius, .01+1e-12)
+                self.assertGreaterEqual(z, -1e-12)
+                self.assertLessEqual(z, .02+1e-12)
+                if entity["kind"] == "curve" or geometry["type"] == "cylinder":
+                    self.assertAlmostEqual(radius, geometry["radius"], delta=1e-12)
+                else:
+                    self.assertAlmostEqual(z, geometry["origin"][2], delta=1e-12)
+                if entity["kind"] == "surface":
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    if geometry["type"] == "cylinder":
+                        normal = sample["face_normal"]
+                        radial_dot = x*normal[0]+y*normal[1]
+                        if geometry["radius"] < .0075:
+                            self.assertLess(radial_dot, 0)
+                        else:
+                            self.assertGreater(radial_dot, 0)
+                count += 1
+        self.assertEqual(count, 46)
 
 
 if __name__ == "__main__":

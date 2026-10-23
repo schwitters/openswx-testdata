@@ -1,0 +1,61 @@
+{
+  "ocp_distribution_version": "7.9.3.1.1",
+  "native_reference": {
+    "topology": {
+      "faces": 4,
+      "edges": 6,
+      "vertices": 4,
+      "solids": 1
+    },
+    "volume_mm3": 4712.388980384689,
+    "area_mm2": 2356.194490192345,
+    "cylinder_radii_mm": [
+      5.0,
+      10.0
+    ],
+    "cap_z_mm": [
+      0.0,
+      20.0
+    ],
+    "annular_cap_wire_counts": [
+      2,
+      2
+    ],
+    "seam_representations": [
+      "polynomial_degree_1_bspline",
+      "polynomial_degree_1_bspline"
+    ],
+    "brep_valid": true
+  },
+  "library_export": {
+    "topology": {
+      "faces": 4,
+      "edges": 6,
+      "vertices": 4,
+      "solids": 1
+    },
+    "volume_mm3": 4712.388980384689,
+    "area_mm2": 2356.1944901923453,
+    "cylinder_radii_mm": [
+      5.0,
+      10.0
+    ],
+    "cap_z_mm": [
+      0.0,
+      20.0
+    ],
+    "annular_cap_wire_counts": [
+      2,
+      2
+    ],
+    "seam_representations": [
+      "polynomial_degree_1_bspline",
+      "polynomial_degree_1_bspline"
+    ],
+    "brep_valid": true
+  },
+  "bidirectional_difference_volume_mm3": [
+    0.0,
+    0.0
+  ]
+}

@@ -68,5 +68,5 @@ Runner options also accept `OPENSWX_CORPUS_ROOT`, `OPENSWX_CORPUS_BUILD`,
 its symlink to the system interpreter.
 
 The shared `run_case.py`/`case_export` entry points also support this cylinder.
-See [the block capture](block_capture.md#repeat-either-admitted-case) for the
+See [the block capture](block_capture.md#repeat-an-admitted-starter-case) for the
 common invocation. The original cylinder-only command above remains supported.
