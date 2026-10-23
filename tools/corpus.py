@@ -75,9 +75,56 @@ def validate(root, name, value):
         raise CorpusError(f"{name}/{location}: {error.message}")
 
 
+def aggregate_measures(bodies):
+    """Sum disjoint body measures; weight centroids by geometric volume."""
+    bodies = list(bodies)
+    volume = sum(b["volume_m3"] for b in bodies)
+    result = {"volume_m3":volume,"area_m2":sum(b["area_m2"] for b in bodies)}
+    if volume>0 and all("centroid_m" in b for b in bodies):
+        result["centroid_m"] = [sum(b["volume_m3"]*b["centroid_m"][i] for b in bodies)/volume
+                                for i in range(3)]
+    return result
+
+
+def multiple_solid_measures(recipe):
+    values = recipe["analytic"]["dimensions_m"]
+    expected = {prefix+"_"+axis for prefix in ("first","second") for axis in ("width","depth","height")} | {"gap"}
+    if set(values)!=expected:
+        raise CorpusError("multiple solids: expected two block dimensions and a positive gap")
+    measures = {}
+    for prefix,key,x in (("first","large-block",0),
+                         ("second","small-block",values["first_width"]+values["gap"])):
+        w,d,h = (values[prefix+"_"+axis] for axis in ("width","depth","height"))
+        volume,area = w*d*h,2*(w*d+w*h+d*h)
+        if not all(math.isfinite(v) and v>0 for v in (volume,area)):
+            raise CorpusError("multiple solids: unresolved block measures")
+        measures[key] = {"volume_m3":volume,"area_m2":area,"centroid_m":[x+w/2,d/2,h/2]}
+    return measures
+
+
+def selected_bodies(selection,native):
+    """Map explicit Parasolid IDs to native keys without assuming body order."""
+    bodies = {b["key"]:b for b in native["bodies"]}
+    if len(bodies)!=len(native["bodies"]):
+        raise CorpusError("duplicate native body key")
+    if "body_id" in selection:
+        if "bodies" in selection or len(bodies)!=1:
+            raise CorpusError("single body selection requires exactly one native body")
+        entries = [{"body_id":selection["body_id"],"native_body_key":next(iter(bodies))}]
+    else:
+        entries = selection.get("bodies",[])
+    keys = [e["native_body_key"] for e in entries]
+    ids = [e["body_id"] for e in entries]
+    if len(keys)!=len(set(keys)) or set(keys)!=set(bodies) or len(ids)!=len(set(ids)):
+        raise CorpusError("body selections must uniquely cover every native body")
+    return [(e,bodies[e["native_body_key"]]) for e in entries]
+
+
 def analytic_measures(recipe):
     kind = recipe["analytic"]["shape"]
     values = recipe["analytic"]["dimensions_m"]
+    if kind == "multiple_solids":
+        return aggregate_measures(multiple_solid_measures(recipe).values())
     keys = {"block": {"width", "depth", "height"},
             "cylinder": {"radius", "height"},
             "tube": {"outer_radius", "inner_radius", "height"},
@@ -202,17 +249,36 @@ def check_native(manifest, native, recipe):
     keys = [body["key"] for body in native["bodies"]]
     if len(keys) != len(set(keys)):
         raise CorpusError("duplicate native body key")
-    if recipe:
-        if len(native["bodies"]) != 1 or native["bodies"][0]["kind"] != "solid":
-            raise CorpusError("analytic starter recipes require exactly one solid body")
-        measurements = native["bodies"][0]["measurements_si"]
-        tolerance = manifest["tolerances"]
-        for quantity, target in analytic_measures(recipe).items():
-            absolute = tolerance["volume_absolute_m3" if quantity == "volume_m3" else "area_absolute_m2"]
-            if quantity not in measurements or not math.isclose(
-                    measurements[quantity], target,
-                    rel_tol=tolerance["measure_relative"], abs_tol=absolute):
+    if not recipe:
+        return
+    tolerance = manifest["tolerances"]
+    def compare(measurements,targets):
+        for quantity,target in targets.items():
+            if quantity=="centroid_m":
+                if quantity not in measurements or math.dist(measurements[quantity],target)>tolerance["length_absolute_m"]:
+                    raise CorpusError("native analytic centroid mismatch")
+                continue
+            absolute = tolerance["volume_absolute_m3" if quantity=="volume_m3" else "area_absolute_m2"]
+            if quantity not in measurements or not math.isclose(measurements[quantity],target,
+                    rel_tol=tolerance["measure_relative"],abs_tol=absolute):
                 raise CorpusError(f"native analytic mismatch: {quantity}, expected {target}")
+    if recipe["analytic"]["shape"]=="multiple_solids":
+        expected = multiple_solid_measures(recipe)
+        if set(keys)!=set(expected) or any(b["kind"]!="solid" for b in native["bodies"]):
+            raise CorpusError("multiple solids require both named solid bodies")
+        for body in native["bodies"]:
+            compare(body["measurements_si"],expected[body["key"]])
+        if "document_measurements_si" not in native:
+            raise CorpusError("multiple solids require document measures")
+        compare(native["document_measurements_si"],aggregate_measures(expected.values()))
+        if "selection" not in manifest:
+            raise CorpusError("multiple solids require explicit body selections")
+    else:
+        if len(native["bodies"])!=1 or native["bodies"][0]["kind"]!="solid":
+            raise CorpusError("analytic starter recipes require exactly one solid body")
+        compare(native["bodies"][0]["measurements_si"],analytic_measures(recipe))
+    if "selection" in manifest:
+        selected_bodies(manifest["selection"],native)
 
 
 def check_case(root, case_dir, planned):

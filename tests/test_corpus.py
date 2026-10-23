@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 openswx contributors
 """Admission contracts and native observations; dummy bytes stay temporary."""
+import copy
 import hashlib
 import importlib.util
 import json
@@ -683,6 +684,115 @@ class CapturedConcaveProfileTest(unittest.TestCase):
         self.assertEqual(set(cap_memberships),{0,.02})
         for values in cap_memberships.values():
             self.assertEqual((values.count(True),values.count(False)),(5,4))
+
+
+class MultipleSolidsContractTest(unittest.TestCase):
+    def setUp(self):
+        self.case = ROOT / "cases/part-multiple-solids-001"
+        self.manifest = corpus.load_json(self.case / "case.json")
+        self.native = corpus.load_json(self.case / "reference/native.json")
+        self.recipe = corpus.read_recipe(ROOT,self.manifest["recipe"],self.manifest["id"])
+
+    def test_admitted_multiple_solids_integrity(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        self.assertIn("part-multiple-solids-001",{c["id"] for c in report["cases"]})
+
+    def test_individual_and_document_measures(self):
+        measures = corpus.multiple_solid_measures(self.recipe)
+        self.assertAlmostEqual(measures["large-block"]["volume_m3"],.000024)
+        self.assertAlmostEqual(measures["small-block"]["volume_m3"],.000003)
+        total = corpus.analytic_measures(self.recipe)
+        self.assertAlmostEqual(total["volume_m3"],.000027)
+        self.assertAlmostEqual(total["area_m2"],.0065)
+        for actual,expected in zip(total["centroid_m"],(.015,.014166666666666666,.01888888888888889)):
+            self.assertAlmostEqual(actual,expected,delta=1e-12)
+
+    def test_body_selection_is_independent_of_native_order(self):
+        self.native["bodies"].reverse()
+        selected = corpus.selected_bodies(self.manifest["selection"],self.native)
+        self.assertEqual([(e["body_id"],b["key"]) for e,b in selected],
+                         [(6,"large-block"),(2,"small-block")])
+        corpus.check_native(self.manifest,self.native,self.recipe)
+
+    def test_duplicate_or_incomplete_body_mapping_is_rejected(self):
+        original = self.manifest["selection"]
+        for mutation in ("duplicate-id","duplicate-key","missing","unknown-key"):
+            selection = copy.deepcopy(original)
+            entries = selection["bodies"]
+            if mutation=="duplicate-id":
+                entries[1]["body_id"] = entries[0]["body_id"]
+            elif mutation=="duplicate-key":
+                entries[1]["native_body_key"] = entries[0]["native_body_key"]
+            elif mutation=="missing":
+                entries.pop()
+            else:
+                entries[1]["native_body_key"] = "unobserved-body"
+            with self.subTest(mutation=mutation), self.assertRaisesRegex(corpus.CorpusError,"uniquely cover"):
+                corpus.selected_bodies(selection,self.native)
+
+    def test_single_body_selection_cannot_stand_for_two_bodies(self):
+        selection = self.manifest["selection"]
+        selection.pop("bodies")
+        selection["body_id"] = 2
+        with self.assertRaisesRegex(corpus.CorpusError,"exactly one native body"):
+            corpus.check_native(self.manifest,self.native,self.recipe)
+
+    def test_ambiguous_selection_schema_is_rejected(self):
+        self.manifest["selection"]["body_id"] = 2
+        with self.assertRaises(corpus.CorpusError):
+            corpus.validate(ROOT,"case",self.manifest)
+
+    def test_document_only_and_compensated_wrong_body_measures_are_rejected(self):
+        self.native["bodies"][0]["measurements_si"]["volume_m3"] += .000001
+        self.native["bodies"][1]["measurements_si"]["volume_m3"] -= .000001
+        with self.assertRaisesRegex(corpus.CorpusError,"analytic mismatch"):
+            corpus.check_native(self.manifest,self.native,self.recipe)
+
+    def test_missing_document_measurements_are_rejected(self):
+        self.native.pop("document_measurements_si")
+        with self.assertRaisesRegex(corpus.CorpusError,"require document measures"):
+            corpus.check_native(self.manifest,self.native,self.recipe)
+
+    def test_missing_explicit_selection_is_rejected(self):
+        self.manifest.pop("selection")
+        with self.assertRaisesRegex(corpus.CorpusError,"require explicit body selections"):
+            corpus.check_native(self.manifest,self.native,self.recipe)
+
+    def test_shifted_small_body_centroid_is_rejected(self):
+        self.native["bodies"][1]["measurements_si"]["centroid_m"][0] += .001
+        with self.assertRaisesRegex(corpus.CorpusError,"centroid mismatch"):
+            corpus.check_native(self.manifest,self.native,self.recipe)
+
+    def test_native_samples_preserve_body_ownership(self):
+        observations = self.native["observations"]
+        entities = observations["brep"]["entities"]
+        byref = {e["ref"]:e for e in entities}
+        boxes = {m["body_measurements"][0]["ref"]:m["bounding_box"] for m in observations["body_measurements"]}
+        body_counts = {ref:0 for ref in boxes}
+        for label,evaluation in observations["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            owner = byref[entity["owner"]]
+            ref = owner["body"]
+            box = boxes[ref]
+            g = entity["geometry"]
+            for sample in evaluation["samples"]:
+                point = sample["position"]
+                for a,value,b in zip(box["min"],point,box["max"]):
+                    self.assertGreaterEqual(value,a-1e-12)
+                    self.assertLessEqual(value,b+1e-12)
+                if entity["kind"]=="curve":
+                    self.assertEqual(g["type"],"line")
+                    self.assertLess(math.dist(point,[o+d*sample["parameter"] for o,d in zip(g["origin"],g["direction"])]),1e-12)
+                else:
+                    self.assertEqual(g["type"],"plane")
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    self.assertAlmostEqual(sum((a-o)*n for a,o,n in zip(point,g["origin"],g["normal"])),0,delta=1e-12)
+                    axis = max(range(3),key=lambda i:abs(g["normal"][i]))
+                    expected = [0,0,0]
+                    expected[axis] = -1 if abs(point[axis]-box["min"][axis])<1e-12 else 1
+                    self.assertLess(math.dist(expected,sample["face_normal"]),1e-12)
+                body_counts[ref] += 1
+        self.assertEqual(sorted(body_counts.values()),[90,90])
 
 
 if __name__ == "__main__":

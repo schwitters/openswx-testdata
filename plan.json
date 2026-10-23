@@ -170,7 +170,8 @@
       "coverage_targets": [
         "part",
         "multiple-solids"
-      ]
+      ],
+      "recipe": "recipes/part-multiple-solids-001.json"
     },
     {
       "id": "part-thin-wall-001",

@@ -125,3 +125,12 @@ corner. Its partition and two-packet delta decode completely; the explicit
 checkpoint matches native geometry and STEP. Supporting-plane samples outside
 the cap trim are recorded and checked as outside. Native file envelopes and
 automatic history reconstruction retain their existing limits.
+
+## Multiple-solids capture confirmation
+
+`part-multiple-solids-001` verifies two disjoint blocks in one native part. Both
+explicit body selections pass topology, binding and individual STEP export; the
+outputs agree separately and together with the whole native STEP reference. The
+body mapping is reviewed by geometry, not inferred from enumeration order. The
+export API still writes one selected body per call. Native file envelopes and
+automatic history reconstruction retain their existing limits.

@@ -15,6 +15,9 @@ try:
     from OCP.BRepBuilderAPI import BRepBuilderAPI_MakePolygon, BRepBuilderAPI_MakeFace
     from OCP.BRepPrimAPI import BRepPrimAPI_MakePrism
     from OCP.gp import gp_Pnt
+    from check_multiple_solids_step import check_multiple_solids, check_selected_block
+    from OCP.BRep import BRep_Builder
+    from OCP.TopoDS import TopoDS_Compound
     from check_block_step import check_block_shape
     from check_tube_step import check_tube_shape
     from check_blind_hole_step import check_blind_hole_shape
@@ -290,6 +293,73 @@ class ConcaveProfileGeometryTest(unittest.TestCase):
     def test_inverted_material_orientation_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError,"material face normal"):
             check_concave_profile_shape(self.make_profile().Reversed())
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class MultipleSolidsGeometryTest(unittest.TestCase):
+    @staticmethod
+    def blocks():
+        large = BRepPrimAPI_MakeBox(20,30,40).Shape()
+        small = BRepPrimAPI_MakeBox(gp_Pnt(50,0,0),10,15,20).Shape()
+        return {"large-block":large,"small-block":small}
+
+    @staticmethod
+    def compound(shapes):
+        builder,compound = BRep_Builder(),TopoDS_Compound()
+        builder.MakeCompound(compound)
+        for shape in shapes:
+            builder.Add(compound,shape)
+        return compound
+
+    def test_both_individual_exports_match_the_whole_native_part(self):
+        exports = self.blocks()
+        report = check_multiple_solids(self.compound(exports.values()),exports)
+        self.assertEqual(report["combined_topology"]["solids"],2)
+        self.assertEqual(report["bidirectional_difference_volume_mm3"],[0,0])
+
+    def test_native_body_order_is_irrelevant(self):
+        exports = self.blocks()
+        check_multiple_solids(self.compound(list(exports.values())[::-1]),exports)
+
+    def test_swapped_explicit_exports_are_rejected(self):
+        exports = self.blocks()
+        with self.assertRaisesRegex(RuntimeError,"dimensions or placement"):
+            check_multiple_solids(self.compound(exports.values()),dict(zip(exports,reversed(list(exports.values())))))
+
+    def test_selected_export_containing_both_bodies_is_rejected(self):
+        exports = self.blocks()
+        native = self.compound(exports.values())
+        exports["large-block"] = native
+        with self.assertRaisesRegex(RuntimeError,"exactly one complete block"):
+            check_multiple_solids(native,exports)
+
+    def test_duplicate_export_cannot_replace_the_second_body(self):
+        exports = self.blocks()
+        native = self.compound(exports.values())
+        exports["small-block"] = exports["large-block"]
+        with self.assertRaisesRegex(RuntimeError,"dimensions or placement"):
+            check_multiple_solids(native,exports)
+
+    def test_missing_export_is_rejected(self):
+        exports = self.blocks()
+        native = self.compound(exports.values())
+        exports.pop("small-block")
+        with self.assertRaisesRegex(RuntimeError,"both explicit body exports"):
+            check_multiple_solids(native,exports)
+
+    def test_duplicate_native_body_is_rejected(self):
+        exports = self.blocks()
+        native = self.compound((exports["large-block"],BRepPrimAPI_MakeBox(20,30,40).Shape()))
+        with self.assertRaisesRegex(RuntimeError,"duplicate native body ownership"):
+            check_multiple_solids(native,exports)
+
+    def test_shifted_small_body_with_equal_measures_is_rejected(self):
+        expected = self.blocks()["small-block"]
+        shifted = BRepPrimAPI_MakeBox(gp_Pnt(51,0,0),10,15,20).Shape()
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(shifted,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"dimensions or placement"):
+            check_selected_block(shifted,"small-block")
 
 
 if __name__ == "__main__":

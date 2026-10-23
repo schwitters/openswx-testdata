@@ -330,7 +330,8 @@
             "through_hole",
             "stepped_bore",
             "two_holes",
-            "concave_profile"
+            "concave_profile",
+            "multiple_solids"
           ]
         },
         "dimensions_m": {

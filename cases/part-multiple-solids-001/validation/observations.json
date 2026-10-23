@@ -1,0 +1,55 @@
+{
+  "library_commit": "1607ee9a22b1aba7e2a6607061c209845d591dd0",
+  "case": "part-multiple-solids-001",
+  "selected_payload_index": 0,
+  "selected_bodies": [
+    {
+      "body_id": 6,
+      "native_body_key": "large-block"
+    },
+    {
+      "body_id": 2,
+      "native_body_key": "small-block"
+    }
+  ],
+  "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+  "stages": {
+    "metadata": "pass: native part, Default configuration and saved mass properties agree",
+    "extraction": "pass: partition and delta, no extraction issues",
+    "decode": "pass: both embedded streams complete, no uninterpreted bytes",
+    "topology": "pass: recorded ownership/incidence checked by body binding",
+    "binding": "pass: each selected body has 6 faces, 12 edges and 8 vertices, no interval overrides",
+    "step": "pass: selected checkpoint and native/reference STEP agree with analytic two-body geometry"
+  },
+  "source_topology": {
+    "bodies": 2,
+    "edges": 24,
+    "faces": 12,
+    "loops": 12,
+    "shell_provenance": "connected_native_face_edge_incidence",
+    "shells": 2,
+    "vertices": 16
+  },
+  "per_body_export_topology": {
+    "faces": 6,
+    "edges": 12,
+    "vertices": 8,
+    "shells": 1,
+    "solids": 1
+  },
+  "topology_notes": [
+    "Native API reports one connected shell per body; XT records material and void-side shell uses.",
+    "Each block has twelve straight edges and eight explicit vertices; no synthetic seams are needed."
+  ],
+  "known_limits": [
+    {
+      "scope": "original reference/model.x_b",
+      "error_code": "unsupported_format",
+      "offset": 0,
+      "message": "Reader requires binary PS prologue at byte zero; native file has an ASCII header."
+    }
+  ],
+  "native_sample_count": 180,
+  "mcp_documents_closed": true,
+  "occt_report": "validation/occt.json"
+}

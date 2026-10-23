@@ -11,7 +11,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-from corpus import CorpusError, audit, load_json
+from corpus import CorpusError, audit, load_json, selected_bodies
 
 
 def require(condition, message):
@@ -32,7 +32,7 @@ def main(fixed_case=None, legacy_exporter=False):
     parser.add_argument("--output", type=Path, default=Path(os.environ.get(
         "OPENSWX_CORPUS_OUTPUT", "results/cylinder" if fixed_case else "results/fixture")))
     if fixed_case is None:
-        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001"),
+        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001", "part-multiple-solids-001"),
                             default=os.environ.get("OPENSWX_CORPUS_CASE"))
     args = parser.parse_args()
     case_id = fixed_case if fixed_case is not None else args.case
@@ -66,14 +66,16 @@ def main(fixed_case=None, legacy_exporter=False):
         case = root / "cases" / case_id
         manifest, native = load_json(case / "case.json"), load_json(case / "reference/native.json")
         selection = manifest["selection"]
-        payload_index, body_id = selection["payload_index"], str(selection["body_id"])
+        payload_index = selection["payload_index"]
+        selections = selected_bodies(selection,native)
+        multiple = len(selections)>1
         report["selection"] = selection
         report["source_coordinate_unit"] = native["length_unit"]
         report["binding_tolerance_m"] = 1e-8
         require(manifest["tolerances"]["length_absolute_m"] == report["binding_tolerance_m"],
                 "fixture tolerance differs from the starter export driver")
         if legacy_exporter:
-            require(case_id == "part-cylinder-001" and payload_index == 0 and body_id == "2",
+            require(case_id == "part-cylinder-001" and payload_index == 0 and selection.get("body_id") == 2,
                     "legacy cylinder export driver selection differs from case")
         source = case / "source/model.sldprt"
         build = args.openswx_build.resolve()
@@ -85,21 +87,21 @@ def main(fixed_case=None, legacy_exporter=False):
             ["git", "-C", str(root), "status", "--porcelain"], text=True).strip())
         report["executables"] = {str(path): hashlib.sha256(path.read_bytes()).hexdigest()
                                  for path in (dump, inspect, args.exporter.resolve())}
-        expected = native["bodies"][0]
+        document_measures = native.get("document_measurements_si",native["bodies"][0]["measurements_si"])
         metadata = checked_json("metadata", [dump, source])
         require(metadata["doc_type"] == "part", "wrong document type")
         require([c["name"] for c in metadata["configurations"]] == [manifest["configuration"]],
                 "wrong saved configuration inventory")
         props = metadata["configurations"][0]["mass_properties"]
         for actual_key, expected_key in (("volume", "volume_m3"), ("surface_area", "area_m2")):
-            require(math.isclose(props[actual_key], expected["measurements_si"][expected_key],
+            require(math.isclose(props[actual_key], document_measures[expected_key],
                                  rel_tol=manifest["tolerances"]["measure_relative"]), "saved measure mismatch")
-        if "centroid_m" in expected["measurements_si"]:
+        if "centroid_m" in document_measures:
             center = props.get("center_of_gravity")
             require(isinstance(center,dict) and all(axis in center for axis in ("x","y","z")),
                     "missing saved centroid")
             require(math.dist([center[axis] for axis in ("x","y","z")],
-                              expected["measurements_si"]["centroid_m"]) <=
+                              document_measures["centroid_m"]) <=
                     manifest["tolerances"]["length_absolute_m"], "saved centroid mismatch")
         report["stages"]["metadata"] = "pass"
         extracted = output / "extracted"
@@ -131,32 +133,52 @@ def main(fixed_case=None, legacy_exporter=False):
         require(raw.returncode != 0 and "unsupported_format at byte 0" in raw.stderr,
                 "native binary-envelope expectation changed; review known limit")
         report["native_binary_envelope"] = "expected unsupported_format at byte 0"
-        topology = checked_json("topology", [inspect, "--body-topology", body_id, "--summary", partition])
-        require("body_topology" in topology, "missing topology validation result")
-        require(topology["body_topology"].get("body") == int(body_id),
-                "topology result belongs to another body")
-        for key in ("faces", "edges", "vertices"):
-            require(topology["body_topology"]["counts"][key] == expected["counts"][key],
-                    "recorded topology differs from native capture")
+        for entry,expected in selections:
+            body_id = str(entry["body_id"])
+            label = "topology-"+body_id if multiple else "topology"
+            topology = checked_json(label,[inspect,"--body-topology",body_id,"--summary",partition])
+            require(topology.get("body_topology",{}).get("body")==entry["body_id"],
+                    "topology result belongs to another body")
+            for key in ("faces","edges","vertices"):
+                require(topology["body_topology"]["counts"][key]==expected["counts"][key],
+                        "recorded topology differs from native capture")
         report["stages"]["topology"] = "pass"
-        binding = checked_json("binding", [inspect, "--body-geometry", body_id, "--binding-tolerance", "1e-8", partition])
-        for key in ("faces", "edges", "vertices"):
-            require(binding["body_geometry"]["counts"][key] == expected["counts"][key],
-                    "bound topology differs from native capture")
-        require(binding["model"]["geometry_counts"] ==
-                load_json(case / "validation/partition-decode.json")["model"]["geometry_counts"],
-                "support geometry inventory changed")
+        for entry,expected in selections:
+            body_id = str(entry["body_id"])
+            label = "binding-"+body_id if multiple else "binding"
+            binding = checked_json(label,[inspect,"--body-geometry",body_id,"--binding-tolerance","1e-8",partition])
+            require(binding["body_geometry"].get("body")==entry["body_id"],
+                    "binding result belongs to another body")
+            for key in ("faces","edges","vertices"):
+                require(binding["body_geometry"]["counts"][key]==expected["counts"][key],
+                        "bound topology differs from native capture")
+            require(binding["model"]["geometry_counts"]==
+                    load_json(case / "validation/partition-decode.json")["model"]["geometry_counts"],
+                    "support geometry inventory changed")
         report["stages"]["binding"] = "pass"
-        exported = output / "library.step"
-        export_command = [args.exporter.resolve(), source]
-        if not legacy_exporter:
-            export_command.extend((str(payload_index), body_id))
-        export_command.append(exported)
-        report["export_statistics"] = checked_json("export", export_command)
-        for key in ("faces", "edges"):
-            require(report["export_statistics"][key] == expected["counts"][key],
-                    "export lost source topology")
-        require(report["export_statistics"]["solids"] == 1, "expected one complete solid")
+        exports,statistics = {},[]
+        for entry,expected in selections:
+            body_id = str(entry["body_id"])
+            exported = output / ("body-"+body_id+".step" if multiple else "library.step")
+            export_command = [args.exporter.resolve(),source]
+            if not legacy_exporter:
+                export_command.extend((str(payload_index),body_id))
+            export_command.append(exported)
+            label = "export-"+body_id if multiple else "export"
+            counts = checked_json(label,export_command)
+            for key in ("faces","edges"):
+                require(counts[key]==expected["counts"][key],"export lost source topology")
+            require(counts["solids"]==1,"expected one complete selected solid")
+            exports[entry["native_body_key"]] = exported
+            statistics.append({**entry,"statistics":counts})
+        report["export_statistics"] = statistics if multiple else statistics[0]["statistics"]
+        if multiple:
+            invalid = output / "invalid-body.step"
+            rejected = run("invalid-body-selection",[args.exporter.resolve(),source,
+                           str(payload_index),"1",invalid])
+            require(rejected.returncode==2 and "Target has the wrong node type" in rejected.stderr and not invalid.exists(),
+                    "non-body selection was not rejected explicitly")
+            report["invalid_body_selection"] = "node 1 rejected; no STEP written"
         checker = {"part-cylinder-001": "check_cylinder_step.py",
                    "part-block-001": "check_block_step.py",
                    "part-tube-001": "check_tube_step.py",
@@ -164,9 +186,11 @@ def main(fixed_case=None, legacy_exporter=False):
                    "part-through-hole-001": "check_through_hole_step.py",
                    "part-stepped-bore-001": "check_stepped_bore_step.py",
                    "part-two-holes-001": "check_two_holes_step.py",
-                   "part-concave-profile-001": "check_concave_profile_step.py"}[case_id]
-        report["occt"] = checked_json("occt", [args.occt_python.absolute(), root / "tools" / checker,
-                                               case / "reference/model.step", exported])
+                   "part-concave-profile-001": "check_concave_profile_step.py",
+                   "part-multiple-solids-001": "check_multiple_solids_step.py"}[case_id]
+        export_paths = [exports[key] for key in ("large-block","small-block")] if multiple else list(exports.values())
+        report["occt"] = checked_json("occt", [args.occt_python.absolute(),root / "tools" / checker,
+                                               case / "reference/model.step",*export_paths])
         report["stages"]["step"] = "pass"
         report["state_scope"] = manifest["selection"]["state_scope"]
         print(json.dumps(report, indent=2))

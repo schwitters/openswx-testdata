@@ -1,11 +1,12 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores and a concave L-profile. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile and two separated solids. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
 [blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md),
 [stepped-bore](stepped_bore_capture.md), [two-bores](two_holes_capture.md) and
-[concave L-profile](concave_profile_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[concave L-profile](concave_profile_capture.md) and
+[multiple solids](multiple_solids_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
@@ -82,3 +83,13 @@ fixture with a named mutation, seed, parent hash and expected diagnostic. They
 must not be confused with genuine SolidWorks output or silently broaden the
 valid corpus. Preserve the existing hand-built unit fixtures for packet layouts,
 exact budget boundaries and geometries the producer does not emit.
+
+## Multiple-body selections
+
+`part-multiple-solids-001` records document measurements separately from its two
+native bodies. `selection.bodies` maps each explicit XT BODY ID to one native
+body key, with unique IDs and complete native-key coverage. The runner checks
+both bodies before passing topology or binding, exports each one separately and
+compares each output to its positioned native STEP solid. It also compares the
+combined outputs to the entire native reference. Selecting a non-BODY node must
+fail without producing a STEP file. See the [capture](multiple_solids_capture.md).

@@ -125,6 +125,37 @@
         "minLength": 1
       },
       "uniqueItems": true
+    },
+    "document_measurements_si": {
+      "type": "object",
+      "properties": {
+        "volume_m3": {
+          "type": "number",
+          "minimum": 0
+        },
+        "area_m2": {
+          "type": "number",
+          "minimum": 0
+        },
+        "length_m": {
+          "type": "number",
+          "minimum": 0
+        },
+        "centroid_m": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        }
+      },
+      "required": [
+        "volume_m3",
+        "area_m2",
+        "centroid_m"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [

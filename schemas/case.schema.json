@@ -226,14 +226,57 @@
         "payload_path": {
           "type": "string",
           "minLength": 1
+        },
+        "bodies": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "body_id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "native_body_key": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "body_id",
+              "native_body_key"
+            ]
+          }
         }
       },
       "required": [
         "payload_index",
-        "body_id",
         "configuration",
         "state_scope",
         "payload_path"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "body_id"
+          ],
+          "not": {
+            "required": [
+              "bodies"
+            ]
+          }
+        },
+        {
+          "required": [
+            "bodies"
+          ],
+          "not": {
+            "required": [
+              "body_id"
+            ]
+          }
+        }
       ]
     },
     "known_limits": {

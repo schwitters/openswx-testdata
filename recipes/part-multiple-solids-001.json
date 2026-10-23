@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "id": "part-multiple-solids-001",
+  "description": "Construct two separated blocks and verify every explicit body export.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-large",
+      "operation": "sketch_rectangle",
+      "parameters": {
+        "plane": "XY",
+        "origin_m": [
+          0,
+          0,
+          0
+        ],
+        "width_m": 0.02,
+        "depth_m": 0.03,
+        "sketch_id": "large-profile"
+      }
+    },
+    {
+      "id": "extrude-large",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-large"
+        ],
+        "height_m": 0.04,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    },
+    {
+      "id": "sketch-small",
+      "operation": "sketch_rectangle",
+      "parameters": {
+        "plane": "XY",
+        "origin_m": [
+          0.05,
+          0,
+          0
+        ],
+        "width_m": 0.01,
+        "depth_m": 0.015,
+        "sketch_id": "small-profile"
+      }
+    },
+    {
+      "id": "extrude-small",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-small"
+        ],
+        "height_m": 0.02,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "multiple_solids",
+    "dimensions_m": {
+      "first_width": 0.02,
+      "first_depth": 0.03,
+      "first_height": 0.04,
+      "second_width": 0.01,
+      "second_depth": 0.015,
+      "second_height": 0.02,
+      "gap": 0.03
+    }
+  }
+}
