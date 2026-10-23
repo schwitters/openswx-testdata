@@ -22,6 +22,7 @@ try:
     from check_thin_wall_step import check_thin_wall_shape
     from check_sphere_cap_step import check_sphere_cap_shape, repair_native_cap_pcurve, spherical_bezier_radial_bound
     from step_check import read_step
+    from check_chamfer_step import check_chamfer_shape, make_chamfer
     from check_fillet_step import check_fillet_shape, make_fillet
     from check_torus_cut_step import check_torus_cut_shape
     from bezier_check import bezier_radial_bound
@@ -796,6 +797,57 @@ class FilletGeometryTest(unittest.TestCase):
         self.assertEqual(changed[0],poles[0])
         self.assertEqual(changed[-1],poles[-1])
         self.assertGreater(bezier_radial_bound(changed,seam["center_mm"],2,weights),1e-5)
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class ChamferGeometryTest(unittest.TestCase):
+    def test_expected_chamfer(self):
+        report = check_chamfer_shape(make_chamfer())
+        self.assertEqual(report["surface_families"],{"plane":2,"cylinder":1,"cone":1})
+        self.assertEqual(report["chamfer_generator"]["representation"],"line")
+
+    def test_wrong_rim_with_identical_measures_is_rejected(self):
+        expected,opposite = make_chamfer(),make_chamfer(top=False)
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(opposite,volume),delta=1e-6)
+        with self.assertRaises(RuntimeError):
+            check_chamfer_shape(opposite)
+
+    def test_wrong_size_is_rejected(self):
+        with self.assertRaises(RuntimeError):
+            check_chamfer_shape(make_chamfer(distance=1))
+
+    def test_unchamfered_stock_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete chamfered"):
+            check_chamfer_shape(BRepPrimAPI_MakeCylinder(10,20).Shape())
+
+    def test_fillet_with_same_topology_and_ring_positions_is_rejected(self):
+        rounded = make_fillet()
+        self.assertEqual(check_fillet_shape(rounded)["ring_z_radius_mm"],[(0,10),(18,10),(20,8)])
+        with self.assertRaisesRegex(RuntimeError,"support family"):
+            check_chamfer_shape(rounded)
+
+    def test_translated_chamfer_is_rejected(self):
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(1,0,0))
+        with self.assertRaises(RuntimeError):
+            check_chamfer_shape(make_chamfer().Moved(TopLoc_Location(transform)))
+
+    def test_rotation_about_symmetry_axis_is_accepted(self):
+        from OCP.gp import gp_Ax1, gp_Dir
+        transform = gp_Trsf()
+        transform.SetRotation(gp_Ax1(gp_Pnt(0,0,0),gp_Dir(0,0,1)),.37)
+        check_chamfer_shape(make_chamfer().Moved(TopLoc_Location(transform)))
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_chamfer_shape(make_chamfer().Reversed())
+
+    def test_native_step_linear_bspline_generators_are_accepted(self):
+        native,_ = read_step(Path(__file__).resolve().parents[1] / "cases/part-chamfer-001/reference/model.step")
+        report = check_chamfer_shape(native)
+        self.assertEqual(report["chamfer_generator"]["representation"],"polynomial_degree_1_bspline")
+        self.assertTrue(report["chamfer_generator"]["exact_cone_pcurve"])
 
 
 if __name__ == "__main__":

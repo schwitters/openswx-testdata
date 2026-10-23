@@ -1,7 +1,7 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector, a full sphere, a minor spherical cap, a ring torus, a quarter-torus segment and a native rim fillet. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector, a full sphere, a minor spherical cap, a ring torus, a quarter-torus segment, a native rim fillet and an exact revolved chamfer. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
 [blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md),
 [stepped-bore](stepped_bore_capture.md), [two-bores](two_holes_capture.md) and
@@ -10,7 +10,7 @@ six-stage runner for the captured cylinder, block, tube, blind hole, through hol
 [thin wall](thin_wall_capture.md), [cone frustum](cone_frustum_capture.md) and
 [cone sector](cone_sector_capture.md), [sphere](sphere_capture.md) and
 [sphere cap](sphere_cap_capture.md), [torus](torus_capture.md) and
-[torus segment](torus_cut_capture.md) and [native fillet](fillet_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[torus segment](torus_cut_capture.md), [native fillet](fillet_capture.md) and [exact chamfer](chamfer_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
@@ -186,3 +186,13 @@ joins verify the feature result. The imported rational torus meridian requires
 an exact constant-U pcurve and a whole-curve bound about its offset circle
 center. This passing toroidal band does not cover the unsupported meridional
 torus-cut boundary family. See the [capture](fillet_capture.md).
+
+## Exact circular-rim chamfer
+
+`part-chamfer-001` constructs C2 x 45-degree geometry on an R10/H20 mm cylinder
+by full polygon revolution. The MCP has no native Chamfer feature; this covers
+geometry rather than feature semantics. Its cone band and sharp normal changes
+must distinguish it from the fillet with identical ring locations and topology.
+Native, exported and independently kernel-chamfered B-reps must agree in
+placement, supports, ring associations, straight seams, material normals,
+measures and bidirectional solid differences. See the [capture](chamfer_capture.md).

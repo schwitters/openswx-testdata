@@ -236,3 +236,13 @@ parallel circle cuts and passes topology, binding and STEP export. Native STEP,
 library STEP and an independently kernel-built fillet agree geometrically, with
 verified tangent joins, material normals and rational-seam bounds. This does
 not cover arbitrary blends, boundary-free torus export or meridional torus cuts.
+
+## Exact rim-chamfer capture confirmation
+
+`part-chamfer-001` confirms export of an exact circular-rim C2 x 45-degree
+chamfer with a cone band and sharp material-normal changes. Native, library
+and independent kernel STEP shapes agree. It uses native revolution of a
+polygon because the captured MCP catalogue lacks a Chamfer feature. This is
+not native feature-semantics coverage. The [capture](chamfer_capture.md)
+records the straight seam certification and negative checks. Existing sphere,
+torus and torus-cut export limitations remain unchanged.

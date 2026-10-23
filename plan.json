@@ -325,7 +325,8 @@
       "coverage_targets": [
         "part",
         "chamfer"
-      ]
+      ],
+      "recipe": "recipes/part-chamfer-001.json"
     },
     {
       "id": "part-elliptic-profile-001",

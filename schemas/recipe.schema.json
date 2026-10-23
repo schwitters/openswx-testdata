@@ -620,7 +620,8 @@
             "sphere_cap",
             "torus",
             "torus_cut",
-            "fillet_cylinder"
+            "fillet_cylinder",
+            "chamfer_cylinder"
           ]
         },
         "dimensions_m": {

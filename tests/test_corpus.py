@@ -316,6 +316,45 @@ class CorpusTest(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
                 corpus.read_recipe(self.root,relative,"part-fillet-001")
 
+    def test_chamfer_measures_and_size_limits(self):
+        recipe = corpus.read_recipe(self.root,"recipes/part-chamfer-001.json","part-chamfer-001")
+        measures = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(measures["volume_m3"],5888*math.pi/3*1e-9,delta=1e-17)
+        self.assertAlmostEqual(measures["area_m2"],(524+36*math.sqrt(2))*math.pi*1e-6,delta=1e-14)
+        for size in (0,-.001,.01,.02):
+            changed = copy.deepcopy(recipe)
+            changed["analytic"]["dimensions_m"]["chamfer_size"] = size
+            with self.subTest(size=size), self.assertRaises(corpus.CorpusError):
+                corpus.analytic_measures(changed)
+        recipe["analytic"]["dimensions_m"]["height"] = .002
+        with self.assertRaises(corpus.CorpusError):
+            corpus.analytic_measures(recipe)
+
+    def test_chamfer_profile_and_revolution_match_analytic_dimensions(self):
+        relative = "recipes/part-chamfer-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-chamfer-001")
+        for mutation in ("angle","matching-partial-angle","top-radius","shoulder","origin","chamfer-size","missing-vertex"):
+            recipe = copy.deepcopy(original)
+            profile = recipe["steps"][1]["parameters"]
+            if mutation=="angle":
+                recipe["steps"][-1]["parameters"]["angle_rad"] = math.pi
+            elif mutation=="matching-partial-angle":
+                recipe["analytic"]["angle_rad"] = math.pi
+                recipe["steps"][-1]["parameters"]["angle_rad"] = math.pi
+            elif mutation=="top-radius":
+                profile["vertices_m"][3][0] = .007
+            elif mutation=="shoulder":
+                profile["vertices_m"][2][1] = .019
+            elif mutation=="origin":
+                profile["origin_m"][0] = .001
+            elif mutation=="chamfer-size":
+                recipe["analytic"]["dimensions_m"]["chamfer_size"] = .001
+            else:
+                profile["vertices_m"].pop()
+            self.write_json(self.root / relative,recipe)
+            with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
+                corpus.read_recipe(self.root,relative,"part-chamfer-001")
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -1437,6 +1476,62 @@ class CapturedFilletTest(unittest.TestCase):
                     self.assertLess(math.dist(sample["face_normal"],expected),1e-12)
                 count += 1
         self.assertEqual((count,torus_count),(55,25))
+        self.assertEqual(joins,{18:5,20:5})
+
+
+class CapturedChamferTest(unittest.TestCase):
+    def test_admitted_chamfer_integrity(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        self.assertIn("part-chamfer-001",{c["id"] for c in report["cases"]})
+
+    def test_native_chamfer_surfaces_samples_and_sharp_normal_changes(self):
+        native = corpus.load_json(ROOT / "cases/part-chamfer-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":4,"edges":3,"vertices":0,"shells":1})
+        center = (0,0,57836/5888*.001)
+        self.assertLess(math.dist(body["measurements_si"]["centroid_m"],center),1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        families = [e["geometry"]["type"] for e in entities if e["kind"]=="surface"]
+        self.assertEqual(sorted(families),["cone","cylinder","plane","plane"])
+        count=cone_count=0
+        joins = {18:0,20:0}
+        for label,evaluation in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            g = entity["geometry"]
+            for sample in evaluation["samples"]:
+                point = sample["position"]
+                x,y,z = point
+                rho = math.hypot(x,y)
+                outer = min(.01,.028-z)
+                self.assertGreaterEqual(z,-1e-12)
+                self.assertLessEqual(z,.02+1e-12)
+                self.assertLessEqual(rho,outer+1e-12)
+                if entity["kind"]=="curve":
+                    self.assertEqual(g["type"],"circle")
+                    self.assertAlmostEqual(rho,g["radius"],delta=1e-12)
+                    self.assertAlmostEqual(z,g["center"][2],delta=1e-12)
+                else:
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    if g["type"]=="cone":
+                        self.assertAlmostEqual(rho,.028-z,delta=1e-12)
+                        expected = [x/rho/math.sqrt(2),y/rho/math.sqrt(2),1/math.sqrt(2)]
+                        cone_count += 1
+                        if abs(z-.018)<1e-12:
+                            self.assertGreater(math.dist(sample["face_normal"],[x/rho,y/rho,0]),.7)
+                            joins[18] += 1
+                        if abs(z-.02)<1e-12:
+                            self.assertGreater(math.dist(sample["face_normal"],[0,0,1]),.7)
+                            joins[20] += 1
+                    elif g["type"]=="cylinder":
+                        self.assertAlmostEqual(rho,.01,delta=1e-12)
+                        self.assertLessEqual(z,.018+1e-12)
+                        expected = [x/rho,y/rho,0]
+                    else:
+                        self.assertEqual(g["type"],"plane")
+                        expected = [0,0,-1 if abs(z)<1e-12 else 1]
+                    self.assertLess(math.dist(sample["face_normal"],expected),1e-12)
+                count += 1
+        self.assertEqual((count,cone_count),(55,25))
         self.assertEqual(joins,{18:5,20:5})
 
 

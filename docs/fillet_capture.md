@@ -121,5 +121,5 @@ new output directory:
   --output results/fillet-run-001
 ```
 
-The corpus contains fourteen complete passing export cases and three expected
+The corpus contains fifteen complete passing export cases and three expected
 export limitations.

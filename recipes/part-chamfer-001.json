@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "id": "part-chamfer-001",
+  "description": "Revolve an exact R10/H20 mm cylinder profile with a top C2 x 45-degree chamfer.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_polygon",
+      "parameters": {
+        "plane": "XZ",
+        "origin_m": [
+          0,
+          0,
+          0
+        ],
+        "vertices_m": [
+          [
+            0,
+            0
+          ],
+          [
+            0.01,
+            0
+          ],
+          [
+            0.01,
+            0.018
+          ],
+          [
+            0.008,
+            0.02
+          ],
+          [
+            0,
+            0.02
+          ]
+        ],
+        "sketch_id": "main-profile"
+      }
+    },
+    {
+      "id": "revolve-profile",
+      "operation": "revolve",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "axis_origin_m": [
+          0,
+          0,
+          0
+        ],
+        "axis_direction": [
+          0,
+          0,
+          1
+        ],
+        "angle_rad": 6.283185307179586,
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "chamfer_cylinder",
+    "dimensions_m": {
+      "radius": 0.01,
+      "height": 0.02,
+      "chamfer_size": 0.002
+    }
+  }
+}

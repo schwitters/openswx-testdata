@@ -125,6 +125,18 @@ def analytic_measures(recipe):
     values = recipe["analytic"]["dimensions_m"]
     if kind == "multiple_solids":
         return aggregate_measures(multiple_solid_measures(recipe).values())
+    if kind == "chamfer_cylinder":
+        if set(values) != {"radius", "height", "chamfer_size"}:
+            raise CorpusError("chamfer cylinder: expected radius, height and chamfer size")
+        radius,height,size = values["radius"],values["height"],values["chamfer_size"]
+        if not (all(math.isfinite(v) and v>0 for v in (radius,height,size)) and size < radius and size < height):
+            raise CorpusError("chamfer requires positive top radius and remaining cylinder")
+        top = radius-size
+        volume = math.pi*(radius**2*(height-size)+size*(radius**2+radius*top+top**2)/3)
+        area = math.pi*(radius**2+top**2+2*radius*(height-size)+(radius+top)*math.sqrt(2)*size)
+        if not all(math.isfinite(v) and v>0 for v in (volume,area)):
+            raise CorpusError("chamfer cylinder: unresolved measures")
+        return {"volume_m3":volume,"area_m2":area}
     if kind == "fillet_cylinder":
         if set(values) != {"radius", "height", "fillet_radius"}:
             raise CorpusError("fillet cylinder: expected cylinder radius, height and fillet radius")
@@ -306,7 +318,7 @@ def read_recipe(root, relative, case_id):
     if recipe["steps"][-1]["operation"] not in ("extrude", "revolve", "fillet"):
         raise CorpusError("starter recipe must end with an extrusion, revolution or fillet")
     kind = recipe["analytic"]["shape"]
-    if kind in ("cone_frustum", "cone_sector", "sphere", "sphere_cap", "torus", "torus_cut"):
+    if kind in ("cone_frustum", "cone_sector", "sphere", "sphere_cap", "torus", "torus_cut", "chamfer_cylinder"):
         revolutions = [step for step in recipe["steps"] if step["operation"] == "revolve"]
         expected_angle = recipe["analytic"].get("angle_rad",2*math.pi)
         if len(revolutions) != 1 or revolutions[0]["parameters"]["angle_rad"] != expected_angle:
@@ -323,6 +335,22 @@ def read_recipe(root, relative, case_id):
                 raise CorpusError("sphere construction requires the matching profile radius")
             if kind == "sphere_cap" and profile["parameters"]["cap_height_m"] != recipe["analytic"]["dimensions_m"]["cap_height"]:
                 raise CorpusError("sphere cap construction height differs from analytic height")
+    if kind == "chamfer_cylinder":
+        if [s["operation"] for s in recipe["steps"]] != ["create_part","sketch_polygon","revolve"]:
+            raise CorpusError("chamfer cylinder requires one revolved profile")
+        radius,height,size = (recipe["analytic"]["dimensions_m"][k] for k in ("radius","height","chamfer_size"))
+        profile = recipe["steps"][1]["parameters"]
+        expected = [[0,0],[radius,0],[radius,height-size],[radius-size,height],[0,height]]
+        vertices = profile["vertices_m"]
+        # Decimal metre values can differ by a rounding bit after subtraction.
+        matches = len(vertices)==len(expected) and all(
+            math.isclose(a,b,rel_tol=0,abs_tol=1e-15)
+            for actual,target in zip(vertices,expected) for a,b in zip(actual,target))
+        revolution = recipe["steps"][-1]["parameters"]
+        if (profile["origin_m"] != [0,0,0] or not matches or
+                revolution["profiles"] != [recipe["steps"][1]["id"]] or
+                revolution["angle_rad"] != 2*math.pi):
+            raise CorpusError("chamfer profile differs from analytic geometry")
     if kind == "fillet_cylinder":
         if [s["operation"] for s in recipe["steps"]] != ["create_part","sketch_circle","extrude","fillet"]:
             raise CorpusError("fillet cylinder requires one base extrusion followed by one native fillet")
