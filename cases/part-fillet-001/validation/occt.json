@@ -1,0 +1,270 @@
+{
+  "ocp_distribution_version": "7.9.3.1.1",
+  "native_reference": {
+    "topology": {
+      "faces": 4,
+      "edges": 5,
+      "vertices": 3,
+      "solids": 1
+    },
+    "volume_mm3": 6231.659467357695,
+    "area_mm2": 1829.2409621272,
+    "centroid_mm": [
+      -9.315881650726543e-11,
+      8.421594710067352e-14,
+      9.921081417390965
+    ],
+    "surface_families": {
+      "plane": 2,
+      "cylinder": 1,
+      "torus": 1
+    },
+    "ring_z_radius_mm": [
+      [
+        0.0,
+        10.0
+      ],
+      [
+        18.000000000000004,
+        10.0
+      ],
+      [
+        20.0,
+        8.0
+      ]
+    ],
+    "axial_seam": {
+      "radius_mm": 10.0,
+      "z_span_mm": [
+        0.0,
+        18.000000000000004
+      ],
+      "representation": "polynomial_degree_1_bspline"
+    },
+    "fillet_meridian": {
+      "representation": "occt_rational_bezier",
+      "degree": 6,
+      "poles_mm": [
+        [
+          10.0,
+          0.0,
+          18.000000000000004
+        ],
+        [
+          9.999999999999996,
+          0.0,
+          18.534673566305838
+        ],
+        [
+          9.829991298732622,
+          0.0,
+          19.0554171451644
+        ],
+        [
+          9.503839026404565,
+          0.0,
+          19.50383902640457
+        ],
+        [
+          9.0554171451644,
+          0.0,
+          19.829991298732622
+        ],
+        [
+          8.534673566305834,
+          0.0,
+          20.000000000000004
+        ],
+        [
+          8.0,
+          0.0,
+          20.000000000000004
+        ]
+      ],
+      "weights": [
+        1.0313934717875126,
+        1.010025407661439,
+        0.9979246427249737,
+        0.9939584441369245,
+        0.9979246427249754,
+        1.0100254076614368,
+        1.0313934717875126
+      ],
+      "center_mm": [
+        8.0,
+        0.0,
+        18
+      ],
+      "radius_mm": 2,
+      "exact_torus_pcurve": true,
+      "radial_deviation_bound_mm": 2.691902048902082e-10,
+      "edge_tolerance_mm": 1e-05
+    },
+    "outward_normals_verified": true,
+    "brep_valid": true
+  },
+  "library_export": {
+    "topology": {
+      "faces": 4,
+      "edges": 5,
+      "vertices": 3,
+      "solids": 1
+    },
+    "volume_mm3": 6231.659467357696,
+    "area_mm2": 1829.2409621271997,
+    "centroid_mm": [
+      -9.315769909723251e-11,
+      8.354670893916286e-14,
+      9.921081417390964
+    ],
+    "surface_families": {
+      "plane": 2,
+      "cylinder": 1,
+      "torus": 1
+    },
+    "ring_z_radius_mm": [
+      [
+        0.0,
+        10.0
+      ],
+      [
+        18.000000000000004,
+        10.0
+      ],
+      [
+        20.0,
+        8.0
+      ]
+    ],
+    "axial_seam": {
+      "radius_mm": 10.0,
+      "z_span_mm": [
+        0.0,
+        18.000000000000004
+      ],
+      "representation": "polynomial_degree_1_bspline"
+    },
+    "fillet_meridian": {
+      "representation": "occt_rational_bezier",
+      "degree": 6,
+      "poles_mm": [
+        [
+          10.0,
+          0.0,
+          18.000000000000004
+        ],
+        [
+          9.999999999999996,
+          0.0,
+          18.534673566305838
+        ],
+        [
+          9.829991298732622,
+          0.0,
+          19.0554171451644
+        ],
+        [
+          9.503839026404565,
+          0.0,
+          19.50383902640457
+        ],
+        [
+          9.0554171451644,
+          0.0,
+          19.829991298732622
+        ],
+        [
+          8.534673566305834,
+          0.0,
+          20.000000000000004
+        ],
+        [
+          8.0,
+          0.0,
+          20.000000000000004
+        ]
+      ],
+      "weights": [
+        1.0313934717875126,
+        1.010025407661439,
+        0.9979246427249737,
+        0.9939584441369245,
+        0.9979246427249754,
+        1.0100254076614368,
+        1.0313934717875126
+      ],
+      "center_mm": [
+        8.0,
+        0.0,
+        18
+      ],
+      "radius_mm": 2,
+      "exact_torus_pcurve": true,
+      "radial_deviation_bound_mm": 2.691902048902082e-10,
+      "edge_tolerance_mm": 1e-05
+    },
+    "outward_normals_verified": true,
+    "brep_valid": true
+  },
+  "analytic_kernel_reference": {
+    "topology": {
+      "faces": 4,
+      "edges": 5,
+      "vertices": 3,
+      "solids": 1
+    },
+    "volume_mm3": 6231.659467357696,
+    "area_mm2": 1829.2409621271993,
+    "centroid_mm": [
+      -1.9338034855105774e-15,
+      -8.197895379573889e-16,
+      9.921081417390962
+    ],
+    "surface_families": {
+      "plane": 2,
+      "cylinder": 1,
+      "torus": 1
+    },
+    "ring_z_radius_mm": [
+      [
+        0.0,
+        10.0
+      ],
+      [
+        18.0,
+        10.0
+      ],
+      [
+        20.0,
+        8.0
+      ]
+    ],
+    "axial_seam": {
+      "radius_mm": 10.0,
+      "z_span_mm": [
+        0.0,
+        18.0
+      ],
+      "representation": "line"
+    },
+    "fillet_meridian": {
+      "representation": "circle",
+      "center_mm": [
+        8.0,
+        0.0,
+        18
+      ],
+      "radius_mm": 2
+    },
+    "outward_normals_verified": true,
+    "brep_valid": true
+  },
+  "native_kernel_difference_volume_mm3": [
+    0.0,
+    0.0
+  ],
+  "bidirectional_difference_volume_mm3": [
+    0.0,
+    0.0
+  ]
+}

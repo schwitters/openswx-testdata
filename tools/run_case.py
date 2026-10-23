@@ -40,7 +40,7 @@ def main(fixed_case=None, legacy_exporter=False):
     parser.add_argument("--output", type=Path, default=Path(os.environ.get(
         "OPENSWX_CORPUS_OUTPUT", "results/cylinder" if fixed_case else "results/fixture")))
     if fixed_case is None:
-        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001", "part-multiple-solids-001", "part-thin-wall-001", "part-cone-frustum-001", "part-cone-sector-001", "part-sphere-001", "part-sphere-cap-001", "part-torus-001", "part-torus-cut-001"),
+        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001", "part-multiple-solids-001", "part-thin-wall-001", "part-cone-frustum-001", "part-cone-sector-001", "part-sphere-001", "part-sphere-cap-001", "part-torus-001", "part-torus-cut-001", "part-fillet-001"),
                             default=os.environ.get("OPENSWX_CORPUS_CASE"))
     args = parser.parse_args()
     case_id = fixed_case if fixed_case is not None else args.case
@@ -223,7 +223,8 @@ def main(fixed_case=None, legacy_exporter=False):
                    "part-thin-wall-001": "check_thin_wall_step.py",
                    "part-cone-frustum-001": "check_cone_frustum_step.py",
                    "part-cone-sector-001": "check_cone_sector_step.py",
-                   "part-sphere-cap-001": "check_sphere_cap_step.py"}[case_id]
+                   "part-sphere-cap-001": "check_sphere_cap_step.py",
+                   "part-fillet-001": "check_fillet_step.py"}[case_id]
         export_paths = [exports[key] for key in ("large-block","small-block")] if multiple else list(exports.values())
         report["occt"] = checked_json("occt", [args.occt_python.absolute(),root / "tools" / checker,
                                                case / "reference/model.step",*export_paths])

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "id": "part-fillet-001",
+  "description": "Create an R10/H20 mm cylinder and apply a native R2 mm fillet to its top circular rim.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0
+        ],
+        "radius_m": 0.01,
+        "sketch_id": "main-profile"
+      }
+    },
+    {
+      "id": "extrude-profile",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "height_m": 0.02,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    },
+    {
+      "id": "fillet-top-rim",
+      "operation": "fillet",
+      "parameters": {
+        "radius_m": 0.002,
+        "edge_selector": {
+          "type": "circle",
+          "center_m": [
+            0,
+            0,
+            0.02
+          ],
+          "radius_m": 0.01
+        },
+        "propagate_tangent": false
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "fillet_cylinder",
+    "dimensions_m": {
+      "radius": 0.01,
+      "height": 0.02,
+      "fillet_radius": 0.002
+    }
+  }
+}

@@ -533,6 +533,68 @@
               "parameters"
             ],
             "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
+                "const": "fillet"
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "radius_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "edge_selector": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "const": "circle"
+                      },
+                      "center_m": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 3,
+                        "maxItems": 3
+                      },
+                      "radius_m": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "center_m",
+                      "radius_m"
+                    ]
+                  },
+                  "propagate_tangent": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "radius_m",
+                  "edge_selector",
+                  "propagate_tangent"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ]
           }
         ]
       },
@@ -557,7 +619,8 @@
             "sphere",
             "sphere_cap",
             "torus",
-            "torus_cut"
+            "torus_cut",
+            "fillet_cylinder"
           ]
         },
         "dimensions_m": {

@@ -1,0 +1,46 @@
+{
+  "library_commit": "1607ee9a22b1aba7e2a6607061c209845d591dd0",
+  "case": "part-fillet-001",
+  "selected_payload_index": 0,
+  "selected_body_id": 2,
+  "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+  "stages": {
+    "metadata": "pass: native part, Default configuration and saved mass properties agree",
+    "extraction": "pass: partition and delta, no extraction issues",
+    "decode": "pass: both embedded streams complete, no uninterpreted bytes",
+    "topology": "pass: recorded ownership/incidence checked by body binding",
+    "binding": "pass: 4 faces and 3 vertex-free circular edges, no interval overrides",
+    "step": "pass: selected checkpoint and native/reference STEP agree with analytic filleted-cylinder geometry"
+  },
+  "source_topology": {
+    "bodies": 1,
+    "edges": 3,
+    "faces": 4,
+    "loops": 6,
+    "shell_provenance": "connected_native_face_edge_incidence",
+    "shells": 1,
+    "vertices": 0
+  },
+  "export_topology": {
+    "faces": 4,
+    "edges": 3,
+    "vertices": 3,
+    "shells": 1,
+    "solids": 1
+  },
+  "topology_notes": [
+    "Native API reports one connected shell; XT records both material and void-side shell uses.",
+    "Three source circle rings receive seam vertices; OCCT adds one straight cylinder seam and one rational Bezier torus meridian with an exact support pcurve and a whole-curve radial bound."
+  ],
+  "known_limits": [
+    {
+      "scope": "original reference/model.x_b",
+      "error_code": "unsupported_format",
+      "offset": 0,
+      "message": "Reader requires binary PS prologue at byte zero; native file has an ASCII header."
+    }
+  ],
+  "native_sample_count": 55,
+  "mcp_documents_closed": true,
+  "occt_report": "validation/occt.json"
+}

@@ -144,5 +144,5 @@ new output directory:
 ```
 
 Exit zero means the declared expectations matched, including this exact
-rejection. It is not a passing STEP export. The corpus contains thirteen
+rejection. It is not a passing STEP export. The corpus contains fourteen
 complete passing export cases and three expected export limitations.

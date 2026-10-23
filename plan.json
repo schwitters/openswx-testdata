@@ -308,7 +308,8 @@
       "coverage_targets": [
         "part",
         "fillet"
-      ]
+      ],
+      "recipe": "recipes/part-fillet-001.json"
     },
     {
       "id": "part-chamfer-001",

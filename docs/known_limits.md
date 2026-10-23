@@ -227,3 +227,12 @@ code. It requires the exact rejection and no output, then validates the native
 segment independently against analytic geometry. A future fix must preserve
 both radial caps, angular trims and material orientation, and review the error
 classification. See the [torus-segment capture](torus_cut_capture.md).
+
+## Native rim-fillet capture confirmation
+
+`part-fillet-001` generates an R2 mm top-rim blend on an R10/H20 mm cylinder
+through the native SolidWorks fillet tool. It yields a regular torus band with
+parallel circle cuts and passes topology, binding and STEP export. Native STEP,
+library STEP and an independently kernel-built fillet agree geometrically, with
+verified tangent joins, material normals and rational-seam bounds. This does
+not cover arbitrary blends, boundary-free torus export or meridional torus cuts.

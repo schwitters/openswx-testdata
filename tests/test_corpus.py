@@ -282,6 +282,40 @@ class CorpusTest(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
                 corpus.read_recipe(self.root,relative,"part-torus-cut-001")
 
+    def test_native_rim_fillet_measures_and_regular_blend_limits(self):
+        relative = "recipes/part-fillet-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-fillet-001")
+        measures = corpus.analytic_measures(original)
+        self.assertAlmostEqual(measures["volume_m3"],(5800*math.pi/3+16*math.pi**2)*1e-9,delta=1e-17)
+        self.assertAlmostEqual(measures["area_m2"],(532*math.pi+16*math.pi**2)*1e-6,delta=1e-14)
+        for values in ({"fillet_radius":.005},{"height":.001}):
+            recipe = copy.deepcopy(original)
+            recipe["analytic"]["dimensions_m"].update(values)
+            with self.subTest(values=values), self.assertRaisesRegex(corpus.CorpusError,"regular ring torus"):
+                corpus.analytic_measures(recipe)
+
+    def test_fillet_recipe_selects_exact_top_rim_after_base_extrusion(self):
+        relative = "recipes/part-fillet-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-fillet-001")
+        for mutation in ("bottom-rim","selector-radius","blend-radius","base-height","propagation","no-base"):
+            recipe = copy.deepcopy(original)
+            params = recipe["steps"][-1]["parameters"]
+            if mutation=="bottom-rim":
+                params["edge_selector"]["center_m"][2] = 0
+            elif mutation=="selector-radius":
+                params["edge_selector"]["radius_m"] = .009
+            elif mutation=="blend-radius":
+                params["radius_m"] = .001
+            elif mutation=="base-height":
+                recipe["steps"][2]["parameters"]["height_m"] = .019
+            elif mutation=="propagation":
+                params["propagate_tangent"] = True
+            else:
+                recipe["steps"] = [recipe["steps"][0],recipe["steps"][-1]]
+            self.write_json(self.root / relative,recipe)
+            with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
+                corpus.read_recipe(self.root,relative,"part-fillet-001")
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -1335,6 +1369,75 @@ class CapturedTorusCutTest(unittest.TestCase):
                 count += 1
         self.assertEqual((count,mantle_count),(45,25))
         self.assertEqual(normals,{(-1,0,0),(0,-1,0)})
+
+
+class CapturedFilletTest(unittest.TestCase):
+    def test_admitted_native_fillet_integrity(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        self.assertIn("part-fillet-001",{c["id"] for c in report["cases"]})
+
+    def test_fillet_uses_the_native_reference_of_the_observed_top_edge(self):
+        capture = corpus.load_json(ROOT / "cases/part-fillet-001/provenance/capture.json")
+        events = {e["step"]:e for e in capture["events"]}
+        before = events["brep-before-fillet"]["response"]["result"]["structuredContent"]["result"]
+        candidates = [e for e in before["entities"] if e["kind"]=="curve" and e["geometry"]["type"]=="circle" and
+                      math.dist(e["geometry"]["center"],(0,0,.02))<1e-12 and abs(e["geometry"]["radius"]-.01)<1e-12]
+        self.assertEqual(len(candidates),1)
+        params = events["fillet-top-rim"]["request"]["params"]["arguments"]["params"]["feature"]
+        self.assertEqual(params["type"],"fillet")
+        self.assertEqual(params["radius"],.002)
+        self.assertFalse(params["propagate_tangent"])
+        self.assertEqual(params["edges"],[{"ref":candidates[0]["owner"]}])
+
+    def test_native_fillet_surface_families_samples_and_tangencies(self):
+        native = corpus.load_json(ROOT / "cases/part-fillet-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":4,"edges":3,"vertices":0,"shells":1})
+        center = (0,0,(56324+864*math.pi)/(5800+48*math.pi)*.001)
+        self.assertLess(math.dist(body["measurements_si"]["centroid_m"],center),1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        families = [e["geometry"]["type"] for e in entities if e["kind"]=="surface"]
+        self.assertEqual(sorted(families),["cylinder","plane","plane","torus"])
+        count=torus_count=0
+        joins = {18:0,20:0}
+        for label,evaluation in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            g = entity["geometry"]
+            for sample in evaluation["samples"]:
+                point = sample["position"]
+                x,y,z = point
+                rho = math.hypot(x,y)
+                outer = .01 if z<=.018 else .008+math.sqrt(max(0,.002**2-(z-.018)**2))
+                self.assertGreaterEqual(z,-1e-12)
+                self.assertLessEqual(z,.02+1e-12)
+                self.assertLessEqual(rho,outer+1e-12)
+                if entity["kind"]=="curve":
+                    self.assertEqual(g["type"],"circle")
+                    self.assertAlmostEqual(rho,g["radius"],delta=1e-12)
+                    self.assertAlmostEqual(z,g["center"][2],delta=1e-12)
+                else:
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    if g["type"]=="torus":
+                        self.assertAlmostEqual((rho-.008)**2+(z-.018)**2,.002**2,delta=1e-15)
+                        expected = [(rho-.008)*x/(.002*rho),(rho-.008)*y/(.002*rho),(z-.018)/.002]
+                        torus_count += 1
+                        if abs(z-.018)<1e-12:
+                            self.assertLess(math.dist(sample["face_normal"],[x/rho,y/rho,0]),1e-12)
+                            joins[18] += 1
+                        if abs(z-.02)<1e-12:
+                            self.assertLess(math.dist(sample["face_normal"],[0,0,1]),1e-12)
+                            joins[20] += 1
+                    elif g["type"]=="cylinder":
+                        self.assertAlmostEqual(rho,.01,delta=1e-12)
+                        self.assertLessEqual(z,.018+1e-12)
+                        expected = [x/rho,y/rho,0]
+                    else:
+                        self.assertEqual(g["type"],"plane")
+                        expected = [0,0,-1 if abs(z)<1e-12 else 1]
+                    self.assertLess(math.dist(sample["face_normal"],expected),1e-12)
+                count += 1
+        self.assertEqual((count,torus_count),(55,25))
+        self.assertEqual(joins,{18:5,20:5})
 
 
 if __name__ == "__main__":

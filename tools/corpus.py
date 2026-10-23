@@ -125,6 +125,18 @@ def analytic_measures(recipe):
     values = recipe["analytic"]["dimensions_m"]
     if kind == "multiple_solids":
         return aggregate_measures(multiple_solid_measures(recipe).values())
+    if kind == "fillet_cylinder":
+        if set(values) != {"radius", "height", "fillet_radius"}:
+            raise CorpusError("fillet cylinder: expected cylinder radius, height and fillet radius")
+        radius,height,blend = values["radius"],values["height"],values["fillet_radius"]
+        if not (blend < height and 2*blend < radius):
+            raise CorpusError("fillet requires a positive remaining cylinder and regular ring torus")
+        major = radius-blend
+        volume = math.pi*(radius**2*(height-blend)+major**2*blend+major*math.pi*blend**2/2+2*blend**3/3)
+        area = math.pi*(radius**2+major**2+2*radius*(height-blend)+2*blend**2)+math.pi**2*major*blend
+        if not all(math.isfinite(v) and v>0 for v in (volume,area)):
+            raise CorpusError("fillet cylinder: unresolved measures")
+        return {"volume_m3":volume,"area_m2":area}
     if kind in ("torus", "torus_cut"):
         if set(values) != {"major_radius", "minor_radius"}:
             raise CorpusError("torus: expected major and minor radii")
@@ -286,10 +298,13 @@ def read_recipe(root, relative, case_id):
                 raise CorpusError("cut requires an earlier solid-body extrusion")
             if step["parameters"]["operation"] == "new_body":
                 has_solid = True
+        elif step["operation"] == "fillet":
+            if not has_solid:
+                raise CorpusError("fillet requires an earlier solid-body feature")
         else:
             raise CorpusError("starter recipe must have exactly one create_part")
-    if recipe["steps"][-1]["operation"] not in ("extrude", "revolve"):
-        raise CorpusError("starter recipe must end with an extrusion or revolution")
+    if recipe["steps"][-1]["operation"] not in ("extrude", "revolve", "fillet"):
+        raise CorpusError("starter recipe must end with an extrusion, revolution or fillet")
     kind = recipe["analytic"]["shape"]
     if kind in ("cone_frustum", "cone_sector", "sphere", "sphere_cap", "torus", "torus_cut"):
         revolutions = [step for step in recipe["steps"] if step["operation"] == "revolve"]
@@ -308,6 +323,16 @@ def read_recipe(root, relative, case_id):
                 raise CorpusError("sphere construction requires the matching profile radius")
             if kind == "sphere_cap" and profile["parameters"]["cap_height_m"] != recipe["analytic"]["dimensions_m"]["cap_height"]:
                 raise CorpusError("sphere cap construction height differs from analytic height")
+    if kind == "fillet_cylinder":
+        if [s["operation"] for s in recipe["steps"]] != ["create_part","sketch_circle","extrude","fillet"]:
+            raise CorpusError("fillet cylinder requires one base extrusion followed by one native fillet")
+        circle,extrusion,fillet = (s["parameters"] for s in recipe["steps"][1:])
+        values = recipe["analytic"]["dimensions_m"]
+        if circle["radius_m"] != values["radius"] or circle["center_m"] != [0,0,0] or extrusion["height_m"] != values["height"] or extrusion["direction"] != [0,0,1] or extrusion["operation"] != "new_body" or extrusion["profiles"] != [recipe["steps"][1]["id"]]:
+            raise CorpusError("fillet cylinder base differs from analytic dimensions")
+        selector = fillet["edge_selector"]
+        if fillet["radius_m"] != values["fillet_radius"] or selector["center_m"] != [0,0,values["height"]] or selector["radius_m"] != values["radius"]:
+            raise CorpusError("fillet radius or selected circular rim differs from analytic geometry")
     analytic_measures(recipe)
     return recipe
 

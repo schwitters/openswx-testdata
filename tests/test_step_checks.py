@@ -22,6 +22,7 @@ try:
     from check_thin_wall_step import check_thin_wall_shape
     from check_sphere_cap_step import check_sphere_cap_shape, repair_native_cap_pcurve, spherical_bezier_radial_bound
     from step_check import read_step
+    from check_fillet_step import check_fillet_shape, make_fillet
     from check_torus_cut_step import check_torus_cut_shape
     from bezier_check import bezier_radial_bound
     from check_torus_step import check_torus_shape
@@ -740,6 +741,61 @@ class TorusCutGeometryTest(unittest.TestCase):
         changed[1] = 0
         with self.assertRaisesRegex(RuntimeError,"positive finite weights"):
             bezier_radial_bound(poles,center,seam["radius_mm"],changed)
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class FilletGeometryTest(unittest.TestCase):
+    def test_expected_top_rim_fillet(self):
+        report = check_fillet_shape(make_fillet())
+        self.assertEqual(report["surface_families"],{"plane":2,"cylinder":1,"torus":1})
+        self.assertEqual(report["fillet_meridian"]["representation"],"circle")
+
+    def test_opposite_rim_with_equal_measures_is_rejected(self):
+        expected,opposite = make_fillet(),make_fillet(top=False)
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(opposite,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"fillet|cylinder"):
+            check_fillet_shape(opposite)
+
+    def test_wrong_blend_radius_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"fillet|cylinder"):
+            check_fillet_shape(make_fillet(radius=1))
+
+    def test_unfilleted_stock_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete filleted"):
+            check_fillet_shape(BRepPrimAPI_MakeCylinder(10,20).Shape())
+
+    def test_translated_fillet_is_rejected(self):
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(1,0,0))
+        with self.assertRaisesRegex(RuntimeError,"fillet|cylinder"):
+            check_fillet_shape(make_fillet().Moved(TopLoc_Location(transform)))
+
+    def test_rotation_about_symmetry_axis_is_accepted(self):
+        from OCP.gp import gp_Ax1, gp_Dir
+        transform = gp_Trsf()
+        transform.SetRotation(gp_Ax1(gp_Pnt(0,0,0),gp_Dir(0,0,1)),.37)
+        check_fillet_shape(make_fillet().Moved(TopLoc_Location(transform)))
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_fillet_shape(make_fillet().Reversed())
+
+    def test_rational_meridian_bound_uses_the_offset_circle_center(self):
+        import json
+        path = Path(__file__).resolve().parents[1] / "cases/part-fillet-001/validation/occt.json"
+        seam = json.loads(path.read_text())["native_reference"]["fillet_meridian"]
+        poles,weights = seam["poles_mm"],seam["weights"]
+        original = bezier_radial_bound(poles,seam["center_mm"],2,weights)
+        self.assertLessEqual(original,1e-5)
+        moved = [[v+d for v,d in zip(p,(100,200,300))] for p in poles]
+        center = [v+d for v,d in zip(seam["center_mm"],(100,200,300))]
+        self.assertLessEqual(bezier_radial_bound(moved,center,2,weights),1e-5)
+        changed = [list(p) for p in poles]
+        changed[len(changed)//2][2] += .001
+        self.assertEqual(changed[0],poles[0])
+        self.assertEqual(changed[-1],poles[-1])
+        self.assertGreater(bezier_radial_bound(changed,seam["center_mm"],2,weights),1e-5)
 
 
 if __name__ == "__main__":

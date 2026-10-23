@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "id": "part-fillet-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-fillet-001.json",
+  "tags": [
+    "fillet",
+    "native-edge-selection",
+    "top-rim-blend",
+    "toroidal-band",
+    "cylinder",
+    "vertex-free-rings",
+    "periodic-seams",
+    "rational-bezier-oracle",
+    "material-normals",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T22:38:07.235369+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original R10 mm, H20 mm cylinder with a native R2 mm fillet on its top circular rim generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 1e-09,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type, Default configuration and saved mass properties."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; four faces, three vertex-free rings and no native vertices."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint matches native filleted-cylinder geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "pass",
+      "reason": "Complete selected checkpoint; analytic filleted cylinder, native STEP and OCCT equivalence."
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 3233,
+      "sha256": "4bae119c39b078d3cc41c37aa755d24bc86df186e6f26f0a9921e00c10ea2cb6"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 4399,
+      "sha256": "ce38ac3d57701c1e2046da1a086f950929377ed8a37fd11950a69e2c55c62fd9"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 1385820,
+      "sha256": "32177d3486dc2b444dfdcf0aad8a4f343cadb317afb15ffb1b391390c392f075"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1492,
+      "sha256": "8f7abd8af8e9fdf6984edee2560347f40666063b4405d60955809f3151682702"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2383,
+      "sha256": "0fc835ba76c7719ea7a64661922522788df47c0ef6bd731019e22dd1e0e60330"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 8047,
+      "sha256": "1d7f99df6120c9b56301b7fbce6536108e02128d27714045a82e22e0aaa65436"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 4370,
+      "sha256": "c9395f69717a532b56e8d42355e782ef580e79f30ad7c4d4c74ecb4cd2bcd3b8"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 4709,
+      "sha256": "93cda1536445084f4f52f93b5fcdf90a19eb6a0f2b36c90324d81aeaf051e98b"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 329063,
+      "sha256": "617d28e9f7a3d3a1bb2dd58fa5227c07d0beee9032da09c0858e03991b39ea67"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 119777,
+      "sha256": "4669b5fb9bebd9048fd880f85a0c635e250513c42827c652db6fed5be3d117e0"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 141601,
+      "sha256": "96c461f67d727a204ff884e4aa3ccca4807529cefb54fb027bef03a0da5573ec"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1431,
+      "sha256": "63a6816909eb4e12db51ab0899fe6eea094407fdeacb0ebcb77c67aab854b95a"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1731,
+      "sha256": "254dc4a6692380a110151c2922b6f9c32e20ab7cd003ca0413cab304330cf6ef"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 5108,
+      "sha256": "2d587d911c91b5bd988908c8f57c84b3281bf6fa22babf1224f04ea3f7ae147f"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 2113,
+      "sha256": "669ee30fb7ff2f057fa146f47477af2e661c171d249388e258f819042c4ae3be"
+    }
+  ]
+}

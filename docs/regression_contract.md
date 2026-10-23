@@ -1,7 +1,7 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector, a full sphere, a minor spherical cap, a ring torus and a quarter-torus segment. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector, a full sphere, a minor spherical cap, a ring torus, a quarter-torus segment and a native rim fillet. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
 [blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md),
 [stepped-bore](stepped_bore_capture.md), [two-bores](two_holes_capture.md) and
@@ -10,7 +10,7 @@ six-stage runner for the captured cylinder, block, tube, blind hole, through hol
 [thin wall](thin_wall_capture.md), [cone frustum](cone_frustum_capture.md) and
 [cone sector](cone_sector_capture.md), [sphere](sphere_capture.md) and
 [sphere cap](sphere_cap_capture.md), [torus](torus_capture.md) and
-[torus segment](torus_cut_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[torus segment](torus_cut_capture.md) and [native fillet](fillet_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
@@ -175,3 +175,14 @@ normals and the correct clipped quadrant. Its parallel seam must have an exact
 constant-V torus pcurve. Positive-weight rational Beziers additionally require a
 homogeneous Bernstein whole-curve radius bound within fixed tolerances.
 Periodic UV probes are lifted into the actual unwrapped trimmed chart.
+
+## Native circular-rim fillet
+
+`part-fillet-001` applies a native R2 mm fillet to an R10/H20 mm cylinder's top
+edge, selected by observed native geometry and its returned EDGE reference.
+The resulting two planes, cylinder and torus pass all six stages. Independent
+OCCT construction, analytic measures/centroid, material normals and tangent
+joins verify the feature result. The imported rational torus meridian requires
+an exact constant-U pcurve and a whole-curve bound about its offset circle
+center. This passing toroidal band does not cover the unsupported meridional
+torus-cut boundary family. See the [capture](fillet_capture.md).
