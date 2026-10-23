@@ -1,0 +1,5 @@
+{
+  "error_code": "unsupported_format",
+  "offset": 2594,
+  "message": "STEP node 41: Face export requires PLANE/CYLINDER/CONE/SPHERE or ring TORUS surfaces"
+}

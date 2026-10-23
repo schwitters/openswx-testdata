@@ -22,6 +22,7 @@ try:
     from check_thin_wall_step import check_thin_wall_shape
     from check_sphere_cap_step import check_sphere_cap_shape, repair_native_cap_pcurve, spherical_bezier_radial_bound
     from step_check import read_step
+    from check_elliptic_profile_step import check_elliptic_shape, make_elliptic_prism, ellipse_spline_bound
     from check_chamfer_step import check_chamfer_shape, make_chamfer
     from check_fillet_step import check_fillet_shape, make_fillet
     from check_torus_cut_step import check_torus_cut_shape
@@ -848,6 +849,82 @@ class ChamferGeometryTest(unittest.TestCase):
         report = check_chamfer_shape(native)
         self.assertEqual(report["chamfer_generator"]["representation"],"polynomial_degree_1_bspline")
         self.assertTrue(report["chamfer_generator"]["exact_cone_pcurve"])
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class EllipticPrismGeometryTest(unittest.TestCase):
+    def test_independent_analytic_ellipse_extrusion(self):
+        report = check_elliptic_shape(make_elliptic_prism())
+        self.assertAlmostEqual(report["volume_mm3"],1000*math.pi,delta=1e-6)
+        self.assertEqual(report["mantle"]["representation"],"surface_of_extrusion")
+
+    def test_native_rational_sweep_is_certified_without_conversion(self):
+        shape,_ = read_step(Path(__file__).resolve().parents[1] / "cases/part-elliptic-profile-001/reference/model.step")
+        report = check_elliptic_shape(shape)
+        self.assertEqual(report["mantle"]["representation"],"linear_rational_bspline_surface")
+        self.assertLess(report["mantle"]["scaled_radial_bound_mm"],1e-8)
+        self.assertLess(report["volume_gk_estimated_relative_error"],1e-9)
+
+    def test_rotated_axes_with_identical_measures_are_rejected(self):
+        from OCP.gp import gp_Ax1, gp_Dir
+        transform = gp_Trsf()
+        transform.SetRotation(gp_Ax1(gp_Pnt(0,0,0),gp_Dir(0,0,1)),math.pi/2)
+        expected = make_elliptic_prism()
+        rotated = expected.Moved(TopLoc_Location(transform))
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(rotated,volume),delta=1e-6)
+        with self.assertRaises(RuntimeError):
+            check_elliptic_shape(rotated)
+
+    def test_half_turn_is_accepted(self):
+        from OCP.gp import gp_Ax1, gp_Dir
+        transform = gp_Trsf()
+        transform.SetRotation(gp_Ax1(gp_Pnt(0,0,0),gp_Dir(0,0,1)),math.pi)
+        check_elliptic_shape(make_elliptic_prism().Moved(TopLoc_Location(transform)))
+
+    def test_equal_volume_with_different_semiaxes_is_rejected(self):
+        with self.assertRaises(RuntimeError):
+            check_elliptic_shape(make_elliptic_prism(12.5,4))
+
+    def test_circular_substitute_with_equal_volume_is_rejected(self):
+        with self.assertRaises(RuntimeError):
+            check_elliptic_shape(BRepPrimAPI_MakeCylinder(math.sqrt(50),20).Shape())
+
+    def test_wrong_height_is_rejected(self):
+        with self.assertRaises(RuntimeError):
+            check_elliptic_shape(make_elliptic_prism(height=19))
+
+    def test_translation_is_rejected(self):
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(1,0,0))
+        with self.assertRaises(RuntimeError):
+            check_elliptic_shape(make_elliptic_prism().Moved(TopLoc_Location(transform)))
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_elliptic_shape(make_elliptic_prism().Reversed())
+
+    def test_interior_control_point_excursion_is_rejected(self):
+        from OCP.BRepAdaptor import BRepAdaptor_Curve
+        from OCP.GeomAbs import GeomAbs_BSplineCurve
+        from OCP.TopAbs import TopAbs_EDGE
+        from OCP.TopExp import TopExp
+        from OCP.TopTools import TopTools_IndexedMapOfShape
+        from OCP.TopoDS import TopoDS
+        shape,_ = read_step(Path(__file__).resolve().parents[1] / "cases/part-elliptic-profile-001/reference/model.step")
+        edges = TopTools_IndexedMapOfShape()
+        TopExp.MapShapes_s(shape,TopAbs_EDGE,edges)
+        for i in range(1,edges.Extent()+1):
+            curve = BRepAdaptor_Curve(TopoDS.Edge_s(edges.FindKey(i)))
+            if curve.GetType()==GeomAbs_BSplineCurve and curve.BSpline().Degree()>1:
+                spline=curve.BSpline().Copy()
+                point=spline.Pole(2)
+                point.SetX(point.X()+.001)
+                spline.SetPole(2,point)
+                with self.assertRaisesRegex(RuntimeError,"departs from the ellipse"):
+                    ellipse_spline_bound(spline,curve.Value(curve.FirstParameter()).Z())
+                return
+        self.fail("native ellipse spline was not found")
 
 
 if __name__ == "__main__":

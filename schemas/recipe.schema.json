@@ -595,6 +595,60 @@
               "operation",
               "parameters"
             ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
+                "const": "sketch_ellipse"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "plane": {
+                    "const": "XY"
+                  },
+                  "center_m": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "sketch_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+                  },
+                  "major_radius_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "minor_radius_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "plane",
+                  "center_m",
+                  "sketch_id",
+                  "major_radius_m",
+                  "minor_radius_m"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ],
+            "additionalProperties": false
           }
         ]
       },
@@ -621,7 +675,8 @@
             "torus",
             "torus_cut",
             "fillet_cylinder",
-            "chamfer_cylinder"
+            "chamfer_cylinder",
+            "elliptic_prism"
           ]
         },
         "dimensions_m": {

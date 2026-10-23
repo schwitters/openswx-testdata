@@ -355,6 +355,46 @@ class CorpusTest(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
                 corpus.read_recipe(self.root,relative,"part-chamfer-001")
 
+    def test_elliptic_prism_measures_and_perimeter(self):
+        recipe = corpus.read_recipe(self.root,"recipes/part-elliptic-profile-001.json","part-elliptic-profile-001")
+        measures = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(measures["volume_m3"],1000*math.pi*1e-9,delta=1e-17)
+        self.assertAlmostEqual(measures["area_m2"],1283.004087413747*1e-6,delta=1e-14)
+        self.assertAlmostEqual(corpus.ellipse_perimeter(10,5),48.44224110273838,delta=1e-12)
+        self.assertAlmostEqual(corpus.ellipse_perimeter(10,10),20*math.pi,delta=1e-12)
+        self.assertAlmostEqual(corpus.ellipse_perimeter(.01,.005)*1000,48.44224110273838,delta=1e-12)
+
+    def test_elliptic_prism_requires_distinct_positive_ordered_semiaxes(self):
+        original = corpus.load_json(self.root / "recipes/part-elliptic-profile-001.json")
+        for change in ({"minor_radius":0},{"minor_radius":.01},{"minor_radius":.02},
+                       {"height":0},{"major_radius":math.inf},{"minor_radius":math.nan}):
+            recipe = copy.deepcopy(original)
+            recipe["analytic"]["dimensions_m"].update(change)
+            with self.subTest(change=change), self.assertRaises(corpus.CorpusError):
+                corpus.analytic_measures(recipe)
+
+    def test_elliptic_recipe_requires_matching_profile_and_extrusion(self):
+        relative = "recipes/part-elliptic-profile-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-elliptic-profile-001")
+        for mutation in ("major","minor","center","height","direction","operation","profile"):
+            recipe = copy.deepcopy(original)
+            profile,extrusion = (s["parameters"] for s in recipe["steps"][1:])
+            if mutation in ("major","minor"):
+                profile[mutation+"_radius_m"] *= .9
+            elif mutation=="center":
+                profile["center_m"][0] = .001
+            elif mutation=="height":
+                extrusion["height_m"] = .019
+            elif mutation=="direction":
+                extrusion["direction"] = [0,0,-1]
+            elif mutation=="operation":
+                extrusion["operation"] = "join"
+            else:
+                extrusion["profiles"] = ["missing-sketch"]
+            self.write_json(self.root / relative,recipe)
+            with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
+                corpus.read_recipe(self.root,relative,"part-elliptic-profile-001")
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -1533,6 +1573,71 @@ class CapturedChamferTest(unittest.TestCase):
                 count += 1
         self.assertEqual((count,cone_count),(55,25))
         self.assertEqual(joins,{18:5,20:5})
+
+
+class CapturedEllipticProfileTest(unittest.TestCase):
+    def test_admitted_ellipse_has_an_explicit_swept_surface_export_limit(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        row = next(c for c in report["cases"] if c["id"]=="part-elliptic-profile-001")
+        self.assertEqual(row["expectations"]["step"]["outcome"],"unsupported")
+        error = corpus.load_json(ROOT / "cases/part-elliptic-profile-001/validation/export-error.json")
+        self.assertEqual(error,{"error_code":"unsupported_format","offset":2594,
+                               "message":"STEP node 41: Face export requires PLANE/CYLINDER/CONE/SPHERE or ring TORUS surfaces"})
+
+    def test_default_native_mass_precision_is_kept_separate_from_geometry(self):
+        case = ROOT / "cases/part-elliptic-profile-001"
+        native = corpus.load_json(case / "reference/native.json")
+        precision = corpus.load_json(case / "validation/native-measure-precision.json")
+        manifest = corpus.load_json(case / "case.json")
+        observed = native["bodies"][0]["measurements_si"]
+        self.assertEqual(precision["native_volume_m3"],observed["volume_m3"])
+        self.assertEqual(precision["native_area_m2"],observed["area_m2"])
+        self.assertEqual(precision["native_centroid_m"],observed["centroid_m"])
+        self.assertFalse(precision["native_mass_values_modified"])
+        self.assertFalse(precision["accuracy_control_exposed_by_mcp"])
+        self.assertEqual(precision["native_accuracy_level"],0)
+        self.assertEqual(manifest["tolerances"]["measure_relative"],1e-3)
+        self.assertEqual(manifest["tolerances"]["length_absolute_m"],1e-8)
+        for key in ("native_volume_relative_error","native_area_relative_error"):
+            self.assertGreater(precision[key],1e-4)
+            self.assertLess(precision[key],1e-3)
+        self.assertGreater(precision["native_centroid_error_m"],1e-8)
+        self.assertLess(precision["native_centroid_error_m"],1e-6)
+
+    def test_native_elliptic_sweep_positions_trims_and_material_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-elliptic-profile-001/reference/native.json")
+        self.assertEqual(native["bodies"][0]["counts"],{"faces":3,"edges":2,"vertices":0,"shells":1})
+        entities = native["observations"]["brep"]["entities"]
+        count=sweep_count=0
+        for label,evaluation in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            g = entity["geometry"]
+            for sample in evaluation["samples"]:
+                x,y,z = sample["position"]
+                implicit = (x/.01)**2+(y/.005)**2
+                self.assertGreaterEqual(z,-1e-12)
+                self.assertLessEqual(z,.02+1e-12)
+                self.assertLessEqual(implicit,1+1e-10)
+                if entity["kind"]=="curve":
+                    self.assertEqual(g["type"],"ellipse")
+                    self.assertAlmostEqual(implicit,1,delta=1e-10)
+                    self.assertAlmostEqual(z,g["center"][2],delta=1e-12)
+                else:
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    if g["type"]=="other":
+                        self.assertEqual(g["native_type"],4009)
+                        self.assertEqual(g["descriptor_status"],"unsupported")
+                        self.assertAlmostEqual(implicit,1,delta=1e-10)
+                        gradient=[x/.01**2,y/.005**2,0]
+                        expected=[v/math.hypot(*gradient) for v in gradient]
+                        sweep_count += 1
+                    else:
+                        self.assertEqual(g["type"],"plane")
+                        self.assertAlmostEqual(z,g["origin"][2],delta=1e-12)
+                        expected=[0,0,-1 if abs(z)<1e-12 else 1]
+                    self.assertLess(math.dist(sample["face_normal"],expected),1e-10)
+                count += 1
+        self.assertEqual((count,sweep_count),(73,45))
 
 
 if __name__ == "__main__":

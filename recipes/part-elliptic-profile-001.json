@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "part-elliptic-profile-001",
+  "description": "Extrude an XY ellipse with X/Y semiaxes 10/5 mm through 20 mm along +Z.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_ellipse",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0
+        ],
+        "sketch_id": "main-profile",
+        "major_radius_m": 0.01,
+        "minor_radius_m": 0.005
+      }
+    },
+    {
+      "id": "extrude-profile",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "height_m": 0.02,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "elliptic_prism",
+    "dimensions_m": {
+      "major_radius": 0.01,
+      "minor_radius": 0.005,
+      "height": 0.02
+    }
+  }
+}

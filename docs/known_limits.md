@@ -246,3 +246,28 @@ polygon because the captured MCP catalogue lacks a Chamfer feature. This is
 not native feature-semantics coverage. The [capture](chamfer_capture.md)
 records the straight seam certification and negative checks. Existing sphere,
 torus and torus-cut export limitations remain unchanged.
+
+## Elliptic sweep STEP export
+
+`part-elliptic-profile-001` has two exact ellipse boundaries and a valid linear
+swept mantle. All five reader stages pass. The exporter rejects the swept
+surface at partition byte 2594, STEP node 41, as `unsupported_format`; it
+currently accepts only PLANE/CYLINDER/CONE/SPHERE or ring TORUS face supports.
+The frozen diagnostic and missing output are regression expectations. Native
+STEP passes a separate analytic and kernel check, with no library equivalence
+claim. See the [capture](elliptic_profile_capture.md).
+
+## Native default mass accuracy
+
+The elliptic extrusion exposes inaccurate native mass values at document
+accuracy level 0 and the body API default: volume relative error approximately
+`2.432e-4`, area `1.777e-4`, and centroid displacement `0.516` micrometre. The MCP
+has no mass-accuracy selector. Original native values and source metadata are
+preserved. This fixture declares `1e-3` relative scalar admission allowance;
+saved-field consistency still requires `1e-9` relative agreement with native
+observations. Geometry and binding retain `1e-8` m tolerance, and the independent
+STEP checker uses exact-support bounds, span-aware GK volume and boundary-derived
+area. Default OCCT area integration is retained only as a diagnostic here.
+The MCP also lacks an exact descriptor for the native linear-sweep surface,
+although its direct point/normal evaluator succeeds. Supporting accuracy
+selection and an exact sweep descriptor would improve future capture evidence.

@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "id": "part-elliptic-profile-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-elliptic-profile-001.json",
+  "tags": [
+    "elliptic-profile",
+    "native-ellipse",
+    "linear-sweep",
+    "default-mass-accuracy-limit",
+    "periodic-seam",
+    "expected-step-unsupported",
+    "material-normals",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T23:02:12.490799+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original XY ellipse with semiaxes 10/5 mm extruded 20 mm along document +Z generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 0.001,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type and Default configuration; saved scalars match frozen native default-accuracy observations. Analytic scalar accuracy has a separate explicit limit."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; three faces, two vertex-free ellipse edges and no native vertices."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint binds elliptic swept-surface geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "unsupported",
+      "reason": "Exporter currently rejects the swept mantle; native/reference elliptic prism geometry is checked separately.",
+      "issue": "docs/known_limits.md#elliptic-sweep-step-export",
+      "error_code": "unsupported_format"
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#elliptic-sweep-step-export",
+      "scope": "selected partition 0 BODY 2",
+      "error_code": "unsupported_format",
+      "reason": "Swept surface mantle is not yet an accepted STEP face support; node 41 is rejected at partition byte 2594."
+    },
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    },
+    {
+      "issue": "docs/known_limits.md#native-default-mass-accuracy",
+      "scope": "native mass API and saved scalar mass properties",
+      "error_code": "uncertified_native_measurement",
+      "reason": "Native accuracy level 0 and body API default disagree with analytic V/A by less than the explicit 1e-3 relative scalar allowance. Geometry remains checked at 1e-8 m; OCCT GK volume at 1e-9 relative. Native centroid is retained as observed, not used as an analytic oracle."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 788,
+      "sha256": "241c264836e17d27cde40b983804890e35d4c495fe4d5e2eb3097bd65026cb1b"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 3864,
+      "sha256": "4da4bd78f9f37e91e5bf24b9d24d86c1a9f4c8d9a2662b5f499eb7480a3f39c8"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 978320,
+      "sha256": "d1dc6b5ddd068c54f20dcfe99e91aa0b665ecbfb7ed974fe76711be4245e8cac"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1493,
+      "sha256": "1aa0402e2b13e664808d431ae167e4093a212b5110779e19e7df009c9d205843"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2377,
+      "sha256": "f02fc52b8ab0ce8bfe7ee1589fd42fa6fcfb8c6b93e2dbd90a61af63137f8666"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 10323,
+      "sha256": "4ebe109ff8959f11c4f988b7d688a9bb7852dbc6e647b6e465e07119fe794818"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 3853,
+      "sha256": "164f2f11e660c4d2042b23769c95d5a5d4c8b037888e07445025a24e4c1d342d"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 4239,
+      "sha256": "df9a52466b93f62b1350693716b9e152cfe39d54abe8c486c2bedaae0e70017b"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 273885,
+      "sha256": "a8f551f5a138cba02e63858712442cb8ea337d97107b1632d7ee4eb9f90266f2"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 100839,
+      "sha256": "6f105eeef1ffe9d79a3c56b8512e5aa1ed329d07cf967bd9843c4f2922e3f306"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 120423,
+      "sha256": "573601762a7082a763911ed5aedbf42a0e12f513ea502e6cbfbcffe4262089ab"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1420,
+      "sha256": "c6ff246b4282aee3888b5c76f0b2351224810f0efaf2ecfc30a73a0b3053256d"
+    },
+    {
+      "path": "validation/export-error.json",
+      "role": "validation_report",
+      "bytes": 160,
+      "sha256": "b284cec4758e68daed4cf78377cacad00e9ac5afee0f920ed9c3f855062d9d9b"
+    },
+    {
+      "path": "validation/native-measure-precision.json",
+      "role": "validation_report",
+      "bytes": 734,
+      "sha256": "bdbee3760b586d2fb28171b9cc9b1e6d461c59cb435a2a5e2ba075ff031e704d"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1818,
+      "sha256": "0c937dc2e53026111f06ac7d56002bb79ac4f0f8b137a940b3e4e8436be6c8ee"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 2338,
+      "sha256": "8bbc84b508c396c5ade18d65c1c561fa5b9ea9d14120e4a3f64f2fac5b9d9a4e"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 2100,
+      "sha256": "23c27f53bee699a6d106c975da17d67fd20e18b9a1142eebe48e0660e0888282"
+    }
+  ]
+}

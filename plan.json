@@ -342,7 +342,8 @@
       "coverage_targets": [
         "part",
         "elliptic-profile"
-      ]
+      ],
+      "recipe": "recipes/part-elliptic-profile-001.json"
     },
     {
       "id": "part-quadratic-spline-001",

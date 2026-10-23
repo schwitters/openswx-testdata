@@ -119,5 +119,6 @@ new output directory:
 ```
 
 The corpus contains fifteen complete passing export cases. The complete
-sphere, complete torus and meridionally trimmed torus segment have expected
+sphere, complete torus, meridionally trimmed torus segment and elliptic
+extrusion have expected
 export limitations.

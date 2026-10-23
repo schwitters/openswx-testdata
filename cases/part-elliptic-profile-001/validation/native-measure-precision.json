@@ -1,0 +1,25 @@
+{
+  "native_accuracy_level": 0,
+  "relative_scalar_allowance": 0.001,
+  "geometry_tolerance_m": 1e-08,
+  "analytic_volume_m3": 3.141592653589793e-06,
+  "analytic_area_m2": 0.001283004087413747,
+  "analytic_centroid_m": [
+    0,
+    0,
+    0.01
+  ],
+  "native_volume_m3": 3.1423566776275375e-06,
+  "native_area_m2": 0.00128323209603166,
+  "native_centroid_m": [
+    5.160814670300695e-07,
+    -5.72008597358696e-09,
+    0.01
+  ],
+  "native_volume_relative_error": 0.00024319640449621538,
+  "native_area_relative_error": 0.00017771464654714464,
+  "native_centroid_error_m": 5.161131658807532e-07,
+  "native_mass_values_modified": false,
+  "accuracy_control_exposed_by_mcp": false,
+  "step_equivalence": "not_tested_no_library_output"
+}

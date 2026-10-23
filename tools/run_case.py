@@ -40,7 +40,7 @@ def main(fixed_case=None, legacy_exporter=False):
     parser.add_argument("--output", type=Path, default=Path(os.environ.get(
         "OPENSWX_CORPUS_OUTPUT", "results/cylinder" if fixed_case else "results/fixture")))
     if fixed_case is None:
-        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001", "part-multiple-solids-001", "part-thin-wall-001", "part-cone-frustum-001", "part-cone-sector-001", "part-sphere-001", "part-sphere-cap-001", "part-torus-001", "part-torus-cut-001", "part-fillet-001", "part-chamfer-001"),
+        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001", "part-multiple-solids-001", "part-thin-wall-001", "part-cone-frustum-001", "part-cone-sector-001", "part-sphere-001", "part-sphere-cap-001", "part-torus-001", "part-torus-cut-001", "part-fillet-001", "part-chamfer-001", "part-elliptic-profile-001"),
                             default=os.environ.get("OPENSWX_CORPUS_CASE"))
     args = parser.parse_args()
     case_id = fixed_case if fixed_case is not None else args.case
@@ -101,9 +101,12 @@ def main(fixed_case=None, legacy_exporter=False):
         require([c["name"] for c in metadata["configurations"]] == [manifest["configuration"]],
                 "wrong saved configuration inventory")
         props = metadata["configurations"][0]["mass_properties"]
+        # Compare saved fields to frozen native observations independently of
+        # their separate analytic accuracy allowance.
         for actual_key, expected_key in (("volume", "volume_m3"), ("surface_area", "area_m2")):
             require(math.isclose(props[actual_key], document_measures[expected_key],
-                                 rel_tol=manifest["tolerances"]["measure_relative"]), "saved measure mismatch")
+                                 rel_tol=min(manifest["tolerances"]["measure_relative"],1e-9)),
+                    "saved measure mismatch")
         if "centroid_m" in document_measures:
             center = props.get("center_of_gravity")
             require(isinstance(center,dict) and all(axis in center for axis in ("x","y","z")),
@@ -167,7 +170,8 @@ def main(fixed_case=None, legacy_exporter=False):
         if manifest["expectations"]["step"]["outcome"]=="unsupported":
             unsupported_checkers = {"part-sphere-001":"check_sphere_step.py",
                                     "part-torus-001":"check_torus_step.py",
-                                    "part-torus-cut-001":"check_torus_cut_step.py"}
+                                    "part-torus-cut-001":"check_torus_cut_step.py",
+                                    "part-elliptic-profile-001":"check_elliptic_profile_step.py"}
             require(case_id in unsupported_checkers and len(selections)==1,
                     "unsupported STEP oracle is not implemented for this fixture")
             entry,_ = selections[0]

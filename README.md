@@ -5,7 +5,7 @@ An MIT-licensed test corpus repository for `libopenswx`,
 **SolidWorks 2025**. All future CAD fixtures must be original synthetic models
 with recorded authorship and generation provenance.
 
-**Current state: 50 planned cases, eighteen recipes and eighteen captured parts.**
+**Current state: 50 planned cases, nineteen recipes and nineteen captured parts.**
 The [cylinder](docs/cylinder_capture.md), [block](docs/block_capture.md),
 [tube](docs/tube_capture.md), [blind-hole](docs/blind_hole_capture.md),
 [through-hole](docs/through_hole_capture.md),
@@ -16,15 +16,19 @@ The [cylinder](docs/cylinder_capture.md), [block](docs/block_capture.md),
 [cone frustum](docs/cone_frustum_capture.md),
 [cone sector](docs/cone_sector_capture.md), [sphere](docs/sphere_capture.md),
 [sphere cap](docs/sphere_cap_capture.md), [torus](docs/torus_capture.md),
-[torus segment](docs/torus_cut_capture.md), [native fillet](docs/fillet_capture.md)
-and [exact chamfer](docs/chamfer_capture.md) captures
+[torus segment](docs/torus_cut_capture.md), [native fillet](docs/fillet_capture.md),
+[exact chamfer](docs/chamfer_capture.md) and
+[elliptic extrusion](docs/elliptic_profile_capture.md) captures
 include native SLDPRT, Parasolid binary/text and STEP AP214 references, full
 capture provenance and a shared offline check of
 all three libraries. Fifteen cases pass all six stages. The full sphere and
 torus pass the five reader stages; their boundary-free faces produce verified
 `unsupported_format` STEP export results. The meridionally trimmed torus is a
 third export limitation, currently rejected as `invalid_record` despite valid
-native geometry. The general MCP generation adapter is still pending.
+native geometry. The elliptic extrusion adds a fourth limitation: its swept
+mantle is currently rejected as `unsupported_format`. Its default native mass
+precision and independent geometric checks are documented separately.
+The general MCP generation adapter is still pending.
 The local audit checks contracts and artifact integrity; library/OCCT
 verification is a separate runner.
 
@@ -50,14 +54,14 @@ the matching environment variables are `OPENSWX_CORPUS_ROOT` and
 - `recipes/`: declarative, metre/radian construction instructions for a block,
   cylinder, tube, blind hole, through hole, stepped bore, two bores, a concave
   L-profile, two separate solid bodies, a plate with 10 micrometre thickness,
-  a revolved cone frustum, a 90-degree cone sector, a complete sphere, a minor spherical cap, a ring torus, a quarter-torus segment, a native cylinder rim fillet and a revolved exact chamfer.
+  a revolved cone frustum, a 90-degree cone sector, a complete sphere, a minor spherical cap, a ring torus, a quarter-torus segment, a native cylinder rim fillet, a revolved exact chamfer and a native ellipse extrusion.
   Step names are not promises about deployed MCP tool names.
 - `schemas/`: JSON Schema 2020-12 contracts for the plan, starter recipes,
   captured cases, native observations and export receipts. STEP protocol, file
   version and source-to-metre scale are recorded separately.
 - `cases/<id>/`: admitted immutable fixtures and `case.json`; currently `part-cylinder-001`,
   `part-block-001`, `part-tube-001`, `part-blind-hole-001`, `part-through-hole-001`, `part-stepped-bore-001`, `part-two-holes-001`, `part-concave-profile-001`,
-  `part-multiple-solids-001`, `part-thin-wall-001`, `part-cone-frustum-001`, `part-cone-sector-001`, `part-sphere-001`, `part-sphere-cap-001`, `part-torus-001`, `part-torus-cut-001`, `part-fillet-001` and `part-chamfer-001`.
+  `part-multiple-solids-001`, `part-thin-wall-001`, `part-cone-frustum-001`, `part-cone-sector-001`, `part-sphere-001`, `part-sphere-cap-001`, `part-torus-001`, `part-torus-cut-001`, `part-fillet-001`, `part-chamfer-001` and `part-elliptic-profile-001`.
 - `tools/corpus.py`: offline contract, provenance-association and SHA-256 audit.
 - `tools/run_case.py`: shared six-stage offline regression runner, using explicit
   manifest selection and fixture-specific OCCT geometry checks.
@@ -116,7 +120,8 @@ a quarter torus with meridional end disks, exposes a third export limitation.
 The seventh P1 case, a native R2 mm cylinder rim fillet, passes STEP export
 with a toroidal blend band. The eighth P1 case, a C2 x 45-degree circular-rim
 chamfer, also passes. It uses an exact revolved polygon because the MCP lacks a
-native Chamfer feature.
+native Chamfer feature. The ninth P1 fixture, an elliptic extrusion, passes all
+five reader stages and records an unsupported swept-surface STEP export.
 The revolution contract permits full or partial turns of an XZ polygon, or a
 full turn of a right semicircle, minor spherical-cap profile or offset circle, about document +Z through the origin;
 construction and analytic angles must agree.

@@ -120,11 +120,37 @@ def selected_bodies(selection,native):
     return [(e,bodies[e["native_body_key"]]) for e in entries]
 
 
+def ellipse_perimeter(major, minor):
+    """Integrate the periodic ellipse speed with a converged trapezoidal rule."""
+    if not (math.isfinite(major) and math.isfinite(minor) and 0 < minor <= major):
+        raise CorpusError("ellipse requires positive finite ordered radii")
+    previous = None
+    for count in (64,128,256,512,1024,2048,4096,8192):
+        value = 2*math.pi/count*math.fsum(
+            math.hypot(major*math.sin(2*math.pi*i/count),minor*math.cos(2*math.pi*i/count))
+            for i in range(count))
+        if previous is not None and math.isclose(value,previous,rel_tol=1e-13):
+            return value
+        previous = value
+    raise CorpusError("ellipse perimeter quadrature did not converge")
+
+
 def analytic_measures(recipe):
     kind = recipe["analytic"]["shape"]
     values = recipe["analytic"]["dimensions_m"]
     if kind == "multiple_solids":
         return aggregate_measures(multiple_solid_measures(recipe).values())
+    if kind == "elliptic_prism":
+        if set(values) != {"major_radius","minor_radius","height"}:
+            raise CorpusError("elliptic prism: expected two semiaxes and height")
+        major,minor,height = (values[k] for k in ("major_radius","minor_radius","height"))
+        if not (math.isfinite(height) and height>0 and major>minor):
+            raise CorpusError("elliptic prism requires a positive height and distinct ordered radii")
+        perimeter = ellipse_perimeter(major,minor)
+        volume,area = math.pi*major*minor*height,2*math.pi*major*minor+height*perimeter
+        if not all(math.isfinite(v) and v>0 for v in (volume,area)):
+            raise CorpusError("elliptic prism: unresolved measures")
+        return {"volume_m3":volume,"area_m2":area}
     if kind == "chamfer_cylinder":
         if set(values) != {"radius", "height", "chamfer_size"}:
             raise CorpusError("chamfer cylinder: expected radius, height and chamfer size")
@@ -335,6 +361,18 @@ def read_recipe(root, relative, case_id):
                 raise CorpusError("sphere construction requires the matching profile radius")
             if kind == "sphere_cap" and profile["parameters"]["cap_height_m"] != recipe["analytic"]["dimensions_m"]["cap_height"]:
                 raise CorpusError("sphere cap construction height differs from analytic height")
+    if kind == "elliptic_prism":
+        if [s["operation"] for s in recipe["steps"]] != ["create_part","sketch_ellipse","extrude"]:
+            raise CorpusError("elliptic prism requires one ellipse extrusion")
+        profile,extrusion = (s["parameters"] for s in recipe["steps"][1:])
+        values = recipe["analytic"]["dimensions_m"]
+        if (profile["plane"] != "XY" or profile["center_m"] != [0,0,0] or
+                profile["major_radius_m"] != values["major_radius"] or
+                profile["minor_radius_m"] != values["minor_radius"] or
+                extrusion["height_m"] != values["height"] or extrusion["direction"] != [0,0,1] or
+                extrusion["operation"] != "new_body" or
+                extrusion["profiles"] != [recipe["steps"][1]["id"]]):
+            raise CorpusError("ellipse extrusion differs from analytic dimensions or placement")
     if kind == "chamfer_cylinder":
         if [s["operation"] for s in recipe["steps"]] != ["create_part","sketch_polygon","revolve"]:
             raise CorpusError("chamfer cylinder requires one revolved profile")
