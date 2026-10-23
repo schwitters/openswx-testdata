@@ -1,0 +1,11 @@
+# Preserve captured artifact bytes: hashes include the original line endings.
+*.sldprt binary
+*.sldasm binary
+*.slddrw binary
+*.x_b binary
+*.bin binary
+*.pdf binary
+# Native text exports retain producer whitespace as part of their receipt hash.
+*.x_t -text -whitespace
+*.step -text -whitespace
+*.stp -text -whitespace

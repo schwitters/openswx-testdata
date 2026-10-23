@@ -179,7 +179,10 @@
               "export_receipts",
               "capabilities",
               "dependency",
-              "drawing_pdf"
+              "drawing_pdf",
+              "capture_evidence",
+              "derived_payload",
+              "validation_report"
             ]
           },
           "bytes": {
@@ -200,6 +203,69 @@
         "additionalProperties": false
       },
       "minItems": 4
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "payload_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "body_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "configuration": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state_scope": {
+          "const": "explicit_checkpoint_not_automatic_history_resolution"
+        },
+        "payload_path": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "payload_index",
+        "body_id",
+        "configuration",
+        "state_scope",
+        "payload_path"
+      ]
+    },
+    "known_limits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "issue": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "error_code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "issue",
+          "scope",
+          "error_code",
+          "reason"
+        ]
+      }
     }
   },
   "required": [

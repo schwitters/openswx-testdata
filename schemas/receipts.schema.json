@@ -61,6 +61,15 @@
               "minLength": 1
             },
             "minItems": 0
+          },
+          "application_protocol": {
+            "enum": [
+              "AP214"
+            ]
+          },
+          "source_to_metre_scale": {
+            "type": "number",
+            "exclusiveMinimum": 0
           }
         },
         "required": [
@@ -74,9 +83,33 @@
           "length_unit",
           "format_version",
           "verification",
-          "warnings"
+          "warnings",
+          "source_to_metre_scale"
         ],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "format": {
+                  "const": "step_reference"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "application_protocol"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "application_protocol"
+                ]
+              }
+            }
+          }
+        ]
       },
       "minItems": 0
     }

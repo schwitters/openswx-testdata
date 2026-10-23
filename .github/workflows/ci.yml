@@ -22,6 +22,6 @@ jobs:
           python3 -m venv .venv
           .venv/bin/python -m pip install -r requirements.txt
       - name: Validate contracts and captured artifacts
-        run: .venv/bin/python tools/corpus.py
+        run: .venv/bin/python tools/corpus.py --require-ready
       - name: Test admission failures
         run: .venv/bin/python -m unittest discover -s tests -v

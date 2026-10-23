@@ -20,8 +20,9 @@ class CorpusTest(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix="openswx-corpus-contract-")
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        for name in ("schemas", "recipes", "cases"):
+        for name in ("schemas", "recipes"):
             shutil.copytree(ROOT / name, self.root / name)
+        (self.root / "cases").mkdir()
         shutil.copy(ROOT / "plan.json", self.root / "plan.json")
         self.case = self.root / "cases/part-cylinder-001"
 
@@ -74,8 +75,10 @@ class CorpusTest(unittest.TestCase):
                 self.exports.append({"artifact_path": path, "bytes": artifact["bytes"],
                     "sha256": artifact["sha256"], "format": role, "configuration": "Default",
                     "document_revision": "r1", "selection_scope": "whole_document",
-                    "length_unit": "metre", "format_version": "AP214" if role == "step_reference" else "test",
+                    "length_unit": "metre", "source_to_metre_scale": 1.0,
+                    "format_version": "ISO-10303-21" if role == "step_reference" else "test",
                     "verification": "verified", "warnings": []})
+        self.exports[-1]["application_protocol"] = "AP214"
         for role, path, data in (("native", "native.json", self.native),
                 ("capabilities", "capabilities.json", {"test_only": True}),
                 ("export_receipts", "receipts.json", {"schema_version": 1, "exports": self.exports})):
@@ -145,6 +148,21 @@ class CorpusTest(unittest.TestCase):
         with self.assertRaisesRegex(corpus.CorpusError, "receipt sha256 mismatch"):
             corpus.audit(self.root)
 
+    def test_receipt_unit_scale(self):
+        self.make_case()
+        self.exports[-1]["source_to_metre_scale"] = .001
+        self.update("receipts.json", {"schema_version": 1, "exports": self.exports})
+        with self.assertRaisesRegex(corpus.CorpusError, "unit/scale mismatch"):
+            corpus.audit(self.root)
+
+    def test_protocol_is_separate_from_file_format(self):
+        self.make_case()
+        del self.exports[-1]["application_protocol"]
+        self.exports[-1]["format_version"] = "AP214"
+        self.update("receipts.json", {"schema_version": 1, "exports": self.exports})
+        with self.assertRaises(corpus.CorpusError):
+            corpus.audit(self.root)
+
     def test_receipt_configuration(self):
         self.make_case()
         self.exports[0]["configuration"] = "Other"
@@ -197,6 +215,29 @@ class CorpusTest(unittest.TestCase):
         self.write_json(path, recipe)
         with self.assertRaisesRegex(corpus.CorpusError, "unknown or later sketch"):
             corpus.audit(self.root)
+
+
+class CapturedCylinderTest(unittest.TestCase):
+    def test_admitted_cylinder_integrity(self):
+        report = corpus.audit(ROOT, require_ready=True)
+        self.assertIn("part-cylinder-001", {case["id"] for case in report["cases"]})
+
+    def test_native_samples_match_construction(self):
+        native = corpus.load_json(ROOT / "cases/part-cylinder-001/reference/native.json")
+        brep = native["observations"]["brep"]["entities"]
+        count = 0
+        for label, evaluated in native["observations"]["evaluations"].items():
+            entity = brep[int(label.split("-")[-1])]
+            for sample in evaluated["samples"]:
+                x,y,z = sample["position"]
+                if entity["geometry"]["type"] in ("circle", "cylinder"):
+                    self.assertAlmostEqual((x*x+y*y)**.5, .01, delta=1e-12)
+                else:
+                    self.assertAlmostEqual(z, entity["geometry"]["origin"][2], delta=1e-12)
+                self.assertGreaterEqual(z, -1e-12)
+                self.assertLessEqual(z, .02+1e-12)
+                count += 1
+        self.assertEqual(count, 26)
 
 
 if __name__ == "__main__":

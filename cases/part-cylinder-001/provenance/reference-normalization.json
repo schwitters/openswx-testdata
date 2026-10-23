@@ -1,0 +1,7 @@
+{
+  "source": "reference/model.x_b",
+  "transformation": "Remove the complete ASCII transmit header; original file retained unchanged",
+  "removed_header_bytes": 711,
+  "output": "derived/reference-without-ascii-header.x_b",
+  "scope": "diagnostic only; no native binary-file support claimed"
+}

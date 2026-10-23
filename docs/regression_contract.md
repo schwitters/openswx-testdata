@@ -1,9 +1,9 @@
 # Library regression contract
 
-The first implementation in this repository is an offline integrity/admission
-validator. The library runner and OCCT comparison described here are the next
-implementation step, after one genuine capture establishes the producer data
-contract. No library result is currently fabricated or inferred from a manifest.
+The repository includes an offline integrity/admission validator and a working
+six-stage runner for the captured cylinder. See [the capture](cylinder_capture.md)
+for its native evidence, commands and exact checkpoint scope. Other cases remain
+planned. No library result is inferred from a manifest.
 
 ## Independent stages
 

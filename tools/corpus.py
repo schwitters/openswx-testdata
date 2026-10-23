@@ -175,8 +175,15 @@ def check_case(root, case_dir, planned):
         required |= REFERENCE_ROLES
     if not required <= by_role.keys():
         raise CorpusError(f"missing artifact roles: {sorted(required - by_role.keys())}")
+    if "selection" in manifest:
+        selection = manifest["selection"]
+        selected = by_path.get(selection["payload_path"])
+        if not selected or selected["role"] != "derived_payload":
+            raise CorpusError("selected checkpoint must be a declared derived payload")
+        if selection["configuration"] != manifest["configuration"]:
+            raise CorpusError("selected checkpoint configuration differs from manifest")
     for role, artifacts in by_role.items():
-        if role != "dependency" and len(artifacts) != 1:
+        if role not in {"dependency", "capture_evidence", "derived_payload", "validation_report"} and len(artifacts) != 1:
             raise CorpusError(f"expected exactly one artifact for {role}")
     listed = set(by_path) | {"case.json"}
     for path in case_dir.rglob("*"):
@@ -202,8 +209,11 @@ def check_case(root, case_dir, planned):
         for key in ("configuration", "document_revision"):
             if receipt[key] != manifest[key]:
                 raise CorpusError(f"receipt {key} differs from manifest: {path}")
-        if receipt["format"] == "step_reference" and receipt["format_version"] != "AP214":
+        if receipt["format"] == "step_reference" and receipt.get("application_protocol") != "AP214":
             raise CorpusError("starter STEP reference must verify AP214")
+        expected_scale = {"metre": 1.0, "millimetre": .001}[receipt["length_unit"]]
+        if receipt["source_to_metre_scale"] != expected_scale:
+            raise CorpusError(f"receipt unit/scale mismatch: {path}")
         covered.add(path)
     reference_paths = {a["path"] for a in by_path.values() if a["role"] in REFERENCE_ROLES}
     if covered != reference_paths:

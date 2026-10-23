@@ -1,14 +1,16 @@
 # openswx-testdata
 
-An MIT-licensed corpus preparation repository for `libopenswx`,
+An MIT-licensed test corpus repository for `libopenswx`,
 `libopenparasolid` and `libopenswstep`. The first producer target is
 **SolidWorks 2025**. All future CAD fixtures must be original synthetic models
 with recorded authorship and generation provenance.
 
-**Current state: 50 planned cases, three starter recipes, zero captured cases.**
-No SolidWorks/MCP generation adapter or library regression runner is implemented
-here yet. The local audit checks contracts and artifact integrity; it does not
-claim a CAD file is valid or a library supports it.
+**Current state: 50 planned cases, three starter recipes, one captured cylinder.**
+The [cylinder capture](docs/cylinder_capture.md) includes native SLDPRT,
+Parasolid binary/text and STEP AP214 references, full capture provenance and a
+repeatable offline check of all three libraries. The general MCP generation
+adapter is still pending. The local audit checks contracts and artifact
+integrity; library/OCCT verification is a separate runner.
 
 ## Start locally
 
@@ -21,9 +23,8 @@ python3 -m venv .venv
 
 The audit exits with code 2 on invalid contracts, missing artifacts, changed
 bytes, inconsistent export receipts or failed analytic checks. Add
-`--require-ready` to reject an empty corpus. This deliberately fails until at
-least one captured case is admitted. `--root` selects another checkout; the
-matching environment variables are `OPENSWX_CORPUS_ROOT` and
+`--require-ready` to reject an empty corpus. `--root` selects another checkout;
+the matching environment variables are `OPENSWX_CORPUS_ROOT` and
 `OPENSWX_CORPUS_REQUIRE_READY=1`.
 
 ## Layout
@@ -33,10 +34,12 @@ matching environment variables are `OPENSWX_CORPUS_ROOT` and
 - `recipes/`: declarative, metre/radian construction instructions for a block,
   cylinder and tube. Step names are not promises about deployed MCP tool names.
 - `schemas/`: JSON Schema 2020-12 contracts for the plan, starter recipes,
-  captured cases, native observations and export receipts.
-- `cases/<id>/`: admitted immutable fixtures and `case.json`; currently empty.
+  captured cases, native observations and export receipts. STEP protocol, file
+  version and source-to-metre scale are recorded separately.
+- `cases/<id>/`: admitted immutable fixtures and `case.json`; currently `part-cylinder-001`.
 - `tools/corpus.py`: offline contract, provenance-association and SHA-256 audit.
-- `tests/`: contract tests using temporary dummy bytes, not CAD fixtures.
+- `tests/`: temporary admission/error contracts plus captured artifact integrity
+  and native geometry-sample checks.
 - `docs/`: the capture procedure, tool handoff and staged testing contract.
 
 See [the first capture procedure](docs/first_capture.md),
@@ -89,9 +92,14 @@ Never silently overwrite an admitted fixture. Regeneration is a reviewed change
 with new hashes, producer receipts and a semantic comparison. Binary identity
 between independent SolidWorks saves is not required. Linux library CI will
 consume a pinned corpus Git commit, without contacting SolidWorks or the MCP.
+The corpus includes selected extracted payloads as explicitly marked derived
+artifacts, plus capture evidence and validation reports. Native reference files
+remain unchanged. See [known limits](docs/known_limits.md) for the standalone
+Parasolid envelope and explicit checkpoint-selection scope.
+
 Generated trial files belong in ignored `staging/`; transient reports and
 exporter outputs belong in ignored `results/`.
 
 The repository has no remote publication configured. Git LFS is not required
-for the empty initial corpus; decide from actual fixture sizes before the first
+for this small initial corpus; decide from actual fixture sizes before a
 large data batch.
