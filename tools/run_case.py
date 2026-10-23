@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 openswx contributors
+"""Replay a frozen starter fixture without SolidWorks or a network."""
+import argparse
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+from corpus import CorpusError, audit, load_json
+
+
+def require(condition, message):
+    if not condition:
+        raise CorpusError(message)
+
+
+def main(fixed_case=None, legacy_exporter=False):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(os.environ.get(
+        "OPENSWX_CORPUS_ROOT", Path(__file__).resolve().parents[1])))
+    parser.add_argument("--openswx-build", type=Path,
+                        default=os.environ.get("OPENSWX_CORPUS_BUILD"))
+    parser.add_argument("--exporter", type=Path,
+                        default=os.environ.get("OPENSWX_CORPUS_EXPORTER"))
+    parser.add_argument("--occt-python", type=Path,
+                        default=os.environ.get("OPENSWX_CORPUS_OCCT_PYTHON"))
+    parser.add_argument("--output", type=Path, default=Path(os.environ.get(
+        "OPENSWX_CORPUS_OUTPUT", "results/cylinder" if fixed_case else "results/fixture")))
+    if fixed_case is None:
+        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001"),
+                            default=os.environ.get("OPENSWX_CORPUS_CASE"))
+    args = parser.parse_args()
+    case_id = fixed_case if fixed_case is not None else args.case
+    if not case_id:
+        parser.error("provide --case (or OPENSWX_CORPUS_CASE)")
+    if not all((args.openswx_build, args.exporter, args.occt_python)):
+        parser.error("provide --openswx-build, --exporter and --occt-python (or corresponding env vars)")
+    root, output = args.root.resolve(), args.output.resolve()
+    if output.is_relative_to(root / "cases"):
+        parser.error("reports cannot overwrite admitted cases")
+    try:
+        output.mkdir(parents=True, exist_ok=False)
+    except OSError as error:
+        parser.error(str(error))
+    report = {"case": case_id, "library_tests_executed": True,
+              "stages": {s: "blocked" for s in ("metadata", "extraction", "decode", "topology", "binding", "step")}}
+
+    def run(label, command):
+        result = subprocess.run([str(c) for c in command], capture_output=True, text=True, timeout=60)
+        (output / (label+".stdout")).write_text(result.stdout)
+        (output / (label+".stderr")).write_text(result.stderr)
+        return result
+
+    def checked_json(label, command):
+        result = run(label, command)
+        require(result.returncode == 0, f"{label} failed: {result.stderr[:400]}")
+        return json.loads(result.stdout)
+
+    try:
+        audit(root, require_ready=True)
+        case = root / "cases" / case_id
+        manifest, native = load_json(case / "case.json"), load_json(case / "reference/native.json")
+        selection = manifest["selection"]
+        payload_index, body_id = selection["payload_index"], str(selection["body_id"])
+        report["selection"] = selection
+        report["source_coordinate_unit"] = native["length_unit"]
+        report["binding_tolerance_m"] = 1e-8
+        require(manifest["tolerances"]["length_absolute_m"] == report["binding_tolerance_m"],
+                "fixture tolerance differs from the starter export driver")
+        if legacy_exporter:
+            require(case_id == "part-cylinder-001" and payload_index == 0 and body_id == "2",
+                    "legacy cylinder export driver selection differs from case")
+        source = case / "source/model.sldprt"
+        build = args.openswx_build.resolve()
+        dump = build / "asmbox/swx_dump"
+        inspect = build / "libopenparasolid/parasolid_inspect"
+        report["corpus_commit"] = subprocess.check_output(
+            ["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
+        report["corpus_worktree_dirty"] = bool(subprocess.check_output(
+            ["git", "-C", str(root), "status", "--porcelain"], text=True).strip())
+        report["executables"] = {str(path): hashlib.sha256(path.read_bytes()).hexdigest()
+                                 for path in (dump, inspect, args.exporter.resolve())}
+        expected = native["bodies"][0]
+        metadata = checked_json("metadata", [dump, source])
+        require(metadata["doc_type"] == "part", "wrong document type")
+        require([c["name"] for c in metadata["configurations"]] == [manifest["configuration"]],
+                "wrong saved configuration inventory")
+        props = metadata["configurations"][0]["mass_properties"]
+        for actual_key, expected_key in (("volume", "volume_m3"), ("surface_area", "area_m2")):
+            require(math.isclose(props[actual_key], expected["measurements_si"][expected_key],
+                                 rel_tol=manifest["tolerances"]["measure_relative"]), "saved measure mismatch")
+        report["stages"]["metadata"] = "pass"
+        extracted = output / "extracted"
+        inventory = checked_json("extraction", [dump, "--extract-parasolid", extracted, source])
+        frozen = load_json(case / "provenance/extraction.json")
+        require(not inventory["issues"] and inventory["payload_count"] == frozen["payload_count"],
+                "payload extraction mismatch")
+        for payload, captured in zip(inventory["payloads"], frozen["payloads"]):
+            require(all(payload[k] == captured[k] for k in ("index", "kind", "configuration_name", "bytes", "source_stream")),
+                    "payload identity mismatch")
+            require(hashlib.sha256((extracted / payload["file"]).read_bytes()).hexdigest() == captured["sha256"],
+                    "extracted payload bytes changed")
+        report["stages"]["extraction"] = "pass"
+        selected_payload = next((p for p in inventory["payloads"] if p["index"] == payload_index), None)
+        require(selected_payload is not None and selected_payload["kind"] == "partition",
+                "explicit selection must identify a partition")
+        require(hashlib.sha256((extracted / selected_payload["file"]).read_bytes()).hexdigest() ==
+                hashlib.sha256((case / selection["payload_path"]).read_bytes()).hexdigest(),
+                "selected checkpoint differs from frozen selection")
+        partition = extracted / selected_payload["file"]
+        for payload in inventory["payloads"]:
+            decoded = checked_json("decode-"+str(payload["index"]),
+                                   [inspect, "--nodes", "--summary", extracted / payload["file"]])
+            require(decoded["complete"] and not decoded["diagnostics"] and decoded["uninterpreted_size"] == 0,
+                    "incomplete embedded payload decode")
+        report["stages"]["decode"] = "pass"
+        # A separate file envelope is a known unsupported input, not a decode pass.
+        raw = run("native-binary-envelope", [inspect, "--nodes", "--summary", case / "reference/model.x_b"])
+        require(raw.returncode != 0 and "unsupported_format at byte 0" in raw.stderr,
+                "native binary-envelope expectation changed; review known limit")
+        report["native_binary_envelope"] = "expected unsupported_format at byte 0"
+        topology = checked_json("topology", [inspect, "--body-topology", body_id, "--summary", partition])
+        require("body_topology" in topology, "missing topology validation result")
+        require(topology["body_topology"].get("body") == int(body_id),
+                "topology result belongs to another body")
+        for key in ("faces", "edges", "vertices"):
+            require(topology["body_topology"]["counts"][key] == expected["counts"][key],
+                    "recorded topology differs from native capture")
+        report["stages"]["topology"] = "pass"
+        binding = checked_json("binding", [inspect, "--body-geometry", body_id, "--binding-tolerance", "1e-8", partition])
+        for key in ("faces", "edges", "vertices"):
+            require(binding["body_geometry"]["counts"][key] == expected["counts"][key],
+                    "bound topology differs from native capture")
+        require(binding["model"]["geometry_counts"] ==
+                load_json(case / "validation/partition-decode.json")["model"]["geometry_counts"],
+                "support geometry inventory changed")
+        report["stages"]["binding"] = "pass"
+        exported = output / "library.step"
+        export_command = [args.exporter.resolve(), source]
+        if not legacy_exporter:
+            export_command.extend((str(payload_index), body_id))
+        export_command.append(exported)
+        report["export_statistics"] = checked_json("export", export_command)
+        for key in ("faces", "edges"):
+            require(report["export_statistics"][key] == expected["counts"][key],
+                    "export lost source topology")
+        require(report["export_statistics"]["solids"] == 1, "expected one complete solid")
+        checker = "check_cylinder_step.py" if case_id == "part-cylinder-001" else "check_block_step.py"
+        report["occt"] = checked_json("occt", [args.occt_python.absolute(), root / "tools" / checker,
+                                               case / "reference/model.step", exported])
+        report["stages"]["step"] = "pass"
+        report["state_scope"] = manifest["selection"]["state_scope"]
+        print(json.dumps(report, indent=2))
+        return 0
+    except (CorpusError, OSError, ValueError, subprocess.SubprocessError) as error:
+        report["failure"] = str(error)
+        print(f"fixture regression: {error}", file=sys.stderr)
+        return 2
+    finally:
+        (output / "report.json").write_text(json.dumps(report, indent=2)+"\n")
+
+
+if __name__ == "__main__":
+    sys.exit(main())

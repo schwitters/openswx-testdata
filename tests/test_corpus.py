@@ -240,5 +240,40 @@ class CapturedCylinderTest(unittest.TestCase):
         self.assertEqual(count, 26)
 
 
+class CapturedBlockTest(unittest.TestCase):
+    def test_admitted_block_integrity(self):
+        report = corpus.audit(ROOT, require_ready=True)
+        self.assertIn("part-block-001", {case["id"] for case in report["cases"]})
+
+    def test_native_block_samples_match_lines_and_planes(self):
+        native = corpus.load_json(ROOT / "cases/part-block-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"], {"faces": 6, "edges": 12, "vertices": 8, "shells": 1})
+        self.assertAlmostEqual(body["measurements_si"]["volume_m3"], .000024, delta=1e-16)
+        self.assertAlmostEqual(body["measurements_si"]["area_m2"], .0052, delta=1e-14)
+        entities = native["observations"]["brep"]["entities"]
+        count = 0
+        for label, evaluated in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            geometry = entity["geometry"]
+            for sample in evaluated["samples"]:
+                point = sample["position"]
+                for coordinate, maximum in zip(point, (.02,.03,.04)):
+                    self.assertGreaterEqual(coordinate, -1e-12)
+                    self.assertLessEqual(coordinate, maximum+1e-12)
+                if entity["kind"] == "curve":
+                    target = [o+d*sample["parameter"] for o,d in
+                              zip(geometry["origin"], geometry["direction"])]
+                    for actual, expected in zip(point, target):
+                        self.assertAlmostEqual(actual, expected, delta=1e-12)
+                else:
+                    residual = sum((x-o)*n for x,o,n in zip(
+                        point, geometry["origin"], geometry["normal"]))
+                    self.assertAlmostEqual(residual, 0, delta=1e-12)
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                count += 1
+        self.assertEqual(count, 90)
+
+
 if __name__ == "__main__":
     unittest.main()

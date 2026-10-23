@@ -9,46 +9,17 @@ import sys
 from pathlib import Path
 
 from OCP.BRepAdaptor import BRepAdaptor_Surface
-from OCP.BRepAlgoAPI import BRepAlgoAPI_Cut
-from OCP.BRepCheck import BRepCheck_Analyzer
-from OCP.BRepGProp import BRepGProp
 from OCP.GeomAbs import GeomAbs_Cylinder, GeomAbs_Plane
-from OCP.GProp import GProp_GProps
-from OCP.IFSelect import IFSelect_RetDone
-from OCP.STEPControl import STEPControl_Reader
-from OCP.TopAbs import TopAbs_FACE, TopAbs_EDGE, TopAbs_VERTEX, TopAbs_SOLID
+from OCP.TopAbs import TopAbs_FACE
 from OCP.TopExp import TopExp
 from OCP.TopoDS import TopoDS
 from OCP.TopTools import TopTools_IndexedMapOfShape
 
-
-def require(condition, message):
-    if not condition:
-        raise RuntimeError(message)
-
-
-def measure(shape, volume):
-    if shape.IsNull():
-        return 0.0
-    properties = GProp_GProps()
-    operation = BRepGProp.VolumeProperties_s if volume else BRepGProp.SurfaceProperties_s
-    operation(shape, properties, Eps=1e-12)
-    return properties.Mass()
+from step_check import compare_solids, measure, read_step, require
 
 
 def read_cylinder(path):
-    reader = STEPControl_Reader()
-    require(reader.ReadFile(str(path)) == IFSelect_RetDone, f"cannot read {path}")
-    reader.SetSystemLengthUnit(1.0)  # One millimetre in OCCT's STEP unit convention.
-    require(reader.TransferRoots() == 1, "expected exactly one STEP root")
-    shape = reader.OneShape()
-    require(not shape.IsNull() and BRepCheck_Analyzer(shape).IsValid(), "invalid B-rep")
-    counts = {}
-    for name, kind in (("faces", TopAbs_FACE), ("edges", TopAbs_EDGE),
-                       ("vertices", TopAbs_VERTEX), ("solids", TopAbs_SOLID)):
-        entities = TopTools_IndexedMapOfShape()
-        TopExp.MapShapes_s(shape, kind, entities)
-        counts[name] = entities.Extent()
+    shape, counts = read_step(path)
     require(counts["faces"] == 3 and counts["solids"] == 1, "incomplete cylinder")
     faces = TopTools_IndexedMapOfShape()
     TopExp.MapShapes_s(shape, TopAbs_FACE, faces)
@@ -84,13 +55,7 @@ def main():
         raise SystemExit("Usage: check_cylinder_step.py <native.step> <exported.step>")
     native, native_report = read_cylinder(Path(sys.argv[1]))
     exported, exported_report = read_cylinder(Path(sys.argv[2]))
-    differences = []
-    for first, second in ((native, exported), (exported, native)):
-        cut = BRepAlgoAPI_Cut(first, second)
-        require(cut.IsDone(), "geometric difference operation failed")
-        remainder = abs(measure(cut.Shape(), True))
-        require(remainder < 1e-6, "solid difference exceeds 1e-6 mm^3")
-        differences.append(remainder)
+    differences = compare_solids(native, exported)
     print(json.dumps({"ocp_distribution_version": importlib.metadata.version("cadquery-ocp"),
                       "native_reference": native_report, "library_export": exported_report,
                       "bidirectional_difference_volume_mm3": differences}, indent=2))

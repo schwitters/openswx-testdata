@@ -1,4 +1,4 @@
-# Limits exposed by the first native cylinder capture
+# Limits exposed by the initial native captures
 
 ## Native Parasolid file envelope
 
@@ -61,3 +61,12 @@ The tools do not expose the resolved template file identity or its hash. That
 field remains explicitly unavailable. The template file itself is not included
 in the corpus. An explicit template identity/hash readback would improve future
 capture reproducibility; it is separate from the cylinder's verified geometry.
+
+## Block capture confirmation
+
+`part-block-001` also contains a completely decoded embedded partition and delta,
+and its standalone binary export also has an ASCII header ending at byte 711.
+The block runner selects partition 0, BODY 2 explicitly and independently checks
+its shape against native/reference geometry. No automatic history resolution is
+claimed. Its six planar faces, twelve straight edges and eight named vertices
+survive export/import without additional periodic seam topology.

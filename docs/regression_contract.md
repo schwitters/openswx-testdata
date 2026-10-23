@@ -1,9 +1,9 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder. See [the capture](cylinder_capture.md)
-for its native evidence, commands and exact checkpoint scope. Other cases remain
-planned. No library result is inferred from a manifest.
+six-stage runner for the captured cylinder and block. See the
+[cylinder](cylinder_capture.md) and [block](block_capture.md) captures for native
+evidence, commands and exact checkpoint scope. Other cases remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
 

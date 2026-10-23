@@ -8,8 +8,9 @@ It does not implement or modify the server. The companion requirements are
 
 `plan.json` uses semantic names. The future adapter must map each name to an
 actual discovered tool, input schema, output schema and effective runtime
-support. Names below from the requirements are proposals, not verified deployed
-interfaces.
+support. The names below reflect the original requirements. Admitted captures now
+include the actual deployed tool catalog and effective capabilities; use those
+frozen snapshots as the authority for reproducing their requests.
 
 | Semantic capability | Required behavior | Proposed/existing interface |
 | --- | --- | --- |

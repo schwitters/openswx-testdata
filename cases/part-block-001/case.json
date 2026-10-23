@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "id": "part-block-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-block-001.json",
+  "tags": [
+    "block",
+    "planar-faces",
+    "straight-edges",
+    "named-vertices",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T20:02:54.307462+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original 20 x 30 x 40 mm block generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 1e-09,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type, Default configuration and saved mass properties."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; six faces, twelve edges and eight native vertices."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint matches native block geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "pass",
+      "reason": "Complete selected checkpoint; analytic block, native STEP and OCCT equivalence."
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 1124,
+      "sha256": "e07fa8c9450b293d353cf29a6b440fd95e1857c0e191be27264dce777d8dc899"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 6730,
+      "sha256": "2fec5cfee7af33e531d51fb6de338c5d543c0c52021c523095be4b297d88ae2d"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 2417232,
+      "sha256": "991c51e644897b8a3e58ccfbd6642cf13d94a0da5d4146beb1f9f3cfe0409479"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1493,
+      "sha256": "0456c9e0950500a834a33191c4da04cfdd9f8431289697ef48de3b51c1df5ada"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2379,
+      "sha256": "044f6722d3d5fe3d4893379e7701ea7ad0e8886b87b4390501ec7d170c8b8c93"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 13533,
+      "sha256": "c26ab9c161c16fd5f1231c9e77ce8e3fff50ec9b60a0daa34a97289624a5d530"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 6665,
+      "sha256": "50363d04d453e4970f962af4abe5b5d9d8103d15a6f332a35006ebc6105be749"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 7124,
+      "sha256": "13592f3ea7432cfa83abed4e750b3176816486cf59bd54cb43a09eea7d6aaeef"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 973041,
+      "sha256": "c9bb87a93c682f014eb30a7306f1c6bdcbf114aa4eb6c82827458293f92b1066"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 58517,
+      "sha256": "63dac8909522775bd3e5ecc564455c23534c295e78a8abc671e4e255bd4afdbd"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 262190,
+      "sha256": "38cda6d17e0a4016676eda6a9f159f71c32a5b9c89ed01df9a1f73f3e0e17ba8"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1430,
+      "sha256": "2b7e5f7b4fdf94150584adf56bb7da2dc6ba3d806cae1140ab9a4b7b210c0b6a"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1607,
+      "sha256": "70871f10bb3f69ba68eb10949f435e62eeea4383caa775466e62a4eea2e2b142"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 769,
+      "sha256": "7f1ced7e63f2412d7442655fa7d114166e934db969621d798c0f2ff30a8079eb"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 2096,
+      "sha256": "cc5492e51de2946e391ab69bd0022aca7e00fddb95701b0c95e8d77064477374"
+    }
+  ]
+}

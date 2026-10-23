@@ -5,10 +5,11 @@ An MIT-licensed test corpus repository for `libopenswx`,
 **SolidWorks 2025**. All future CAD fixtures must be original synthetic models
 with recorded authorship and generation provenance.
 
-**Current state: 50 planned cases, three starter recipes, one captured cylinder.**
-The [cylinder capture](docs/cylinder_capture.md) includes native SLDPRT,
-Parasolid binary/text and STEP AP214 references, full capture provenance and a
-repeatable offline check of all three libraries. The general MCP generation
+**Current state: 50 planned cases, three starter recipes, two captured parts: cylinder and block.**
+The [cylinder capture](docs/cylinder_capture.md) and
+[block capture](docs/block_capture.md) include native SLDPRT, Parasolid binary/text
+and STEP AP214 references, full capture provenance and a shared offline check of
+all three libraries. The general MCP generation
 adapter is still pending. The local audit checks contracts and artifact
 integrity; library/OCCT verification is a separate runner.
 
@@ -36,10 +37,14 @@ the matching environment variables are `OPENSWX_CORPUS_ROOT` and
 - `schemas/`: JSON Schema 2020-12 contracts for the plan, starter recipes,
   captured cases, native observations and export receipts. STEP protocol, file
   version and source-to-metre scale are recorded separately.
-- `cases/<id>/`: admitted immutable fixtures and `case.json`; currently `part-cylinder-001`.
+- `cases/<id>/`: admitted immutable fixtures and `case.json`; currently `part-cylinder-001`
+  and `part-block-001`.
 - `tools/corpus.py`: offline contract, provenance-association and SHA-256 audit.
+- `tools/run_case.py`: shared six-stage offline regression runner, using explicit
+  manifest selection and fixture-specific OCCT geometry checks.
 - `tests/`: temporary admission/error contracts plus captured artifact integrity
-  and native geometry-sample checks.
+  and native geometry-sample checks. Optional OCCT tests also reject equally
+  sized but misplaced/differently proportioned blocks.
 - `docs/`: the capture procedure, tool handoff and staged testing contract.
 
 See [the first capture procedure](docs/first_capture.md),
