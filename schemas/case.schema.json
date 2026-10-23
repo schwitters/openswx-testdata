@@ -1,0 +1,268 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+    },
+    "document_kind": {
+      "enum": [
+        "part",
+        "assembly",
+        "drawing"
+      ]
+    },
+    "configuration": {
+      "type": "string",
+      "minLength": 1
+    },
+    "document_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recipe": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$))[^:]+$"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "producer": {
+      "type": "object",
+      "properties": {
+        "application": {
+          "const": "SolidWorks"
+        },
+        "year": {
+          "const": 2025
+        },
+        "build": {
+          "type": "string",
+          "minLength": 1
+        },
+        "worker_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "captured_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "application",
+        "year",
+        "build",
+        "worker_version",
+        "captured_at"
+      ],
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "const": "original_synthetic"
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1
+        },
+        "license": {
+          "const": "MIT"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "origin",
+        "author",
+        "license",
+        "description"
+      ],
+      "additionalProperties": false
+    },
+    "tolerances": {
+      "type": "object",
+      "properties": {
+        "length_absolute_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "measure_relative": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "area_absolute_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "volume_absolute_m3": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "angle_absolute_rad": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "length_absolute_m",
+        "measure_relative",
+        "area_absolute_m2",
+        "volume_absolute_m3",
+        "angle_absolute_rad"
+      ],
+      "additionalProperties": false
+    },
+    "expectations": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "#/$defs/expectation"
+        },
+        "extraction": {
+          "$ref": "#/$defs/expectation"
+        },
+        "decode": {
+          "$ref": "#/$defs/expectation"
+        },
+        "topology": {
+          "$ref": "#/$defs/expectation"
+        },
+        "binding": {
+          "$ref": "#/$defs/expectation"
+        },
+        "step": {
+          "$ref": "#/$defs/expectation"
+        }
+      },
+      "required": [
+        "metadata",
+        "extraction",
+        "decode",
+        "topology",
+        "binding",
+        "step"
+      ],
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$))[^:]+$"
+          },
+          "role": {
+            "enum": [
+              "source",
+              "native",
+              "parasolid_binary",
+              "parasolid_text",
+              "step_reference",
+              "export_receipts",
+              "capabilities",
+              "dependency",
+              "drawing_pdf"
+            ]
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "path",
+          "role",
+          "bytes",
+          "sha256"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 4
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "document_kind",
+    "configuration",
+    "document_revision",
+    "recipe",
+    "tags",
+    "producer",
+    "provenance",
+    "tolerances",
+    "expectations",
+    "artifacts"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "expectation": {
+      "type": "object",
+      "properties": {
+        "outcome": {
+          "enum": [
+            "pass",
+            "unsupported",
+            "not_applicable"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "issue": {
+          "type": "string",
+          "minLength": 1
+        },
+        "error_code": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "outcome",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "unsupported"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "issue",
+              "error_code"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

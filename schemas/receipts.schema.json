@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "exports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "artifact_path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$))[^:]+$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "format": {
+            "enum": [
+              "parasolid_binary",
+              "parasolid_text",
+              "step_reference"
+            ]
+          },
+          "configuration": {
+            "type": "string",
+            "minLength": 1
+          },
+          "document_revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "selection_scope": {
+            "const": "whole_document"
+          },
+          "length_unit": {
+            "enum": [
+              "metre",
+              "millimetre"
+            ]
+          },
+          "format_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "verification": {
+            "const": "verified"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "artifact_path",
+          "bytes",
+          "sha256",
+          "format",
+          "configuration",
+          "document_revision",
+          "selection_scope",
+          "length_unit",
+          "format_version",
+          "verification",
+          "warnings"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schema_version",
+    "exports"
+  ],
+  "additionalProperties": false
+}

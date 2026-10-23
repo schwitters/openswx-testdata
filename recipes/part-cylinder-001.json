@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "id": "part-cylinder-001",
+  "description": "Construct one cylinder at the document origin.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0
+        ],
+        "radius_m": 0.01,
+        "sketch_id": "main-profile"
+      }
+    },
+    {
+      "id": "extrude-profile",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "height_m": 0.02,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "cylinder",
+    "dimensions_m": {
+      "radius": 0.01,
+      "height": 0.02
+    }
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "length_unit": {
+      "const": "metre"
+    },
+    "angle_unit": {
+      "const": "radian"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
+                "const": "create_part"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "configuration": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "configuration"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
+                "const": "sketch_rectangle"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "plane": {
+                    "const": "XY"
+                  },
+                  "origin_m": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "width_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "depth_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "sketch_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+                  }
+                },
+                "required": [
+                  "plane",
+                  "origin_m",
+                  "width_m",
+                  "depth_m",
+                  "sketch_id"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
+                "const": "sketch_circle"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "plane": {
+                    "const": "XY"
+                  },
+                  "center_m": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "radius_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "sketch_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+                  }
+                },
+                "required": [
+                  "plane",
+                  "center_m",
+                  "radius_m",
+                  "sketch_id"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
+                "const": "extrude"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "profiles": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  },
+                  "height_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "direction": {
+                    "const": [
+                      0,
+                      0,
+                      1
+                    ]
+                  },
+                  "operation": {
+                    "const": "new_body"
+                  }
+                },
+                "required": [
+                  "profiles",
+                  "height_m",
+                  "direction",
+                  "operation"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "minItems": 1
+    },
+    "analytic": {
+      "type": "object",
+      "properties": {
+        "shape": {
+          "enum": [
+            "block",
+            "cylinder",
+            "tube"
+          ]
+        },
+        "dimensions_m": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        }
+      },
+      "required": [
+        "shape",
+        "dimensions_m"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "description",
+    "length_unit",
+    "angle_unit",
+    "steps",
+    "analytic"
+  ],
+  "additionalProperties": false
+}

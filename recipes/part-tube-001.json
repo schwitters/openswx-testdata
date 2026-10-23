@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "part-tube-001",
+  "description": "Construct one tube at the document origin.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0
+        ],
+        "radius_m": 0.01,
+        "sketch_id": "main-profile"
+      }
+    },
+    {
+      "id": "sketch-inner",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0
+        ],
+        "radius_m": 0.005,
+        "sketch_id": "main-profile"
+      }
+    },
+    {
+      "id": "extrude-profile",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-outer",
+          "sketch-inner"
+        ],
+        "height_m": 0.02,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "tube",
+    "dimensions_m": {
+      "outer_radius": 0.01,
+      "inner_radius": 0.005,
+      "height": 0.02
+    }
+  }
+}

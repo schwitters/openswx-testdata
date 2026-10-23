@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "part-block-001",
+  "description": "Construct one block at the document origin.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_rectangle",
+      "parameters": {
+        "plane": "XY",
+        "origin_m": [
+          0,
+          0,
+          0
+        ],
+        "width_m": 0.02,
+        "depth_m": 0.03,
+        "sketch_id": "main-profile"
+      }
+    },
+    {
+      "id": "extrude-profile",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "height_m": 0.04,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "block",
+    "dimensions_m": {
+      "width": 0.02,
+      "depth": 0.03,
+      "height": 0.04
+    }
+  }
+}

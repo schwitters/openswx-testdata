@@ -1,0 +1,809 @@
+{
+  "schema_version": 1,
+  "producer_target": "SolidWorks 2025",
+  "cases": [
+    {
+      "id": "part-block-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "One rectangular solid; closed shell, six planar faces.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "block"
+      ],
+      "recipe": "recipes/part-block-001.json"
+    },
+    {
+      "id": "part-cylinder-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "One cylinder with a periodic seam and two planar caps.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "cylinder"
+      ],
+      "recipe": "recipes/part-cylinder-001.json"
+    },
+    {
+      "id": "part-tube-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "One hollow cylinder with annular caps.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "tube"
+      ],
+      "recipe": "recipes/part-tube-001.json"
+    },
+    {
+      "id": "part-blind-hole-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "A blind cylindrical cut with an internal planar bottom.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "blind-hole"
+      ]
+    },
+    {
+      "id": "part-through-hole-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "A complete bore and net-volume subtraction.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "through-hole"
+      ]
+    },
+    {
+      "id": "part-stepped-bore-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "Coaxial bores with distinct radii and planar shoulders.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "stepped-bore"
+      ]
+    },
+    {
+      "id": "part-two-holes-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "Two separated bores and repeated geometric primitives.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "two-holes"
+      ]
+    },
+    {
+      "id": "part-concave-profile-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "Extrude an L-profile with a nonconvex planar cap.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "concave-profile"
+      ]
+    },
+    {
+      "id": "part-multiple-solids-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "Two disjoint solid bodies; explicit body selection.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "multiple-solids"
+      ]
+    },
+    {
+      "id": "part-thin-wall-001",
+      "document_kind": "part",
+      "priority": "P0",
+      "purpose": "A resolved thin wall, with recorded minimum feature size.",
+      "required_capabilities": [
+        "construction.extrude",
+        "export.native",
+        "export.parasolid_binary",
+        "export.parasolid_text",
+        "export.step_ap214",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "thin-wall"
+      ]
+    },
+    {
+      "id": "part-cone-frustum-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Conical mantle with two circular boundaries.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "cone-frustum"
+      ]
+    },
+    {
+      "id": "part-cone-sector-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Partial conical mantle with seam-sensitive trims.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "cone-sector"
+      ]
+    },
+    {
+      "id": "part-sphere-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Full sphere including pole and seam representation.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "sphere"
+      ]
+    },
+    {
+      "id": "part-sphere-cap-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Spherical cap with a planar cut.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "sphere-cap"
+      ]
+    },
+    {
+      "id": "part-torus-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Regular ring torus and periodic parameter axes.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "torus"
+      ]
+    },
+    {
+      "id": "part-torus-cut-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Trimmed torus with analytic neighbouring faces.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "torus-cut"
+      ]
+    },
+    {
+      "id": "part-fillet-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Native blend; record actual generated surface families.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "fillet"
+      ]
+    },
+    {
+      "id": "part-chamfer-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Planar/conical chamfer transitions.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "chamfer"
+      ]
+    },
+    {
+      "id": "part-elliptic-profile-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Ellipse-based planar contour and extrusion.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "elliptic-profile"
+      ]
+    },
+    {
+      "id": "part-quadratic-spline-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Polynomial quadratic curve and its actual native basis.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "quadratic-spline"
+      ]
+    },
+    {
+      "id": "part-cubic-spline-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Polynomial cubic curve with independent evaluations.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "cubic-spline"
+      ]
+    },
+    {
+      "id": "part-spline-hole-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Planar spline-bounded hole and analytic net area.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "spline-hole"
+      ]
+    },
+    {
+      "id": "part-rational-spline-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Positive-weight rational curve and retained domain.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "rational-spline"
+      ]
+    },
+    {
+      "id": "part-nurbs-surface-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Trimmed NURBS supporting surface.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "nurbs-surface"
+      ]
+    },
+    {
+      "id": "part-plane-cone-intersection-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Oblique plane/cone cut and implicit intersection curves.",
+      "required_capabilities": [
+        "construction.advanced",
+        "native.brep",
+        "native.evaluate",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "plane-cone-intersection"
+      ]
+    },
+    {
+      "id": "part-translated-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Cylinder translated away from the origin.",
+      "required_capabilities": [
+        "construction.transform",
+        "native.measure",
+        "native.brep"
+      ],
+      "coverage_targets": [
+        "part",
+        "translated"
+      ]
+    },
+    {
+      "id": "part-rotated-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Cylinder with an oblique axis.",
+      "required_capabilities": [
+        "construction.transform",
+        "native.measure",
+        "native.brep"
+      ],
+      "coverage_targets": [
+        "part",
+        "rotated"
+      ]
+    },
+    {
+      "id": "part-large-offset-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Resolved geometry near coordinates of magnitude 1e6 m.",
+      "required_capabilities": [
+        "construction.transform",
+        "native.measure",
+        "native.brep"
+      ],
+      "coverage_targets": [
+        "part",
+        "large-offset"
+      ]
+    },
+    {
+      "id": "part-small-scale-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Geometry with characteristic length 1e-4 m.",
+      "required_capabilities": [
+        "construction.transform",
+        "native.measure",
+        "native.brep"
+      ],
+      "coverage_targets": [
+        "part",
+        "small-scale"
+      ]
+    },
+    {
+      "id": "part-large-scale-001",
+      "document_kind": "part",
+      "priority": "P1",
+      "purpose": "Geometry with characteristic length 1e3 m.",
+      "required_capabilities": [
+        "construction.transform",
+        "native.measure",
+        "native.brep"
+      ],
+      "coverage_targets": [
+        "part",
+        "large-scale"
+      ]
+    },
+    {
+      "id": "part-config-dimensions-001",
+      "document_kind": "part",
+      "priority": "P2",
+      "purpose": "Two configurations with distinct dimensions.",
+      "required_capabilities": [
+        "configuration.create",
+        "configuration.activate",
+        "document.reopen",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "config-dimensions"
+      ]
+    },
+    {
+      "id": "part-config-suppression-001",
+      "document_kind": "part",
+      "priority": "P2",
+      "purpose": "Configuration-specific suppression of a bore.",
+      "required_capabilities": [
+        "configuration.create",
+        "configuration.activate",
+        "document.reopen",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "config-suppression"
+      ]
+    },
+    {
+      "id": "part-config-properties-001",
+      "document_kind": "part",
+      "priority": "P2",
+      "purpose": "Distinct global/configuration properties including Unicode.",
+      "required_capabilities": [
+        "configuration.create",
+        "configuration.activate",
+        "document.reopen",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "config-properties"
+      ]
+    },
+    {
+      "id": "part-history-dimension-001",
+      "document_kind": "part",
+      "priority": "P2",
+      "purpose": "Saved/reopened snapshots before and after a dimension change.",
+      "required_capabilities": [
+        "configuration.create",
+        "configuration.activate",
+        "document.reopen",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "history-dimension"
+      ]
+    },
+    {
+      "id": "part-history-feature-001",
+      "document_kind": "part",
+      "priority": "P2",
+      "purpose": "Saved/reopened feature addition and suppression snapshots.",
+      "required_capabilities": [
+        "configuration.create",
+        "configuration.activate",
+        "document.reopen",
+        "native.measure"
+      ],
+      "coverage_targets": [
+        "part",
+        "history-feature"
+      ]
+    },
+    {
+      "id": "assembly-single-part-001",
+      "document_kind": "assembly",
+      "priority": "P2",
+      "purpose": "One external component reference.",
+      "required_capabilities": [
+        "assembly.create",
+        "assembly.place",
+        "configuration.activate"
+      ],
+      "coverage_targets": [
+        "assembly",
+        "single-part"
+      ]
+    },
+    {
+      "id": "assembly-repeated-part-001",
+      "document_kind": "assembly",
+      "priority": "P2",
+      "purpose": "Repeated component occurrences with shared source file.",
+      "required_capabilities": [
+        "assembly.create",
+        "assembly.place",
+        "configuration.activate"
+      ],
+      "coverage_targets": [
+        "assembly",
+        "repeated-part"
+      ]
+    },
+    {
+      "id": "assembly-transforms-001",
+      "document_kind": "assembly",
+      "priority": "P2",
+      "purpose": "Rotated and translated component instances.",
+      "required_capabilities": [
+        "assembly.create",
+        "assembly.place",
+        "configuration.activate"
+      ],
+      "coverage_targets": [
+        "assembly",
+        "transforms"
+      ]
+    },
+    {
+      "id": "assembly-nested-001",
+      "document_kind": "assembly",
+      "priority": "P2",
+      "purpose": "Subassembly and cumulative placement.",
+      "required_capabilities": [
+        "assembly.create",
+        "assembly.place",
+        "configuration.activate"
+      ],
+      "coverage_targets": [
+        "assembly",
+        "nested"
+      ]
+    },
+    {
+      "id": "assembly-suppression-001",
+      "document_kind": "assembly",
+      "priority": "P2",
+      "purpose": "Resolved and suppressed component variants.",
+      "required_capabilities": [
+        "assembly.create",
+        "assembly.place",
+        "configuration.activate"
+      ],
+      "coverage_targets": [
+        "assembly",
+        "suppression"
+      ]
+    },
+    {
+      "id": "assembly-configuration-001",
+      "document_kind": "assembly",
+      "priority": "P2",
+      "purpose": "Instances selecting different part configurations.",
+      "required_capabilities": [
+        "assembly.create",
+        "assembly.place",
+        "configuration.activate"
+      ],
+      "coverage_targets": [
+        "assembly",
+        "configuration"
+      ]
+    },
+    {
+      "id": "drawing-single-view-001",
+      "document_kind": "drawing",
+      "priority": "P2",
+      "purpose": "One orthographic view with a known orientation.",
+      "required_capabilities": [
+        "drawing.create",
+        "drawing.view",
+        "drawing.export_pdf"
+      ],
+      "coverage_targets": [
+        "drawing",
+        "single-view"
+      ]
+    },
+    {
+      "id": "drawing-three-view-001",
+      "document_kind": "drawing",
+      "priority": "P2",
+      "purpose": "Three orthographic views and scale.",
+      "required_capabilities": [
+        "drawing.create",
+        "drawing.view",
+        "drawing.export_pdf"
+      ],
+      "coverage_targets": [
+        "drawing",
+        "three-view"
+      ]
+    },
+    {
+      "id": "drawing-multiple-sheets-001",
+      "document_kind": "drawing",
+      "priority": "P2",
+      "purpose": "Multiple sheets with different dimensions/scales.",
+      "required_capabilities": [
+        "drawing.create",
+        "drawing.view",
+        "drawing.export_pdf"
+      ],
+      "coverage_targets": [
+        "drawing",
+        "multiple-sheets"
+      ]
+    },
+    {
+      "id": "drawing-section-001",
+      "document_kind": "drawing",
+      "priority": "P2",
+      "purpose": "Section view with hatch and source references.",
+      "required_capabilities": [
+        "drawing.create",
+        "drawing.view",
+        "drawing.export_pdf"
+      ],
+      "coverage_targets": [
+        "drawing",
+        "section"
+      ]
+    },
+    {
+      "id": "drawing-detail-001",
+      "document_kind": "drawing",
+      "priority": "P2",
+      "purpose": "Detail view with a separate scale.",
+      "required_capabilities": [
+        "drawing.create",
+        "drawing.view",
+        "drawing.export_pdf"
+      ],
+      "coverage_targets": [
+        "drawing",
+        "detail"
+      ]
+    },
+    {
+      "id": "drawing-dimensions-001",
+      "document_kind": "drawing",
+      "priority": "P2",
+      "purpose": "Dimensions, units and numeric formatting.",
+      "required_capabilities": [
+        "drawing.create",
+        "drawing.view",
+        "drawing.export_pdf"
+      ],
+      "coverage_targets": [
+        "drawing",
+        "dimensions"
+      ]
+    },
+    {
+      "id": "drawing-annotations-001",
+      "document_kind": "drawing",
+      "priority": "P2",
+      "purpose": "Notes and Unicode text.",
+      "required_capabilities": [
+        "drawing.create",
+        "drawing.view",
+        "drawing.export_pdf"
+      ],
+      "coverage_targets": [
+        "drawing",
+        "annotations"
+      ]
+    },
+    {
+      "id": "drawing-hidden-lines-001",
+      "document_kind": "drawing",
+      "priority": "P2",
+      "purpose": "Hidden-line display and projected geometry.",
+      "required_capabilities": [
+        "drawing.create",
+        "drawing.view",
+        "drawing.export_pdf"
+      ],
+      "coverage_targets": [
+        "drawing",
+        "hidden-lines"
+      ]
+    },
+    {
+      "id": "drawing-configuration-001",
+      "document_kind": "drawing",
+      "priority": "P2",
+      "purpose": "Views referencing different model configurations.",
+      "required_capabilities": [
+        "drawing.create",
+        "drawing.view",
+        "drawing.export_pdf"
+      ],
+      "coverage_targets": [
+        "drawing",
+        "configuration"
+      ]
+    }
+  ]
+}

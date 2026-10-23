@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "document_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "configuration": {
+      "type": "string",
+      "minLength": 1
+    },
+    "coordinate_frame": {
+      "const": "document"
+    },
+    "length_unit": {
+      "const": "metre"
+    },
+    "bodies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "solid",
+              "sheet",
+              "wire",
+              "point"
+            ]
+          },
+          "counts": {
+            "type": "object",
+            "properties": {
+              "faces": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "edges": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "vertices": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "shells": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "measurements_si": {
+            "type": "object",
+            "properties": {
+              "volume_m3": {
+                "type": "number",
+                "minimum": 0
+              },
+              "area_m2": {
+                "type": "number",
+                "minimum": 0
+              },
+              "length_m": {
+                "type": "number",
+                "minimum": 0
+              },
+              "centroid_m": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "geometry_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "key",
+          "kind",
+          "counts",
+          "measurements_si"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "properties": {
+      "type": "object"
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "minItems": 0
+    },
+    "observations": {
+      "type": "object"
+    },
+    "unavailable_fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "document_revision",
+    "configuration",
+    "coordinate_frame",
+    "length_unit",
+    "bodies",
+    "unavailable_fields"
+  ],
+  "additionalProperties": false
+}
