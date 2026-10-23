@@ -434,6 +434,51 @@
                 "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
               },
               "operation": {
+                "const": "sketch_offset_circle"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "plane": {
+                    "const": "XZ"
+                  },
+                  "radius_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "sketch_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+                  },
+                  "radial_offset_m": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "plane",
+                  "radius_m",
+                  "sketch_id",
+                  "radial_offset_m"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
                 "const": "revolve"
               },
               "parameters": {
@@ -510,7 +555,8 @@
             "cone_frustum",
             "cone_sector",
             "sphere",
-            "sphere_cap"
+            "sphere_cap",
+            "torus"
           ]
         },
         "dimensions_m": {

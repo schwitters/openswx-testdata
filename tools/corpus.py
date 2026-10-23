@@ -125,6 +125,16 @@ def analytic_measures(recipe):
     values = recipe["analytic"]["dimensions_m"]
     if kind == "multiple_solids":
         return aggregate_measures(multiple_solid_measures(recipe).values())
+    if kind == "torus":
+        if set(values) != {"major_radius", "minor_radius"}:
+            raise CorpusError("torus: expected major and minor radii")
+        major,minor = values["major_radius"],values["minor_radius"]
+        if not minor < major:
+            raise CorpusError("ring torus requires minor radius smaller than major radius")
+        volume,area = 2*math.pi**2*major*minor**2,4*math.pi**2*major*minor
+        if not all(math.isfinite(v) and v>0 for v in (volume,area)):
+            raise CorpusError("torus: unresolved measures")
+        return {"volume_m3":volume,"area_m2":area}
     if kind == "sphere_cap":
         if set(values) != {"radius", "cap_height"}:
             raise CorpusError("sphere cap: expected radius and cap height")
@@ -264,8 +274,8 @@ def read_recipe(root, relative, case_id):
                 raise CorpusError("extrusion references an unknown or later sketch")
             if step["operation"] == "revolve":
                 profile = sketches[step["parameters"]["profiles"][0]]
-                if profile["operation"] not in ("sketch_polygon", "sketch_semicircle", "sketch_spherical_cap") or profile["parameters"]["plane"] != "XZ":
-                    raise CorpusError("starter revolution requires an XZ polygon or semicircle")
+                if profile["operation"] not in ("sketch_polygon", "sketch_semicircle", "sketch_spherical_cap", "sketch_offset_circle") or profile["parameters"]["plane"] != "XZ":
+                    raise CorpusError("starter revolution requires a supported XZ profile")
             if step["parameters"]["operation"] == "cut" and not has_solid:
                 raise CorpusError("cut requires an earlier solid-body extrusion")
             if step["parameters"]["operation"] == "new_body":
@@ -275,11 +285,16 @@ def read_recipe(root, relative, case_id):
     if recipe["steps"][-1]["operation"] not in ("extrude", "revolve"):
         raise CorpusError("starter recipe must end with an extrusion or revolution")
     kind = recipe["analytic"]["shape"]
-    if kind in ("cone_frustum", "cone_sector", "sphere", "sphere_cap"):
+    if kind in ("cone_frustum", "cone_sector", "sphere", "sphere_cap", "torus"):
         revolutions = [step for step in recipe["steps"] if step["operation"] == "revolve"]
         expected_angle = recipe["analytic"].get("angle_rad",2*math.pi)
         if len(revolutions) != 1 or revolutions[0]["parameters"]["angle_rad"] != expected_angle:
             raise CorpusError("revolution construction angle differs from analytic angle")
+        if kind == "torus":
+            profile = sketches[revolutions[0]["parameters"]["profiles"][0]]
+            values = recipe["analytic"]["dimensions_m"]
+            if profile["operation"] != "sketch_offset_circle" or profile["parameters"]["radial_offset_m"] != values["major_radius"] or profile["parameters"]["radius_m"] != values["minor_radius"]:
+                raise CorpusError("torus construction requires matching offset and circle radius")
         if kind in ("sphere", "sphere_cap"):
             profile = sketches[revolutions[0]["parameters"]["profiles"][0]]
             expected_profile = "sketch_semicircle" if kind == "sphere" else "sketch_spherical_cap"

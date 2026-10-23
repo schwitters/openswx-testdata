@@ -40,7 +40,7 @@ def main(fixed_case=None, legacy_exporter=False):
     parser.add_argument("--output", type=Path, default=Path(os.environ.get(
         "OPENSWX_CORPUS_OUTPUT", "results/cylinder" if fixed_case else "results/fixture")))
     if fixed_case is None:
-        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001", "part-multiple-solids-001", "part-thin-wall-001", "part-cone-frustum-001", "part-cone-sector-001", "part-sphere-001", "part-sphere-cap-001"),
+        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001", "part-multiple-solids-001", "part-thin-wall-001", "part-cone-frustum-001", "part-cone-sector-001", "part-sphere-001", "part-sphere-cap-001", "part-torus-001"),
                             default=os.environ.get("OPENSWX_CORPUS_CASE"))
     args = parser.parse_args()
     case_id = fixed_case if fixed_case is not None else args.case
@@ -165,7 +165,9 @@ def main(fixed_case=None, legacy_exporter=False):
                     "support geometry inventory changed")
         report["stages"]["binding"] = "pass"
         if manifest["expectations"]["step"]["outcome"]=="unsupported":
-            require(case_id=="part-sphere-001" and len(selections)==1,
+            unsupported_checkers = {"part-sphere-001":"check_sphere_step.py",
+                                    "part-torus-001":"check_torus_step.py"}
+            require(case_id in unsupported_checkers and len(selections)==1,
                     "unsupported STEP oracle is not implemented for this fixture")
             entry,_ = selections[0]
             exported = output / "library.step"
@@ -180,7 +182,7 @@ def main(fixed_case=None, legacy_exporter=False):
             report["step_issue"] = manifest["expectations"]["step"]["issue"]
             report["step_equivalence"] = "not_tested_no_library_output"
             report["occt"] = checked_json("native-occt",[args.occt_python.absolute(),
-                root / "tools/check_sphere_step.py",case / "reference/model.step"])
+                root / "tools" / unsupported_checkers[case_id],case / "reference/model.step"])
             report["state_scope"] = selection["state_scope"]
             report["expectations_matched"] = True
             print(json.dumps(report,indent=2))

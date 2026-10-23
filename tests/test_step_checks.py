@@ -22,6 +22,8 @@ try:
     from check_thin_wall_step import check_thin_wall_shape
     from check_sphere_cap_step import check_sphere_cap_shape, repair_native_cap_pcurve, spherical_bezier_radial_bound
     from step_check import read_step
+    from check_torus_step import check_torus_shape
+    from OCP.BRepPrimAPI import BRepPrimAPI_MakeTorus
     from check_sphere_step import check_sphere_shape
     from OCP.BRepPrimAPI import BRepPrimAPI_MakeSphere
     from check_cone_sector_step import check_cone_sector_shape
@@ -611,6 +613,61 @@ class SphereCapGeometryTest(unittest.TestCase):
         self.assertEqual(changed[0],poles[0])
         self.assertEqual(changed[-1],poles[-1])
         self.assertGreater(spherical_bezier_radial_bound(changed),1e-5)
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class TorusGeometryTest(unittest.TestCase):
+    def test_expected_torus(self):
+        report = check_torus_shape(BRepPrimAPI_MakeTorus(20,5).Shape())
+        self.assertEqual(report["periodic_directions"],2)
+        self.assertEqual(report["degenerate_edges"],0)
+        self.assertEqual([s["kind"] for s in report["seams"]],["meridian","parallel"])
+
+    def test_shifted_tube_period_preserves_geometry_with_an_inner_parallel_seam(self):
+        report = check_torus_shape(BRepPrimAPI_MakeTorus(20,5,-math.pi,math.pi).Shape())
+        parallel = next(s for s in report["seams"] if s["kind"]=="parallel")
+        self.assertAlmostEqual(parallel["radius_mm"],15,delta=1e-8)
+
+    def test_rotation_around_symmetry_axis_is_accepted(self):
+        from OCP.gp import gp_Ax1, gp_Dir
+        transform = gp_Trsf()
+        transform.SetRotation(gp_Ax1(gp_Pnt(0,0,0),gp_Dir(0,0,1)),.37)
+        check_torus_shape(BRepPrimAPI_MakeTorus(20,5).Shape().Moved(TopLoc_Location(transform)))
+
+    def test_wrong_major_radius_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"major or minor radius"):
+            check_torus_shape(BRepPrimAPI_MakeTorus(21,5).Shape())
+
+    def test_wrong_minor_radius_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"major or minor radius"):
+            check_torus_shape(BRepPrimAPI_MakeTorus(20,4).Shape())
+
+    def test_translation_with_equal_measures_is_rejected(self):
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(1,0,0))
+        expected = BRepPrimAPI_MakeTorus(20,5).Shape()
+        moved = expected.Moved(TopLoc_Location(transform))
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(moved,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"center or axis"):
+            check_torus_shape(moved)
+
+    def test_oblique_axis_with_equal_measures_is_rejected(self):
+        from OCP.gp import gp_Ax2, gp_Dir
+        expected = BRepPrimAPI_MakeTorus(20,5).Shape()
+        oblique = BRepPrimAPI_MakeTorus(gp_Ax2(gp_Pnt(0,0,0),gp_Dir(0,1,0)),20,5).Shape()
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(oblique,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"center or axis"):
+            check_torus_shape(oblique)
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_torus_shape(BRepPrimAPI_MakeTorus(20,5).Shape().Reversed())
+
+    def test_partial_major_revolution_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete natural torus"):
+            check_torus_shape(BRepPrimAPI_MakeTorus(20,5,math.pi).Shape())
 
 
 if __name__ == "__main__":

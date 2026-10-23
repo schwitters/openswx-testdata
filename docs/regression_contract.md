@@ -1,7 +1,7 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector, a full sphere and a minor spherical cap. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector, a full sphere, a minor spherical cap and a ring torus. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
 [blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md),
 [stepped-bore](stepped_bore_capture.md), [two-bores](two_holes_capture.md) and
@@ -9,7 +9,7 @@ six-stage runner for the captured cylinder, block, tube, blind hole, through hol
 [multiple solids](multiple_solids_capture.md),
 [thin wall](thin_wall_capture.md), [cone frustum](cone_frustum_capture.md) and
 [cone sector](cone_sector_capture.md), [sphere](sphere_capture.md) and
-[sphere cap](sphere_cap_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[sphere cap](sphere_cap_capture.md) and [torus](torus_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
@@ -150,3 +150,13 @@ measured pcurve correspondence and a bounded import-only edge tolerance are
 required. Original source bytes and the library output are never repaired. Both
 original/corrected Boolean comparisons and all before/after import observations
 are recorded. See the [capture](sphere_cap_capture.md) for exact limits.
+
+## Expected boundary-free torus rejection
+
+`part-torus-001` passes the five reader stages and records STEP as unsupported.
+The exact frozen API rejection is `unsupported_format` at partition byte 2078,
+node 39: the complete toroidal face has no boundary loops. The runner checks
+the typed error and absence of output before validating the native torus oracle.
+That oracle must preserve both full periodic directions, two exact circular
+seams and their common vertex, with no degenerate pole edges. An expected
+rejection is never counted as a successful library STEP export.

@@ -232,6 +232,31 @@ class CorpusTest(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
                 corpus.read_recipe(self.root,relative,"part-sphere-cap-001")
 
+    def test_ring_torus_measures_and_ordered_radii(self):
+        recipe = corpus.read_recipe(self.root,"recipes/part-torus-001.json","part-torus-001")
+        actual = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(actual["volume_m3"],1000*math.pi**2*1e-9,delta=1e-17)
+        self.assertAlmostEqual(actual["area_m2"],400*math.pi**2*1e-6,delta=1e-14)
+        for minor in (.02,.025):
+            recipe["analytic"]["dimensions_m"]["minor_radius"] = minor
+            with self.subTest(minor=minor), self.assertRaisesRegex(corpus.CorpusError,"minor radius smaller"):
+                corpus.analytic_measures(recipe)
+
+    def test_torus_construction_radii_and_full_turn_must_match(self):
+        relative = "recipes/part-torus-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-torus-001")
+        for mutation in ("offset","radius","partial"):
+            recipe = copy.deepcopy(original)
+            if mutation=="offset":
+                recipe["steps"][1]["parameters"]["radial_offset_m"] = .021
+            elif mutation=="radius":
+                recipe["steps"][1]["parameters"]["radius_m"] = .004
+            else:
+                recipe["steps"][-1]["parameters"]["angle_rad"] = math.pi
+            self.write_json(self.root / relative,recipe)
+            with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
+                corpus.read_recipe(self.root,relative,"part-torus-001")
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -1177,6 +1202,55 @@ class CapturedSphereCapTest(unittest.TestCase):
         seam = report["library_export"]["seams"][0]
         self.assertTrue(seam["exact_sphere_pcurve"])
         self.assertLessEqual(seam["radial_deviation_bound_mm"],seam["edge_tolerance_mm"])
+
+
+class CapturedTorusTest(unittest.TestCase):
+    def test_admitted_torus_has_exact_unsupported_export_expectation(self):
+        corpus.audit(ROOT,require_ready=True)
+        case = ROOT / "cases/part-torus-001"
+        manifest = corpus.load_json(case / "case.json")
+        self.assertEqual(manifest["expectations"]["step"]["outcome"],"unsupported")
+        self.assertEqual(manifest["expectations"]["step"]["error_code"],"unsupported_format")
+        self.assertEqual(corpus.load_json(case / "validation/export-error.json"),
+                         {"error_code":"unsupported_format","offset":2078,
+                          "message":"STEP node 39: Face has no boundary loops"})
+        self.assertFalse(corpus.load_json(case / "validation/observations.json")["library_step_produced"])
+
+    def test_native_torus_both_periods_and_inner_outer_material_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-torus-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":1,"edges":0,"vertices":0,"shells":1})
+        self.assertLess(math.dist(body["measurements_si"]["centroid_m"],(0,0,0)),1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        self.assertEqual([e["kind"] for e in entities],["body","shell","face","surface"])
+        g = entities[3]["geometry"]
+        self.assertEqual(g["type"],"torus")
+        self.assertTrue(g["u_periodic"] and g["v_periodic"] and g["u_closed"] and g["v_closed"])
+        self.assertAlmostEqual(g["major_radius"],.02,delta=1e-12)
+        self.assertAlmostEqual(g["minor_radius"],.005,delta=1e-12)
+        samples = native["observations"]["evaluations"]["evaluate-3"]["samples"]
+        self.assertEqual(len(samples),25)
+        inner=outer=0
+        for sample in samples:
+            x,y,z = sample["position"]
+            rho = math.hypot(x,y)
+            self.assertAlmostEqual((rho-.02)**2+z*z,.005**2,delta=1e-15)
+            self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+            expected = [(rho-.02)*x/(.005*rho),(rho-.02)*y/(.005*rho),z/.005]
+            self.assertLess(math.dist(sample["face_normal"],expected),1e-12)
+            dot = x*sample["face_normal"][0]+y*sample["face_normal"][1]
+            if abs(rho-.015)<1e-12:
+                self.assertLess(dot,0)
+                inner += 1
+            if abs(rho-.025)<1e-12:
+                self.assertGreater(dot,0)
+                outer += 1
+        self.assertGreater(inner,0)
+        self.assertGreater(outer,0)
+        for offset in range(5):
+            self.assertLess(math.dist(samples[offset]["position"],samples[20+offset]["position"]),1e-12)
+        for block in range(5):
+            self.assertLess(math.dist(samples[5*block]["position"],samples[5*block+4]["position"]),1e-12)
 
 
 if __name__ == "__main__":

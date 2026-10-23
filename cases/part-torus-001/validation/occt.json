@@ -1,0 +1,44 @@
+{
+  "ocp_distribution_version": "7.9.3.1.1",
+  "native_reference": {
+    "topology": {
+      "faces": 1,
+      "edges": 2,
+      "vertices": 1,
+      "solids": 1
+    },
+    "volume_mm3": 9869.604401089371,
+    "area_mm2": 3947.841760435744,
+    "major_radius_mm": 20,
+    "minor_radius_mm": 5,
+    "periodic_directions": 2,
+    "degenerate_edges": 0,
+    "seams": [
+      {
+        "kind": "meridian",
+        "radius_mm": 5.000000000000001,
+        "center_mm": [
+          -20.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "kind": "parallel",
+        "radius_mm": 25.0,
+        "center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "outward_normals_verified": true,
+    "brep_valid": true
+  },
+  "analytic_reference_difference_volume_mm3": [
+    0.0,
+    0.0
+  ],
+  "library_export": "not_produced"
+}

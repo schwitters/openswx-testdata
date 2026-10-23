@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "id": "part-torus-001",
+  "description": "Revolve an XZ circle R5 mm at radial offset 20 mm through a full turn about +Z.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_offset_circle",
+      "parameters": {
+        "plane": "XZ",
+        "radial_offset_m": 0.02,
+        "radius_m": 0.005,
+        "sketch_id": "main-profile"
+      }
+    },
+    {
+      "id": "revolve-profile",
+      "operation": "revolve",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "axis_origin_m": [
+          0,
+          0,
+          0
+        ],
+        "axis_direction": [
+          0,
+          0,
+          1
+        ],
+        "angle_rad": 6.283185307179586,
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "torus",
+    "dimensions_m": {
+      "major_radius": 0.02,
+      "minor_radius": 0.005
+    }
+  }
+}

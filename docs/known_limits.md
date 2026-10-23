@@ -197,3 +197,17 @@ one-circle native import; it does not mask library geometry failures. The
 passing cap leaves the complete sphere's unsupported STEP expectation unchanged.
 See [sphere-cap capture](sphere_cap_capture.md) for the full evidence, error
 bounds and representation accounting.
+
+## Boundary-free torus STEP export
+
+`part-torus-001` is a complete R20/r5 mm ring torus, represented as one toroidal
+face with no loops, edges or vertices. All five reader stages pass. At library
+commit `1607ee9`, export rejects STEP node 39 with `unsupported_format` at
+partition byte 2078: `Face has no boundary loops`. No STEP output is written.
+
+The corpus freezes that rejection and independently verifies the native STEP's
+two periodic circle seams and their common vertex. The torus has no pole
+degeneracies. A future complete-surface export must preserve its central hole,
+both periodic directions and material orientation. Unexpected success requires
+review and independent equivalence before changing the expectation. See the
+[torus capture](torus_capture.md).

@@ -274,7 +274,8 @@
       "coverage_targets": [
         "part",
         "torus"
-      ]
+      ],
+      "recipe": "recipes/part-torus-001.json"
     },
     {
       "id": "part-torus-cut-001",
