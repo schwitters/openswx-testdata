@@ -1,14 +1,14 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum and a cone sector. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum, a cone sector and a full sphere. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
 [blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md),
 [stepped-bore](stepped_bore_capture.md), [two-bores](two_holes_capture.md) and
 [concave L-profile](concave_profile_capture.md),
 [multiple solids](multiple_solids_capture.md),
 [thin wall](thin_wall_capture.md), [cone frustum](cone_frustum_capture.md) and
-[cone sector](cone_sector_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[cone sector](cone_sector_capture.md) and [sphere](sphere_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
@@ -123,3 +123,14 @@ without projecting outside points onto a bounded patch. Native holding-circle
 periodicity must not override a topological edge's partial parameter interval.
 The recipe's construction angle and analytic angle must agree. See the
 [capture](cone_sector_capture.md).
+
+## Expected boundary-free sphere rejection
+
+`part-sphere-001` currently passes metadata, extraction, decode, topology and
+binding. Its STEP expectation is `unsupported_format` at partition byte 2070,
+with the exact node-39 missing-loops diagnostic in `validation/export-error.json`.
+The export driver exposes typed error fields as JSON. The runner requires the
+exact frozen error and no STEP output, then validates only the native spherical
+STEP oracle. Unexpected success or a changed failure requires review. Exit zero
+means expectations matched; the report still records STEP as `unsupported`, not
+`pass`, and library/native STEP equivalence as untested.

@@ -20,6 +20,8 @@ try:
     from OCP.BRep import BRep_Builder
     from OCP.TopoDS import TopoDS_Compound
     from check_thin_wall_step import check_thin_wall_shape
+    from check_sphere_step import check_sphere_shape
+    from OCP.BRepPrimAPI import BRepPrimAPI_MakeSphere
     from check_cone_sector_step import check_cone_sector_shape
     from check_cone_frustum_step import check_cone_frustum_shape
     from OCP.BRepPrimAPI import BRepPrimAPI_MakeCone
@@ -505,6 +507,40 @@ class ConeSectorGeometryTest(unittest.TestCase):
         self.assertAlmostEqual(measure(expected,True),measure(cylinder,True),delta=1e-6)
         with self.assertRaisesRegex(RuntimeError,"corner or angular placement"):
             check_cone_sector_shape(cylinder)
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class SphereGeometryTest(unittest.TestCase):
+    def test_expected_complete_sphere(self):
+        report = check_sphere_shape(BRepPrimAPI_MakeSphere(10).Shape())
+        self.assertEqual(report["degenerate_pole_edges"],2)
+        self.assertEqual(report["periodic_meridian_seams"],1)
+
+    def test_rotated_support_poles_preserve_the_same_sphere(self):
+        from OCP.gp import gp_Ax2, gp_Dir
+        shape = BRepPrimAPI_MakeSphere(gp_Ax2(gp_Pnt(0,0,0),gp_Dir(0,1,0)),10).Shape()
+        report = check_sphere_shape(shape)
+        self.assertEqual(report["support_pole_axis"],(0,1,0))
+
+    def test_wrong_radius_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"radius or placement"):
+            check_sphere_shape(BRepPrimAPI_MakeSphere(11).Shape())
+
+    def test_translation_with_equal_measures_is_rejected(self):
+        expected = BRepPrimAPI_MakeSphere(10).Shape()
+        moved = BRepPrimAPI_MakeSphere(gp_Pnt(1,0,0),10).Shape()
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(moved,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"radius or placement"):
+            check_sphere_shape(moved)
+
+    def test_hemisphere_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete natural sphere"):
+            check_sphere_shape(BRepPrimAPI_MakeSphere(10,0,math.pi/2).Shape())
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_sphere_shape(BRepPrimAPI_MakeSphere(10).Shape().Reversed())
 
 
 if __name__ == "__main__":

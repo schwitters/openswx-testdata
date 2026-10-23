@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "id": "part-sphere-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-sphere-001.json",
+  "tags": [
+    "sphere",
+    "full-revolution",
+    "boundary-free-face",
+    "natural-poles",
+    "periodic-seam",
+    "expected-step-unsupported",
+    "material-normals",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T21:16:52.013205+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original complete sphere with radius 10 mm and center at document origin generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 1e-09,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type, Default configuration and saved mass properties."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; one full spherical face without loops, edges or vertices."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint matches native spherical geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "unsupported",
+      "reason": "Exporter currently rejects the boundary-free face; native/reference sphere geometry is checked separately.",
+      "issue": "docs/known_limits.md#boundary-free-sphere-step-export",
+      "error_code": "unsupported_format"
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#boundary-free-sphere-step-export",
+      "scope": "selected partition 0 BODY 2",
+      "error_code": "unsupported_format",
+      "reason": "Full spherical face has no boundary loops; STEP node 39 is rejected at partition byte 2070."
+    },
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 664,
+      "sha256": "9ea939194da00523d261e9ced4a8154a851019c251c6875968b954d08c132b26"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 2816,
+      "sha256": "99059d58450ebbc62c4b4fc80aa5ffc333b62cfce3fe91ed1be2e104abcb56f2"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 551979,
+      "sha256": "27c6b2db7ef07a44a540e95cebec894191ae1b18a5de0463d3d64bd6830046ec"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1492,
+      "sha256": "e9bccb744515902c3dcb17265021504f9758d01bccfe4da0e9249e57e543c62e"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2377,
+      "sha256": "d039048d7e56b4c03aae9c9a8765294a94789ded61b28aafd1cd542a9469ac6c"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 3938,
+      "sha256": "da345883257db4f6c139163bdcfa52d1a4451d35755e4b4ff551f039271c17f0"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 2949,
+      "sha256": "53e6194b81502c11087a400bc4e08ed24aff6a98ee14e3fa13b92b9eb5f296d6"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 3315,
+      "sha256": "b8323edc40ca7f3f996caf0ca3b41830d27cc7788042aa02d7e684c1cdd503b2"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 63316,
+      "sha256": "55116a676a113b94d161faf334bdfd98bb0639b3049d0ab6522601687a2dff0f"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 139878,
+      "sha256": "7de54b6d6e480aaa14c0faa0c89bc2b94ebbda1b56e11e0d9cad85eaadb3f089"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 74528,
+      "sha256": "f0dc5704acaa3700c25cc27057a0c8f651e02b2ce2d7b010f0bae7aa72e36117"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1420,
+      "sha256": "d7d022f308bce47d9e0752004d2caae4501433e71523c15c039f8804442914bb"
+    },
+    {
+      "path": "validation/export-error.json",
+      "role": "validation_report",
+      "bytes": 116,
+      "sha256": "02eb4f4341b657a2ea3acd3c4dcd7fa1736b40ca9f0a2094983c467917a99177"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1750,
+      "sha256": "7507568b3a48027e448d43efb4075dfd8059da087a353f898f9e51cabb36138f"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 568,
+      "sha256": "9805daaa7cb8e2b33c2a42ed3e85887dfd5f5a444cac14f26a08609fb8c0ee1d"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 1963,
+      "sha256": "53e85d2b525f2f36c4365cd962e2771263caa12206f3711005869f809add37fe"
+    }
+  ]
+}

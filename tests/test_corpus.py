@@ -190,6 +190,24 @@ class CorpusTest(unittest.TestCase):
         with self.assertRaises(corpus.CorpusError):
             corpus.validate(self.root,"recipe",recipe)
 
+    def test_sphere_formula_and_revolution_profile(self):
+        relative = "recipes/part-sphere-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-sphere-001")
+        measures = corpus.analytic_measures(original)
+        self.assertAlmostEqual(measures["volume_m3"],4*math.pi*1e-6/3,delta=1e-17)
+        self.assertAlmostEqual(measures["area_m2"],4*math.pi*1e-4,delta=1e-14)
+        for mutation in ("radius","partial","half-plane"):
+            recipe = copy.deepcopy(original)
+            if mutation=="radius":
+                recipe["steps"][1]["parameters"]["radius_m"] = .011
+            elif mutation=="partial":
+                recipe["steps"][-1]["parameters"]["angle_rad"] = math.pi
+            else:
+                recipe["steps"][1]["parameters"]["half_plane"] = "negative_x"
+            self.write_json(self.root / relative,recipe)
+            with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
+                corpus.read_recipe(self.root,relative,"part-sphere-001")
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -1016,6 +1034,73 @@ class CapturedConeSectorTest(unittest.TestCase):
                 count += 1
         self.assertEqual((count,inside,outside),(73,24,4))
         self.assertEqual(cut_normals,{(-1,0,0),(0,-1,0)})
+
+
+class CapturedSphereTest(unittest.TestCase):
+    def test_admitted_sphere_preserves_unsupported_step_expectation(self):
+        corpus.audit(ROOT,require_ready=True)
+        case = ROOT / "cases/part-sphere-001"
+        manifest = corpus.load_json(case / "case.json")
+        self.assertEqual(manifest["expectations"]["step"]["outcome"],"unsupported")
+        self.assertEqual(manifest["expectations"]["step"]["error_code"],"unsupported_format")
+        error = corpus.load_json(case / "validation/export-error.json")
+        self.assertEqual(error,{"error_code":"unsupported_format","offset":2070,
+                                "message":"STEP node 39: Face has no boundary loops"})
+        observations = corpus.load_json(case / "validation/observations.json")
+        self.assertFalse(observations["library_step_produced"])
+
+    def test_native_sphere_poles_periodicity_and_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-sphere-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":1,"edges":0,"vertices":0,"shells":1})
+        self.assertLess(math.dist(body["measurements_si"]["centroid_m"],(0,0,0)),1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        self.assertEqual([e["kind"] for e in entities],["body","shell","face","surface"])
+        surface = entities[3]["geometry"]
+        self.assertEqual(surface["type"],"sphere")
+        self.assertEqual(surface["center"],[0,0,0])
+        self.assertEqual(surface["radius"],.01)
+        samples = native["observations"]["evaluations"]["evaluate-3"]["samples"]
+        self.assertEqual(len(samples),25)
+        for sample in samples:
+            point = sample["position"]
+            self.assertAlmostEqual(math.sqrt(sum(x*x for x in point)),.01,delta=1e-12)
+            self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+            self.assertLess(math.dist(sample["face_normal"],[v/.01 for v in point]),1e-12)
+        # Each U has the same physical poles, and U=0 and 2*pi coincide.
+        for offset in (0,4):
+            for block in range(1,5):
+                self.assertLess(math.dist(samples[offset]["position"],samples[block*5+offset]["position"]),1e-12)
+        self.assertAlmostEqual(math.dist(samples[0]["position"],samples[4]["position"]),.02,delta=1e-12)
+        for offset in range(5):
+            self.assertLess(math.dist(samples[offset]["position"],samples[20+offset]["position"]),1e-12)
+
+
+class ExpectedExportFailureTest(unittest.TestCase):
+    def setUp(self):
+        import sys
+        sys.path.insert(0,str(ROOT / "tools"))
+        import run_case
+        self.error_type = run_case.CorpusError
+        self.verify = run_case.verify_export_failure
+        self.expectation = {"outcome":"unsupported","error_code":"unsupported_format"}
+        self.frozen = {"error_code":"unsupported_format","offset":2070,
+                       "message":"STEP node 39: Face has no boundary loops"}
+
+    def test_exact_failure_is_an_unsupported_match(self):
+        self.verify(self.expectation,self.frozen,2,dict(self.frozen),False)
+
+    def test_unexpected_success_partial_file_and_changed_diagnostics_fail(self):
+        for mutation in ("success","partial-output","code","offset","message","missing-json"):
+            actual = dict(self.frozen)
+            if mutation in ("code","offset","message"):
+                key = {"code":"error_code","offset":"offset","message":"message"}[mutation]
+                actual[key] = 0 if mutation=="offset" else "changed"
+            if mutation=="missing-json":
+                actual = None
+            with self.subTest(mutation=mutation), self.assertRaises(self.error_type):
+                self.verify(self.expectation,self.frozen,0 if mutation=="success" else 2,
+                            actual,mutation=="partial-output")
 
 
 if __name__ == "__main__":

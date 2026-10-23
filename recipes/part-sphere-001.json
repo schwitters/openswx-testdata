@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "id": "part-sphere-001",
+  "description": "Revolve a right semicircle and its diameter about +Z to create a complete radius-10 mm sphere.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_semicircle",
+      "parameters": {
+        "plane": "XZ",
+        "center_m": [
+          0,
+          0,
+          0
+        ],
+        "radius_m": 0.01,
+        "half_plane": "positive_x",
+        "sketch_id": "main-profile"
+      }
+    },
+    {
+      "id": "revolve-profile",
+      "operation": "revolve",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "axis_origin_m": [
+          0,
+          0,
+          0
+        ],
+        "axis_direction": [
+          0,
+          0,
+          1
+        ],
+        "angle_rad": 6.283185307179586,
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "sphere",
+    "dimensions_m": {
+      "radius": 0.01
+    }
+  }
+}

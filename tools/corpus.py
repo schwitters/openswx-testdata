@@ -125,6 +125,14 @@ def analytic_measures(recipe):
     values = recipe["analytic"]["dimensions_m"]
     if kind == "multiple_solids":
         return aggregate_measures(multiple_solid_measures(recipe).values())
+    if kind == "sphere":
+        if set(values) != {"radius"}:
+            raise CorpusError("sphere: expected one radius")
+        radius = values["radius"]
+        volume,area = 4*math.pi*radius**3/3,4*math.pi*radius**2
+        if not all(math.isfinite(v) and v>0 for v in (volume,area)):
+            raise CorpusError("sphere: unresolved measures")
+        return {"volume_m3":volume,"area_m2":area}
     keys = {"cone_sector": {"bottom_radius", "top_radius", "height"},
             "cone_frustum": {"bottom_radius", "top_radius", "height"},
             "block": {"width", "depth", "height"},
@@ -248,8 +256,8 @@ def read_recipe(root, relative, case_id):
                 raise CorpusError("extrusion references an unknown or later sketch")
             if step["operation"] == "revolve":
                 profile = sketches[step["parameters"]["profiles"][0]]
-                if profile["operation"] != "sketch_polygon" or profile["parameters"]["plane"] != "XZ":
-                    raise CorpusError("starter revolution requires an XZ polygon")
+                if profile["operation"] not in ("sketch_polygon", "sketch_semicircle") or profile["parameters"]["plane"] != "XZ":
+                    raise CorpusError("starter revolution requires an XZ polygon or semicircle")
             if step["parameters"]["operation"] == "cut" and not has_solid:
                 raise CorpusError("cut requires an earlier solid-body extrusion")
             if step["parameters"]["operation"] == "new_body":
@@ -259,11 +267,15 @@ def read_recipe(root, relative, case_id):
     if recipe["steps"][-1]["operation"] not in ("extrude", "revolve"):
         raise CorpusError("starter recipe must end with an extrusion or revolution")
     kind = recipe["analytic"]["shape"]
-    if kind in ("cone_frustum", "cone_sector"):
+    if kind in ("cone_frustum", "cone_sector", "sphere"):
         revolutions = [step for step in recipe["steps"] if step["operation"] == "revolve"]
         expected_angle = recipe["analytic"].get("angle_rad",2*math.pi)
         if len(revolutions) != 1 or revolutions[0]["parameters"]["angle_rad"] != expected_angle:
-            raise CorpusError("cone construction angle differs from analytic angle")
+            raise CorpusError("revolution construction angle differs from analytic angle")
+        if kind == "sphere":
+            profile = sketches[revolutions[0]["parameters"]["profiles"][0]]
+            if profile["operation"] != "sketch_semicircle" or profile["parameters"]["radius_m"] != recipe["analytic"]["dimensions_m"]["radius"]:
+                raise CorpusError("sphere construction requires the matching semicircle radius")
     analytic_measures(recipe)
     return recipe
 

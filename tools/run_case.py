@@ -19,6 +19,14 @@ def require(condition, message):
         raise CorpusError(message)
 
 
+def verify_export_failure(expectation,frozen,returncode,actual,output_exists):
+    require(expectation["outcome"]=="unsupported","missing unsupported expectation")
+    require(returncode==2,"expected export rejection; unexpected success requires review")
+    require(not output_exists,"failed export produced a STEP artifact")
+    require(isinstance(actual,dict) and actual==frozen,"export diagnostic changed; review known limit")
+    require(actual.get("error_code")==expectation["error_code"],"export error code differs from expectation")
+
+
 def main(fixed_case=None, legacy_exporter=False):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(os.environ.get(
@@ -32,7 +40,7 @@ def main(fixed_case=None, legacy_exporter=False):
     parser.add_argument("--output", type=Path, default=Path(os.environ.get(
         "OPENSWX_CORPUS_OUTPUT", "results/cylinder" if fixed_case else "results/fixture")))
     if fixed_case is None:
-        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001", "part-multiple-solids-001", "part-thin-wall-001", "part-cone-frustum-001", "part-cone-sector-001"),
+        parser.add_argument("--case", choices=("part-cylinder-001", "part-block-001", "part-tube-001", "part-blind-hole-001", "part-through-hole-001", "part-stepped-bore-001", "part-two-holes-001", "part-concave-profile-001", "part-multiple-solids-001", "part-thin-wall-001", "part-cone-frustum-001", "part-cone-sector-001", "part-sphere-001"),
                             default=os.environ.get("OPENSWX_CORPUS_CASE"))
     args = parser.parse_args()
     case_id = fixed_case if fixed_case is not None else args.case
@@ -156,6 +164,27 @@ def main(fixed_case=None, legacy_exporter=False):
                     load_json(case / "validation/partition-decode.json")["model"]["geometry_counts"],
                     "support geometry inventory changed")
         report["stages"]["binding"] = "pass"
+        if manifest["expectations"]["step"]["outcome"]=="unsupported":
+            require(case_id=="part-sphere-001" and len(selections)==1,
+                    "unsupported STEP oracle is not implemented for this fixture")
+            entry,_ = selections[0]
+            exported = output / "library.step"
+            rejected = run("export",[args.exporter.resolve(),source,str(payload_index),
+                                     str(entry["body_id"]),exported])
+            actual = json.loads(rejected.stdout) if rejected.stdout.strip() else None
+            frozen = load_json(case / "validation/export-error.json")
+            verify_export_failure(manifest["expectations"]["step"],frozen,rejected.returncode,
+                                  actual,exported.exists() or exported.is_symlink())
+            report["export_error"] = actual
+            report["stages"]["step"] = "unsupported"
+            report["step_issue"] = manifest["expectations"]["step"]["issue"]
+            report["step_equivalence"] = "not_tested_no_library_output"
+            report["occt"] = checked_json("native-occt",[args.occt_python.absolute(),
+                root / "tools/check_sphere_step.py",case / "reference/model.step"])
+            report["state_scope"] = selection["state_scope"]
+            report["expectations_matched"] = True
+            print(json.dumps(report,indent=2))
+            return 0
         exports,statistics = {},[]
         for entry,expected in selections:
             body_id = str(entry["body_id"])

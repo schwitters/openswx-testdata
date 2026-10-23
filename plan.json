@@ -240,7 +240,8 @@
       "coverage_targets": [
         "part",
         "sphere"
-      ]
+      ],
+      "recipe": "recipes/part-sphere-001.json"
     },
     {
       "id": "part-sphere-cap-001",

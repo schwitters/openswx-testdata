@@ -163,3 +163,20 @@ Angular placement, arc intervals, trimmed-face membership and material normals
 are checked independently. Other cone angles and oblique intersections are not
 covered by this fixture. Native file envelopes and automatic history resolution
 retain their existing limits.
+
+## Boundary-free sphere STEP export
+
+`part-sphere-001` contains one complete spherical face with no boundary loops,
+edges or vertices. Extraction, complete binary decoding, topology and binding
+pass. At library commit `1607ee9`, STEP export returns `unsupported_format` at
+partition byte 2070: `STEP node 39: Face has no boundary loops`. No STEP output
+is written. The corpus freezes this expected rejection and separately validates
+the SolidWorks STEP reference, including the two natural poles and meridian seam
+that OCCT constructs on import.
+
+The exporter must support complete naturally closed surfaces before this can
+become a passing STEP case. Keep geometry exact, account for degeneracies and
+material orientation, and require independent native/library equivalence when
+changing the expectation. Unexpected success is currently a regression requiring
+review; a matched unsupported result is not counted as a passing STEP stage.
+See the [sphere capture](sphere_capture.md) for the complete reproduction.
