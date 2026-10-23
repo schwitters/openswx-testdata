@@ -18,6 +18,7 @@ try:
     from check_multiple_solids_step import check_multiple_solids, check_selected_block
     from OCP.BRep import BRep_Builder
     from OCP.TopoDS import TopoDS_Compound
+    from check_thin_wall_step import check_thin_wall_shape
     from check_block_step import check_block_shape
     from check_tube_step import check_tube_shape
     from check_blind_hole_step import check_blind_hole_shape
@@ -360,6 +361,53 @@ class MultipleSolidsGeometryTest(unittest.TestCase):
             self.assertAlmostEqual(measure(expected,volume),measure(shifted,volume),delta=1e-6)
         with self.assertRaisesRegex(RuntimeError,"dimensions or placement"):
             check_selected_block(shifted,"small-block")
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class ThinWallGeometryTest(unittest.TestCase):
+    def test_expected_thin_wall(self):
+        report = check_thin_wall_shape(BRepPrimAPI_MakeBox(20,30,.01).Shape())
+        self.assertAlmostEqual(report["volume_mm3"],6,delta=1e-9)
+        self.assertAlmostEqual(report["minimum_feature_size_m"],1e-5)
+        self.assertAlmostEqual(report["feature_to_tolerance_ratio"],1000)
+
+    def test_thickness_changes_of_one_micrometre_are_rejected(self):
+        for thickness in (.009,.011):
+            with self.subTest(thickness=thickness), self.assertRaisesRegex(RuntimeError,"dimensions or placement"):
+                check_thin_wall_shape(BRepPrimAPI_MakeBox(20,30,thickness).Shape())
+
+    def test_one_micrometre_translation_with_equal_measures_is_rejected(self):
+        expected = BRepPrimAPI_MakeBox(20,30,.01).Shape()
+        shifted = BRepPrimAPI_MakeBox(gp_Pnt(0,0,.001),20,30,.01).Shape()
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(shifted,volume),delta=1e-9)
+        with self.assertRaisesRegex(RuntimeError,"dimensions or placement"):
+            check_thin_wall_shape(shifted)
+
+    def test_swapped_extents_with_equal_measures_are_rejected(self):
+        expected = BRepPrimAPI_MakeBox(20,30,.01).Shape()
+        swapped = BRepPrimAPI_MakeBox(30,20,.01).Shape()
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(swapped,volume),delta=1e-9)
+        with self.assertRaisesRegex(RuntimeError,"dimensions or placement"):
+            check_thin_wall_shape(swapped)
+
+    def test_wrong_thin_axis_with_equal_measures_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"dimensions or placement"):
+            check_thin_wall_shape(BRepPrimAPI_MakeBox(.01,30,20).Shape())
+
+    def test_collapsed_plate_is_rejected(self):
+        polygon = BRepBuilderAPI_MakePolygon()
+        for x,y in ((0,0),(20,0),(20,30),(0,30)):
+            polygon.Add(gp_Pnt(x,y,0))
+        polygon.Close()
+        face = BRepBuilderAPI_MakeFace(polygon.Wire()).Face()
+        with self.assertRaisesRegex(RuntimeError,"exactly one complete block"):
+            check_thin_wall_shape(face)
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_thin_wall_shape(BRepPrimAPI_MakeBox(20,30,.01).Shape().Reversed())
 
 
 if __name__ == "__main__":

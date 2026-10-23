@@ -134,3 +134,12 @@ outputs agree separately and together with the whole native STEP reference. The
 body mapping is reviewed by geometry, not inferred from enumeration order. The
 export API still writes one selected body per call. Native file envelopes and
 automatic history reconstruction retain their existing limits.
+
+## Thin-wall capture confirmation
+
+`part-thin-wall-001` preserves a 10-micrometre plate thickness, including both
+cap planes, four short vertical edges and outward normals. Embedded streams
+decode completely; the explicit checkpoint matches native geometry and STEP at
+the unchanged 1e-8 m binding tolerance. This fixture does not establish a general
+minimum feature size. Native file envelopes and automatic history resolution
+retain their existing limits.

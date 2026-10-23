@@ -1,12 +1,13 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile and two separated solids. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids and a thin wall. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
 [blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md),
 [stepped-bore](stepped_bore_capture.md), [two-bores](two_holes_capture.md) and
-[concave L-profile](concave_profile_capture.md) and
-[multiple solids](multiple_solids_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[concave L-profile](concave_profile_capture.md),
+[multiple solids](multiple_solids_capture.md) and
+[thin wall](thin_wall_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
@@ -93,3 +94,12 @@ both bodies before passing topology or binding, exports each one separately and
 compares each output to its positioned native STEP solid. It also compares the
 combined outputs to the entire native reference. Selecting a non-BODY node must
 fail without producing a STEP file. See the [capture](multiple_solids_capture.md).
+
+## Small feature preservation
+
+`part-thin-wall-001` is a 20 x 30 x 0.01 mm plate. Its 10-micrometre thickness
+is recorded explicitly, at 1,000 times the unchanged 1e-8 m binding tolerance.
+The independent checker preserves distinct cap planes, four short vertical edges
+and eight positioned vertices. It rejects micrometre-scale thickness and
+placement changes, collapsed geometry and wrong material orientation. This is a
+resolved fixture, not a certified lower bound for supported feature sizes.

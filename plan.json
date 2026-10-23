@@ -189,7 +189,8 @@
       "coverage_targets": [
         "part",
         "thin-wall"
-      ]
+      ],
+      "recipe": "recipes/part-thin-wall-001.json"
     },
     {
       "id": "part-cone-frustum-001",

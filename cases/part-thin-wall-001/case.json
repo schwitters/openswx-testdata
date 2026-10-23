@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "id": "part-thin-wall-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-thin-wall-001.json",
+  "tags": [
+    "thin-wall",
+    "10-micrometre-thickness",
+    "close-parallel-planes",
+    "planar-faces",
+    "straight-edges",
+    "named-vertices",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T21:02:03.231577+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original 20 x 30 x 0.01 mm thin plate generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 1e-09,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type, Default configuration and saved mass properties."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; six faces, twelve edges and eight native vertices."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint matches native thin-wall geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "pass",
+      "reason": "Complete selected checkpoint; analytic thin plate, native STEP and OCCT equivalence."
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 1124,
+      "sha256": "6ba3e82080da5ab940036a0571cd9a36070afb6fad159c8404c87138e32add9b"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 6738,
+      "sha256": "da0def313346af37738d17a954941d06088b68fef5290bb9fac134ac4a0379ad"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 2488283,
+      "sha256": "66a3a8a8668b7fe6a8130c3b70a95e877d4d592562862d7141371cd0ce813700"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1493,
+      "sha256": "ddfbe268eb3d5baa35d811d1b1b99b71f5fc93d642c04fe657ff5f3b020e65c0"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2379,
+      "sha256": "56864ac5fd1a1aa2c9ef547864038687d1cc8b91ffeaf2668c9b316484d5f9cc"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 13567,
+      "sha256": "11cccd986be759e8a1833d63dd5b359d336d93dde85bd1df602c01cf7046a42d"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 6673,
+      "sha256": "5a183a838c693ce9320d79b9614d0de8a9d5e10874082039e9e908bee2f419a3"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 7175,
+      "sha256": "900f3c8ad02eb28420f4a4a74c4f66aea5b600f29a44321a67bb14ca0a45278f"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 1008064,
+      "sha256": "106e7cedd6af5a218631d0b35ca122b6b2125e3f2375b7bd6f72db2c9d693039"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 40597,
+      "sha256": "78a4ff0248ebade342fe26f6de5338ec0697cc23b4228aba35b051a530f34aa0"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 262475,
+      "sha256": "5e0b0e8127b05cf7ab084c5c472e838c27d9c1b7e18d922555171dbe0a82a61b"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1430,
+      "sha256": "88bd46e151f1a09402d7b0d0e00f5ab22f3c7f0eb7c3995e258c9053ea4cbb53"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1725,
+      "sha256": "6971d0aad2d570b9de1110123c4d0a1d1286b3c134316e91e1b837e2a47726af"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 1081,
+      "sha256": "3b7125522ad1a71af1cab7788d65723555eaac0464ccf84c7fe2071eb3ffbea6"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 2096,
+      "sha256": "bac392b9cc4a4b93fc4dbcc57ca74c5f157ee9bc710f05e6838f3ec7d56bb3ad"
+    }
+  ]
+}

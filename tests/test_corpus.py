@@ -795,5 +795,67 @@ class MultipleSolidsContractTest(unittest.TestCase):
         self.assertEqual(sorted(body_counts.values()),[90,90])
 
 
+class CapturedThinWallTest(unittest.TestCase):
+    def test_admitted_thin_wall_integrity(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        self.assertIn("part-thin-wall-001",{c["id"] for c in report["cases"]})
+
+    def test_minimum_feature_and_analytic_measures(self):
+        recipe = corpus.read_recipe(ROOT,"recipes/part-thin-wall-001.json","part-thin-wall-001")
+        self.assertEqual(recipe["steps"][-1]["parameters"]["height_m"],1e-5)
+        self.assertEqual(min(recipe["analytic"]["dimensions_m"].values()),1e-5)
+        self.assertAlmostEqual(corpus.analytic_measures(recipe)["volume_m3"],6e-9,delta=1e-20)
+        self.assertAlmostEqual(corpus.analytic_measures(recipe)["area_m2"],.001201,delta=1e-15)
+        case = ROOT / "cases/part-thin-wall-001"
+        manifest = corpus.load_json(case / "case.json")
+        observations = corpus.load_json(case / "validation/observations.json")
+        tolerance = manifest["tolerances"]["length_absolute_m"]
+        self.assertEqual(tolerance,1e-8)
+        self.assertEqual(observations["minimum_feature_size_m"],1e-5)
+        self.assertEqual(observations["binding_tolerance_m"],tolerance)
+        self.assertAlmostEqual(observations["feature_to_tolerance_ratio"],1e-5/tolerance)
+
+    def test_native_short_edges_caps_and_material_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-thin-wall-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":6,"edges":12,"vertices":8,"shells":1})
+        for actual,expected in zip(body["measurements_si"]["centroid_m"],(.01,.015,5e-6)):
+            self.assertAlmostEqual(actual,expected,delta=1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        self.assertEqual(sorted(round(e["position"][2],12) for e in entities if e["kind"]=="vertex"),
+                         [0]*4+[1e-5]*4)
+        count=short_edges=0
+        cap_normals = set()
+        for label,evaluation in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            g = entity["geometry"]
+            if entity["kind"]=="curve" and abs(g["direction"][2])>.9:
+                short_edges += 1
+                zs = [sample["position"][2] for sample in evaluation["samples"]]
+                self.assertAlmostEqual(max(zs)-min(zs),1e-5,delta=1e-12)
+            for sample in evaluation["samples"]:
+                point = sample["position"]
+                for value,maximum in zip(point,(.02,.03,1e-5)):
+                    self.assertGreaterEqual(value,-1e-12)
+                    self.assertLessEqual(value,maximum+1e-12)
+                if entity["kind"]=="curve":
+                    self.assertEqual(g["type"],"line")
+                    self.assertLess(math.dist(point,[o+d*sample["parameter"] for o,d in zip(g["origin"],g["direction"])]),1e-12)
+                else:
+                    self.assertEqual(g["type"],"plane")
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    self.assertAlmostEqual(sum((a-o)*n for a,o,n in zip(point,g["origin"],g["normal"])),0,delta=1e-12)
+                    axis = max(range(3),key=lambda i:abs(g["normal"][i]))
+                    expected = [0,0,0]
+                    expected[axis] = -1 if abs(point[axis])<1e-12 else 1
+                    self.assertLess(math.dist(expected,sample["face_normal"]),1e-12)
+                    if axis==2:
+                        cap_normals.add((round(point[2],12),expected[2]))
+                count += 1
+        self.assertEqual(count,90)
+        self.assertEqual(short_edges,4)
+        self.assertEqual(cap_normals,{(0,-1),(1e-5,1)})
+
+
 if __name__ == "__main__":
     unittest.main()

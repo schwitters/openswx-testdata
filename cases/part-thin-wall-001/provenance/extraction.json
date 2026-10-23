@@ -1,0 +1,78 @@
+{
+  "format": "binary_parasolid",
+  "inspected_stream_count": 36,
+  "issue_count": 0,
+  "issues": [],
+  "non_parasolid_block_count": 0,
+  "payload_count": 2,
+  "payloads": [
+    {
+      "bytes": 6738,
+      "category": "partitions",
+      "compressed_size": 3093,
+      "configuration_index": 0,
+      "configuration_name": "Default",
+      "container_marker_offset": 9825,
+      "description": ": TRANSMIT FILE (partition) created by modeller version 3601228",
+      "file": "partitions/payload-0-offset-4.x_b",
+      "frame_count": 1,
+      "frames": [
+        {
+          "compressed_size": 3093,
+          "header_offset": 20,
+          "uncompressed_size": 6738
+        }
+      ],
+      "ghost_partition": false,
+      "header_valid": true,
+      "index": 0,
+      "kind": "partition",
+      "marker_offset": 4,
+      "schema": "SCH_3601228_36001_13006",
+      "section_offset": 0,
+      "source_stream": "Contents/Config-0-Partition",
+      "stored_size": 3129,
+      "uncompressed_size": 6738,
+      "sha256": "da0def313346af37738d17a954941d06088b68fef5290bb9fac134ac4a0379ad"
+    },
+    {
+      "base_partition_candidate": 0,
+      "bytes": 1124,
+      "category": "deltas",
+      "compressed_size": 644,
+      "configuration_index": 0,
+      "configuration_name": "Default",
+      "container_marker_offset": 9825,
+      "dependency_resolution": "not_attempted",
+      "description": ": TRANSMIT FILE (deltas) created by modeller version 3601228",
+      "file": "deltas/payload-1-offset-3133.bin",
+      "frame_count": 1,
+      "frames": [
+        {
+          "compressed_size": 644,
+          "header_offset": 3149,
+          "uncompressed_size": 1124
+        }
+      ],
+      "ghost_partition": false,
+      "header_valid": true,
+      "index": 1,
+      "kind": "deltas",
+      "marker_offset": 3133,
+      "requires_base": true,
+      "schema": "SCH_3601228_36001_13006",
+      "section_offset": 3129,
+      "source_stream": "Contents/Config-0-Partition",
+      "stored_size": 680,
+      "uncompressed_size": 1124,
+      "sha256": "6ba3e82080da5ab940036a0571cd9a36070afb6fad159c8404c87138e32add9b"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "primary_decoded_streams",
+  "source_file": "source/model.sldprt",
+  "source_file_size": 40597,
+  "standalone_readability": "unverified",
+  "verification": "framing_sizes_zlib_checksums_and_signature",
+  "wrapper_count": 2
+}
