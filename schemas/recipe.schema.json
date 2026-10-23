@@ -116,6 +116,64 @@
                 "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
               },
               "operation": {
+                "const": "sketch_polygon"
+              },
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "plane": {
+                    "const": "XY"
+                  },
+                  "origin_m": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "sketch_id": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+                  },
+                  "vertices_m": {
+                    "type": "array",
+                    "minItems": 3,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 2,
+                      "maxItems": 2
+                    }
+                  }
+                },
+                "required": [
+                  "plane",
+                  "origin_m",
+                  "vertices_m",
+                  "sketch_id"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "operation",
+              "parameters"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+              },
+              "operation": {
                 "const": "sketch_circle"
               },
               "parameters": {
@@ -271,7 +329,8 @@
             "blind_hole",
             "through_hole",
             "stepped_bore",
-            "two_holes"
+            "two_holes",
+            "concave_profile"
           ]
         },
         "dimensions_m": {

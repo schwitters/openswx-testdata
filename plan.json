@@ -151,7 +151,8 @@
       "coverage_targets": [
         "part",
         "concave-profile"
-      ]
+      ],
+      "recipe": "recipes/part-concave-profile-001.json"
     },
     {
       "id": "part-multiple-solids-001",

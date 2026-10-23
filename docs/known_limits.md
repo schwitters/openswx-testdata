@@ -117,3 +117,11 @@ explicit checkpoint agrees with native/reference geometry and STEP. Primitive
 ownership is checked by geometric position, including equal-radius bores and
 reversed construction order. Native file envelopes and automatic history
 reconstruction retain their existing limits.
+
+## Concave-profile capture confirmation
+
+`part-concave-profile-001` adds one nonconvex outer cap wire and a reentrant
+corner. Its partition and two-packet delta decode completely; the explicit
+checkpoint matches native geometry and STEP. Supporting-plane samples outside
+the cap trim are recorded and checked as outside. Native file envelopes and
+automatic history reconstruction retain their existing limits.

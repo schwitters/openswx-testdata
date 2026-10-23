@@ -84,6 +84,7 @@ def analytic_measures(recipe):
             "blind_hole": {"outer_radius", "inner_radius", "height", "hole_depth"},
             "through_hole": {"width", "depth", "height", "bore_radius", "bore_x", "bore_y"},
             "stepped_bore": {"outer_radius", "bore_radius", "counterbore_radius", "height", "counterbore_depth"},
+            "concave_profile": {"width", "depth", "height", "vertical_leg_width", "horizontal_leg_depth"},
             "two_holes": {"width", "depth", "height", "bore_radius", "first_x", "first_y", "second_x", "second_y"}}[kind]
     if set(values) != keys:
         raise CorpusError(f"{kind}: expected dimensions {sorted(keys)}")
@@ -92,6 +93,14 @@ def analytic_measures(recipe):
         width, depth = values["width"], values["depth"]
         volume = width * depth * height
         area = 2 * (width * depth + width * height + depth * height)
+    elif kind == "concave_profile":
+        width, depth = values["width"], values["depth"]
+        leg, foot = values["vertical_leg_width"], values["horizontal_leg_depth"]
+        if not (leg < width and foot < depth):
+            raise CorpusError("L-profile requires a positive notch and two remaining legs")
+        section = width*foot + leg*(depth-foot)
+        volume = section*height
+        area = 2*section + 2*(width+depth)*height
     elif kind == "two_holes":
         width, depth, radius = values["width"], values["depth"], values["bore_radius"]
         centers = ((values["first_x"],values["first_y"]),(values["second_x"],values["second_y"]))
@@ -133,6 +142,27 @@ def analytic_measures(recipe):
     return {"volume_m3": volume, "area_m2": area}
 
 
+def check_polygon(vertices):
+    """Require one simple closed contour; closing edge is implicit."""
+    edges = list(zip(vertices,vertices[1:]+vertices[:1]))
+    def cross(a,b,c):
+        return (b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0])
+    def on_segment(a,b,p):
+        return cross(a,b,p)==0 and all(min(x,y)<=z<=max(x,y) for x,y,z in zip(a,b,p))
+    def intersects(a,b,c,d):
+        return ((cross(a,b,c)*cross(a,b,d)<0 and cross(c,d,a)*cross(c,d,b)<0) or
+                any((on_segment(a,b,c),on_segment(a,b,d),on_segment(c,d,a),on_segment(c,d,b))))
+    for i,(a,b) in enumerate(edges):
+        for j,(c,d) in enumerate(edges):
+            if j<=i or j==i+1 or (i==0 and j==len(edges)-1):
+                continue
+            if intersects(a,b,c,d):
+                raise CorpusError("polygon must not self-intersect or touch nonadjacent edges")
+    twice_area = sum(a[0]*b[1]-b[0]*a[1] for a,b in edges)
+    if not math.isfinite(twice_area) or twice_area==0:
+        raise CorpusError("polygon must enclose a finite nonzero area")
+
+
 def read_recipe(root, relative, case_id):
     recipe = load_json(local_file(root, relative))
     validate(root, "recipe", recipe)
@@ -147,6 +177,8 @@ def read_recipe(root, relative, case_id):
     has_solid = False
     for step in recipe["steps"][1:]:
         if step["operation"].startswith("sketch_"):
+            if step["operation"] == "sketch_polygon":
+                check_polygon(step["parameters"]["vertices_m"])
             profiles.add(step["id"])
         elif step["operation"] == "extrude":
             if not set(step["parameters"]["profiles"]) <= profiles:

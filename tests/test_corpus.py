@@ -109,6 +109,31 @@ class CorpusTest(unittest.TestCase):
         with self.assertRaises(corpus.CorpusError):
             corpus.analytic_measures(recipe)
 
+    def test_concave_profile_formula_and_remaining_legs(self):
+        recipe = corpus.read_recipe(self.root,"recipes/part-concave-profile-001.json","part-concave-profile-001")
+        result = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(result["volume_m3"],.000014)
+        self.assertAlmostEqual(result["area_m2"],.0042)
+        for name,value in (("vertical_leg_width",.04),("horizontal_leg_depth",.03)):
+            changed = corpus.load_json(self.root / "recipes/part-concave-profile-001.json")
+            changed["analytic"]["dimensions_m"][name] = value
+            with self.assertRaisesRegex(corpus.CorpusError,"positive notch"):
+                corpus.analytic_measures(changed)
+
+    def test_polygon_rejects_crossing_touching_and_zero_area(self):
+        for vertices in ([[0,0],[2,2],[0,2],[2,0]],
+                         [[0,0],[2,0],[2,2],[1,0],[0,2]],
+                         [[0,0],[1,0],[2,0]]):
+            with self.assertRaises(corpus.CorpusError):
+                corpus.check_polygon(vertices)
+        recipe = corpus.read_recipe(self.root,"recipes/part-concave-profile-001.json","part-concave-profile-001")
+        vertices = recipe["steps"][1]["parameters"]["vertices_m"]
+        corpus.check_polygon(vertices[::-1])
+        recipe["steps"][1]["parameters"]["vertices_m"] = [[0,0],[2,2],[0,2],[2,0]]
+        self.write_json(self.root / "recipes/part-concave-profile-001.json",recipe)
+        with self.assertRaisesRegex(corpus.CorpusError,"self-intersect"):
+            corpus.read_recipe(self.root,"recipes/part-concave-profile-001.json","part-concave-profile-001")
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -610,6 +635,54 @@ class CapturedTwoHolesTest(unittest.TestCase):
                 count += 1
         self.assertEqual(owners,set(centers))
         self.assertEqual(count,126)
+
+
+class CapturedConcaveProfileTest(unittest.TestCase):
+    def test_admitted_concave_profile_integrity(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        self.assertIn("part-concave-profile-001",{c["id"] for c in report["cases"]})
+
+    def test_native_concave_trims_and_material_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-concave-profile-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":8,"edges":18,"vertices":12,"shells":1})
+        for a,b in zip(body["measurements_si"]["centroid_m"],(.014642857142857143,.011428571428571429,.01)):
+            self.assertAlmostEqual(a,b,delta=1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        count=inside=outside=0
+        cap_memberships = {}
+        for label,evaluation in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            geometry = entity["geometry"]
+            for sample in evaluation["samples"]:
+                point = sample["position"]
+                x,y,z = point
+                for value,maximum in zip(point,(.04,.03,.02)):
+                    self.assertGreaterEqual(value,-1e-12)
+                    self.assertLessEqual(value,maximum+1e-12)
+                expected = x<=.015+1e-12 or y<=.01+1e-12
+                if entity["kind"] == "curve":
+                    self.assertTrue(expected)
+                    self.assertEqual(geometry["type"],"line")
+                    target = [o+d*sample["parameter"] for o,d in zip(geometry["origin"],geometry["direction"])]
+                    self.assertLess(math.dist(point,target),1e-12)
+                else:
+                    self.assertEqual(geometry["type"],"plane")
+                    self.assertEqual(sample["trim_membership"]["geometric_inside_or_boundary"],expected)
+                    self.assertAlmostEqual(sum((a-o)*n for a,o,n in zip(point,geometry["origin"],geometry["normal"])),0,delta=1e-12)
+                    inside += int(expected)
+                    outside += int(not expected)
+                    axis = max(range(3),key=lambda i:abs(geometry["normal"][i]))
+                    expected_normal = [0,0,0]
+                    expected_normal[axis] = -1 if abs(point[axis])<1e-12 else 1
+                    self.assertLess(math.dist(sample["face_normal"],expected_normal),1e-12)
+                    if axis==2:
+                        cap_memberships.setdefault(round(z,6),[]).append(expected)
+                count += 1
+        self.assertEqual((count,inside,outside),(138,40,8))
+        self.assertEqual(set(cap_memberships),{0,.02})
+        for values in cap_memberships.values():
+            self.assertEqual((values.count(True),values.count(False)),(5,4))
 
 
 if __name__ == "__main__":

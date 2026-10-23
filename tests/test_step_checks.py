@@ -11,6 +11,10 @@ try:
     from OCP.BRepPrimAPI import BRepPrimAPI_MakeBox, BRepPrimAPI_MakeCylinder
     from OCP.TopLoc import TopLoc_Location
     from OCP.gp import gp_Trsf, gp_Vec
+    from check_concave_profile_step import check_concave_profile_shape
+    from OCP.BRepBuilderAPI import BRepBuilderAPI_MakePolygon, BRepBuilderAPI_MakeFace
+    from OCP.BRepPrimAPI import BRepPrimAPI_MakePrism
+    from OCP.gp import gp_Pnt
     from check_block_step import check_block_shape
     from check_tube_step import check_tube_shape
     from check_blind_hole_step import check_blind_hole_shape
@@ -248,6 +252,44 @@ class TwoHolesGeometryTest(unittest.TestCase):
     def test_one_blind_bore_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError,"incomplete two-hole"):
             check_two_holes_shape(self.make_two_holes(second_depth=10))
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class ConcaveProfileGeometryTest(unittest.TestCase):
+    @staticmethod
+    def make_profile(points=((0,0),(40,0),(40,10),(15,10),(15,30),(0,30))):
+        polygon = BRepBuilderAPI_MakePolygon()
+        for x,y in points:
+            polygon.Add(gp_Pnt(x,y,0))
+        polygon.Close()
+        face = BRepBuilderAPI_MakeFace(polygon.Wire()).Face()
+        return BRepPrimAPI_MakePrism(face,gp_Vec(0,0,20)).Shape()
+
+    def test_expected_profile(self):
+        report = check_concave_profile_shape(self.make_profile())
+        self.assertTrue(report["cap_trim_membership_verified"])
+        self.assertTrue(report["outward_normals_verified"])
+
+    def test_reversed_and_rotated_vertex_order_is_accepted(self):
+        points = ((0,0),(40,0),(40,10),(15,10),(15,30),(0,30))
+        for variant in (points[3:]+points[:3],points[::-1]):
+            check_concave_profile_shape(self.make_profile(variant))
+
+    def test_mirrored_notch_with_identical_measures_is_rejected(self):
+        reference = self.make_profile()
+        mirrored = self.make_profile(((40,0),(0,0),(0,10),(25,10),(25,30),(40,30)))
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(reference,volume),measure(mirrored,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"dimension or placement"):
+            check_concave_profile_shape(mirrored)
+
+    def test_filled_notch_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete L-profile"):
+            check_concave_profile_shape(BRepPrimAPI_MakeBox(40,30,20).Shape())
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material face normal"):
+            check_concave_profile_shape(self.make_profile().Reversed())
 
 
 if __name__ == "__main__":

@@ -5,11 +5,12 @@ An MIT-licensed test corpus repository for `libopenswx`,
 **SolidWorks 2025**. All future CAD fixtures must be original synthetic models
 with recorded authorship and generation provenance.
 
-**Current state: 50 planned cases, seven recipes and seven captured parts.**
+**Current state: 50 planned cases, eight recipes and eight captured parts.**
 The [cylinder](docs/cylinder_capture.md), [block](docs/block_capture.md),
 [tube](docs/tube_capture.md), [blind-hole](docs/blind_hole_capture.md),
 [through-hole](docs/through_hole_capture.md),
-[stepped-bore](docs/stepped_bore_capture.md) and [two-bores](docs/two_holes_capture.md) captures
+[stepped-bore](docs/stepped_bore_capture.md), [two-bores](docs/two_holes_capture.md)
+and [concave L-profile](docs/concave_profile_capture.md) captures
 include native SLDPRT, Parasolid binary/text and STEP AP214 references, full
 capture provenance and a shared offline check of
 all three libraries. The general MCP generation adapter is still pending.
@@ -36,14 +37,14 @@ the matching environment variables are `OPENSWX_CORPUS_ROOT` and
 - `plan.json`: 50 individually named cases, P0/P1/P2 priorities, coverage targets
   and semantic capabilities. Entries are plans, not coverage claims.
 - `recipes/`: declarative, metre/radian construction instructions for a block,
-  cylinder, tube, blind hole, through hole, stepped bore and two bores. Step names are not promises about
+  cylinder, tube, blind hole, through hole, stepped bore, two bores and a concave L-profile. Step names are not promises about
   deployed MCP
   tool names.
 - `schemas/`: JSON Schema 2020-12 contracts for the plan, starter recipes,
   captured cases, native observations and export receipts. STEP protocol, file
   version and source-to-metre scale are recorded separately.
 - `cases/<id>/`: admitted immutable fixtures and `case.json`; currently `part-cylinder-001`,
-  `part-block-001`, `part-tube-001`, `part-blind-hole-001`, `part-through-hole-001`, `part-stepped-bore-001` and `part-two-holes-001`.
+  `part-block-001`, `part-tube-001`, `part-blind-hole-001`, `part-through-hole-001`, `part-stepped-bore-001`, `part-two-holes-001` and `part-concave-profile-001`.
 - `tools/corpus.py`: offline contract, provenance-association and SHA-256 audit.
 - `tools/run_case.py`: shared six-stage offline regression runner, using explicit
   manifest selection and fixture-specific OCCT geometry checks.
@@ -88,7 +89,8 @@ from file extensions or requested settings.
 
 The starter recipe language and analytic admission checks currently cover only
 one-body block/cylinder/tube parts, the top-entry cylindrical blind hole and
-the block with one or two through bores, plus the coaxial stepped bore.
+the block with one or two through bores, the coaxial stepped bore and the
+extruded L-profile with concave caps.
 Extend and test those contracts before capturing the other planned cases. Configuration, history, assembly and drawing
 cases are intentionally queued for later batches.
 

@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "id": "part-concave-profile-001",
+  "description": "Extrude a six-edge L-profile with a reentrant corner and nonconvex planar caps.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_polygon",
+      "parameters": {
+        "plane": "XY",
+        "origin_m": [
+          0,
+          0,
+          0
+        ],
+        "vertices_m": [
+          [
+            0,
+            0
+          ],
+          [
+            0.04,
+            0
+          ],
+          [
+            0.04,
+            0.01
+          ],
+          [
+            0.015,
+            0.01
+          ],
+          [
+            0.015,
+            0.03
+          ],
+          [
+            0,
+            0.03
+          ]
+        ],
+        "sketch_id": "main-profile"
+      }
+    },
+    {
+      "id": "extrude-profile",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "height_m": 0.02,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "concave_profile",
+    "dimensions_m": {
+      "width": 0.04,
+      "depth": 0.03,
+      "height": 0.02,
+      "vertical_leg_width": 0.015,
+      "horizontal_leg_depth": 0.01
+    }
+  }
+}
