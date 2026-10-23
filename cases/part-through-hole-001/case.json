@@ -105,8 +105,8 @@
     {
       "path": "provenance/capture.json",
       "role": "capture_evidence",
-      "bytes": 2887685,
-      "sha256": "05d51022c48630658ff37d4b9e1566fba9cf179dbf9dd64bc690e559a24d8465"
+      "bytes": 2888188,
+      "sha256": "45ed90d34bb7b085f67692526872af96cbc25596836dbd69e0d5966b9197c725"
     },
     {
       "path": "provenance/exports.json",

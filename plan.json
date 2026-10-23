@@ -113,7 +113,8 @@
       "coverage_targets": [
         "part",
         "stepped-bore"
-      ]
+      ],
+      "recipe": "recipes/part-stepped-bore-001.json"
     },
     {
       "id": "part-two-holes-001",

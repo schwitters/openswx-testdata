@@ -19263,6 +19263,19 @@
   "recipe_mapping": {
     "support": "XY planes at Z=0 and Z=0.04 m; rectangle extrusion +Z, circle at (0.01,0.015) m, through-all cut -Z without a requested depth.",
     "native_template": "configured_default; empty native part and empty custom properties observed",
-    "reopen": "Save doc-9 revision 6, close, reopen as doc-10 revision 0, save with capture and verify unchanged native geometry"
-  }
+    "reopen": {
+      "created_document": "doc-9",
+      "saved_revision": 6,
+      "reopened_document": "doc-a",
+      "reopened_revision": 0,
+      "geometry_verified_unchanged": true
+    }
+  },
+  "metadata_corrections": [
+    {
+      "field": "recipe_mapping.reopen",
+      "previous_description": "Save doc-9 revision 6, close, reopen as doc-10 revision 0, save with capture and verify unchanged native geometry",
+      "reason": "Document identifiers are opaque strings; the server uses hexadecimal counters. The actual reopened ID is taken from the recorded open response. Raw events and native artifacts are unchanged."
+    }
+  ]
 }

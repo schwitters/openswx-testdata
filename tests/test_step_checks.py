@@ -15,6 +15,7 @@ try:
     from check_tube_step import check_tube_shape
     from check_blind_hole_step import check_blind_hole_shape
     from check_through_hole_step import check_through_hole_shape
+    from check_stepped_bore_step import check_stepped_bore_shape
     from step_check import measure
     HAS_OCCT = True
 except ModuleNotFoundError as error:
@@ -153,6 +154,50 @@ class ThroughHoleGeometryTest(unittest.TestCase):
     def test_missing_bore_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError,"incomplete through-hole"):
             check_through_hole_shape(BRepPrimAPI_MakeBox(20,30,40).Shape())
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class SteppedBoreGeometryTest(unittest.TestCase):
+    @staticmethod
+    def make_stepped_bore(top_entry=True,depth=8,eccentricity=0):
+        stock = BRepPrimAPI_MakeCylinder(10,20).Shape()
+        bore = BRepPrimAPI_MakeCylinder(3,20).Shape()
+        cut = BRepAlgoAPI_Cut(stock,bore)
+        if not cut.IsDone():
+            raise RuntimeError("Test through bore failed")
+        counterbore = BRepPrimAPI_MakeCylinder(6,depth).Shape()
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(eccentricity,0,20-depth if top_entry else 0))
+        cut = BRepAlgoAPI_Cut(cut.Shape(),counterbore.Moved(TopLoc_Location(transform)))
+        if not cut.IsDone():
+            raise RuntimeError("Test counterbore failed")
+        return cut.Shape()
+
+    def test_expected_stepped_bore(self):
+        report = check_stepped_bore_shape(self.make_stepped_bore())
+        self.assertEqual(report["plane_z_and_wire_count"],[(0,2),(12,2),(20,2)])
+
+    def test_reversed_entry_with_identical_measures_is_rejected(self):
+        reference,reversed_entry = self.make_stepped_bore(),self.make_stepped_bore(False)
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(reference,volume),measure(reversed_entry,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"entry or shoulder"):
+            check_stepped_bore_shape(reversed_entry)
+
+    def test_wrong_depth_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"entry or shoulder"):
+            check_stepped_bore_shape(self.make_stepped_bore(depth=6))
+
+    def test_missing_shoulder_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete stepped-bore"):
+            check_stepped_bore_shape(self.make_stepped_bore(depth=20))
+
+    def test_eccentric_counterbore_with_identical_measures_is_rejected(self):
+        reference,eccentric = self.make_stepped_bore(),self.make_stepped_bore(eccentricity=1)
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(reference,volume),measure(eccentric,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"eccentric bore"):
+            check_stepped_bore_shape(eccentric)
 
 
 if __name__ == "__main__":

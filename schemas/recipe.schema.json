@@ -269,7 +269,8 @@
             "cylinder",
             "tube",
             "blind_hole",
-            "through_hole"
+            "through_hole",
+            "stepped_bore"
           ]
         },
         "dimensions_m": {

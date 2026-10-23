@@ -99,3 +99,12 @@ rectangular caps, eight preserved outer corners and the offset bore axis at
 (10,15) mm. The shared seam checker uses that declared axis rather than assuming
 the global origin. Standalone native `.x_b` envelopes and automatic history
 resolution retain their previously documented limits.
+
+## Stepped-bore capture confirmation
+
+`part-stepped-bore-001` adds two ordered cuts, three cylindrical bands and an
+internal annular shoulder. The partition and six-packet delta decode completely,
+and the explicit checkpoint agrees with native/reference geometry and STEP.
+Native standalone file envelopes and automatic state reconstruction retain the
+same limits. Reopen provenance uses captured document handles verbatim; those
+handles are opaque and must not be reconstructed from decimal counters.

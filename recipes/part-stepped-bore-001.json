@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "id": "part-stepped-bore-001",
+  "description": "Cylinder R10 x H20 mm with a concentric R3 through bore and R6 x depth8 mm top counterbore.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0
+        ],
+        "radius_m": 0.01,
+        "sketch_id": "base-profile"
+      }
+    },
+    {
+      "id": "extrude-base",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "height_m": 0.02,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    },
+    {
+      "id": "sketch-bore",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0.02
+        ],
+        "radius_m": 0.003,
+        "sketch_id": "bore-profile"
+      }
+    },
+    {
+      "id": "cut-bore",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-bore"
+        ],
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "operation": "cut",
+        "end_condition": "through_all"
+      }
+    },
+    {
+      "id": "sketch-counterbore",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0.02
+        ],
+        "radius_m": 0.006,
+        "sketch_id": "counterbore-profile"
+      }
+    },
+    {
+      "id": "cut-counterbore",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-counterbore"
+        ],
+        "height_m": 0.008,
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "operation": "cut"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "stepped_bore",
+    "dimensions_m": {
+      "outer_radius": 0.01,
+      "bore_radius": 0.003,
+      "counterbore_radius": 0.006,
+      "height": 0.02,
+      "counterbore_depth": 0.008
+    }
+  }
+}

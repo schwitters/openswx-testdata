@@ -1,9 +1,10 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole and through hole. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole and stepped bore. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
-[blind-hole](blind_hole_capture.md) and [through-hole](through_hole_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md) and
+[stepped-bore](stepped_bore_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
