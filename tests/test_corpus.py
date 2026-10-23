@@ -165,6 +165,31 @@ class CorpusTest(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(corpus.CorpusError):
                 corpus.read_recipe(self.root,relative,"part-cone-frustum-001")
 
+    def test_sector_formulas_include_both_radial_cuts(self):
+        recipe = corpus.read_recipe(self.root,"recipes/part-cone-sector-001.json","part-cone-sector-001")
+        result = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(result["volume_m3"],875*math.pi/3*1e-9,delta=1e-17)
+        self.assertAlmostEqual(result["area_m2"],(math.pi*(125+75*math.sqrt(17))/4+300)*1e-6,delta=1e-14)
+
+    def test_sector_angle_schema_and_construction_must_agree(self):
+        relative = "recipes/part-cone-sector-001.json"
+        original = corpus.read_recipe(self.root,relative,"part-cone-sector-001")
+        for angle in (0,-1,2*math.pi,7):
+            recipe = copy.deepcopy(original)
+            recipe["analytic"]["angle_rad"] = angle
+            self.write_json(self.root / relative,recipe)
+            with self.subTest(angle=angle), self.assertRaises(corpus.CorpusError):
+                corpus.read_recipe(self.root,relative,"part-cone-sector-001")
+        recipe = copy.deepcopy(original)
+        recipe["steps"][-1]["parameters"]["angle_rad"] = math.pi
+        self.write_json(self.root / relative,recipe)
+        with self.assertRaisesRegex(corpus.CorpusError,"construction angle differs"):
+            corpus.read_recipe(self.root,relative,"part-cone-sector-001")
+        recipe = copy.deepcopy(original)
+        recipe["analytic"]["shape"] = "cone_frustum"
+        with self.assertRaises(corpus.CorpusError):
+            corpus.validate(self.root,"recipe",recipe)
+
     def test_size_corruption(self):
         self.make_case()
         (self.case / "source.sldprt").write_bytes(b"changed")
@@ -931,6 +956,66 @@ class CapturedConeFrustumTest(unittest.TestCase):
                 count += 1
         self.assertEqual((count,mantle_samples),(28,8))
         self.assertEqual(cap_normals,{(0,-1),(.02,1)})
+
+
+class CapturedConeSectorTest(unittest.TestCase):
+    def test_admitted_sector_integrity(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        self.assertIn("part-cone-sector-001",{c["id"] for c in report["cases"]})
+
+    def test_native_arc_intervals_cut_normals_and_trim_membership(self):
+        native = corpus.load_json(ROOT / "cases/part-cone-sector-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":5,"edges":9,"vertices":6,"shells":1})
+        for actual,expected in zip(body["measurements_si"]["centroid_m"],(.075/(7*math.pi),.075/(7*math.pi),.055/7)):
+            self.assertAlmostEqual(actual,expected,delta=1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        byref = {e["ref"]:e for e in entities}
+        arcs = []
+        for entity in entities:
+            if entity["kind"]=="curve" and entity["geometry"]["type"]=="circle":
+                # Holding circles are closed; their topological edges are arcs.
+                self.assertTrue(entity["geometry"]["closed"])
+                edge = byref[entity["owner"]]
+                self.assertAlmostEqual(abs(edge["curve_interval"][1]-edge["curve_interval"][0]),math.pi/2,delta=1e-12)
+                self.assertNotEqual(edge["start_vertex"],edge["end_vertex"])
+                arcs.append(entity["geometry"]["radius"])
+        self.assertEqual(sorted(arcs),[.005,.01])
+        count=inside=outside=0
+        cut_normals = set()
+        for label,evaluation in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            g = entity["geometry"]
+            for sample in evaluation["samples"]:
+                point = sample["position"]
+                x,y,z = point
+                radius = math.hypot(x,y)
+                expected_inside = x>=-1e-12 and y>=-1e-12 and -1e-12<=z<=.02+1e-12 and radius<=.01-.25*z+1e-12
+                if entity["kind"]=="curve":
+                    self.assertTrue(expected_inside)
+                    if g["type"]=="circle":
+                        self.assertAlmostEqual(radius,g["radius"],delta=1e-12)
+                        self.assertAlmostEqual(z,g["center"][2],delta=1e-12)
+                    else:
+                        self.assertLess(math.dist(point,[o+d*sample["parameter"] for o,d in zip(g["origin"],g["direction"])]),1e-12)
+                else:
+                    self.assertEqual(sample["trim_membership"]["geometric_inside_or_boundary"],expected_inside)
+                    inside += int(expected_inside)
+                    outside += int(not expected_inside)
+                    if g["type"]=="cone":
+                        self.assertAlmostEqual(radius,.01-.25*z,delta=1e-12)
+                        normal = [x/radius/math.sqrt(1+.25**2),y/radius/math.sqrt(1+.25**2),.25/math.sqrt(1+.25**2)]
+                    else:
+                        self.assertAlmostEqual(sum((a-o)*n for a,o,n in zip(point,g["origin"],g["normal"])),0,delta=1e-12)
+                        axis = max(range(3),key=lambda a:abs(g["normal"][a]))
+                        normal = [0,0,0]
+                        normal[axis] = 1 if axis==2 and z>.01 else -1
+                        if axis!=2:
+                            cut_normals.add(tuple(normal))
+                    self.assertLess(math.dist(sample["face_normal"],normal),1e-12)
+                count += 1
+        self.assertEqual((count,inside,outside),(73,24,4))
+        self.assertEqual(cut_normals,{(-1,0,0),(0,-1,0)})
 
 
 if __name__ == "__main__":

@@ -223,7 +223,8 @@
       "coverage_targets": [
         "part",
         "cone-sector"
-      ]
+      ],
+      "recipe": "recipes/part-cone-sector-001.json"
     },
     {
       "id": "part-sphere-001",

@@ -125,7 +125,8 @@ def analytic_measures(recipe):
     values = recipe["analytic"]["dimensions_m"]
     if kind == "multiple_solids":
         return aggregate_measures(multiple_solid_measures(recipe).values())
-    keys = {"cone_frustum": {"bottom_radius", "top_radius", "height"},
+    keys = {"cone_sector": {"bottom_radius", "top_radius", "height"},
+            "cone_frustum": {"bottom_radius", "top_radius", "height"},
             "block": {"width", "depth", "height"},
             "cylinder": {"radius", "height"},
             "tube": {"outer_radius", "inner_radius", "height"},
@@ -141,12 +142,18 @@ def analytic_measures(recipe):
         width, depth = values["width"], values["depth"]
         volume = width * depth * height
         area = 2 * (width * depth + width * height + depth * height)
-    elif kind == "cone_frustum":
+    elif kind in ("cone_frustum", "cone_sector"):
         bottom, top = values["bottom_radius"], values["top_radius"]
         if not top < bottom:
             raise CorpusError("cone frustum requires a smaller positive top radius")
         volume = math.pi*height*(bottom**2+bottom*top+top**2)/3
         area = math.pi*(bottom**2+top**2+(bottom+top)*math.hypot(height,bottom-top))
+        if kind == "cone_sector":
+            angle = recipe["analytic"]["angle_rad"]
+            if not 0 < angle < 2*math.pi:
+                raise CorpusError("cone sector requires a strict partial revolution")
+            volume *= angle/(2*math.pi)
+            area = area*angle/(2*math.pi)+(bottom+top)*height
     elif kind == "concave_profile":
         width, depth = values["width"], values["depth"]
         leg, foot = values["vertical_leg_width"], values["horizontal_leg_depth"]
@@ -251,6 +258,12 @@ def read_recipe(root, relative, case_id):
             raise CorpusError("starter recipe must have exactly one create_part")
     if recipe["steps"][-1]["operation"] not in ("extrude", "revolve"):
         raise CorpusError("starter recipe must end with an extrusion or revolution")
+    kind = recipe["analytic"]["shape"]
+    if kind in ("cone_frustum", "cone_sector"):
+        revolutions = [step for step in recipe["steps"] if step["operation"] == "revolve"]
+        expected_angle = recipe["analytic"].get("angle_rad",2*math.pi)
+        if len(revolutions) != 1 or revolutions[0]["parameters"]["angle_rad"] != expected_angle:
+            raise CorpusError("cone construction angle differs from analytic angle")
     analytic_measures(recipe)
     return recipe
 

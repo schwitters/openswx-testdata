@@ -20,6 +20,7 @@ try:
     from OCP.BRep import BRep_Builder
     from OCP.TopoDS import TopoDS_Compound
     from check_thin_wall_step import check_thin_wall_shape
+    from check_cone_sector_step import check_cone_sector_shape
     from check_cone_frustum_step import check_cone_frustum_shape
     from OCP.BRepPrimAPI import BRepPrimAPI_MakeCone
     from check_block_step import check_block_shape
@@ -453,6 +454,57 @@ class ConeFrustumGeometryTest(unittest.TestCase):
     def test_inverted_material_orientation_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError,"material normal"):
             check_cone_frustum_shape(BRepPrimAPI_MakeCone(10,5,20).Shape().Reversed())
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class ConeSectorGeometryTest(unittest.TestCase):
+    @staticmethod
+    def sector():
+        return BRepPrimAPI_MakeCone(10,5,20,math.pi/2).Shape()
+
+    def test_expected_sector(self):
+        report = check_cone_sector_shape(self.sector())
+        self.assertEqual(report["topology"],{"faces":5,"edges":9,"vertices":6,"solids":1})
+        self.assertTrue(report["trim_membership_verified"])
+        self.assertEqual(report["synthetic_seams"],0)
+
+    def test_rotated_sector_with_equal_measures_is_rejected(self):
+        from OCP.gp import gp_Ax1, gp_Dir
+        transform = gp_Trsf()
+        transform.SetRotation(gp_Ax1(gp_Pnt(0,0,0),gp_Dir(0,0,1)),math.pi/2)
+        expected = self.sector()
+        rotated = expected.Moved(TopLoc_Location(transform))
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(rotated,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"corner or angular placement"):
+            check_cone_sector_shape(rotated)
+
+    def test_reversed_taper_with_equal_measures_is_rejected(self):
+        expected = self.sector()
+        reversed_taper = BRepPrimAPI_MakeCone(5,10,20,math.pi/2).Shape()
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(expected,volume),measure(reversed_taper,volume),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"corner or angular placement"):
+            check_cone_sector_shape(reversed_taper)
+
+    def test_wrong_angle_with_same_topology_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"corner or angular placement"):
+            check_cone_sector_shape(BRepPrimAPI_MakeCone(10,5,20,math.pi/3).Shape())
+
+    def test_full_revolution_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete cone sector"):
+            check_cone_sector_shape(BRepPrimAPI_MakeCone(10,5,20).Shape())
+
+    def test_inverted_material_orientation_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"material normal"):
+            check_cone_sector_shape(self.sector().Reversed())
+
+    def test_equal_volume_cylinder_sector_is_rejected(self):
+        expected = self.sector()
+        cylinder = BRepPrimAPI_MakeCylinder(math.sqrt(175/3),20,math.pi/2).Shape()
+        self.assertAlmostEqual(measure(expected,True),measure(cylinder,True),delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError,"corner or angular placement"):
+            check_cone_sector_shape(cylinder)
 
 
 if __name__ == "__main__":

@@ -1,13 +1,14 @@
 # Library regression contract
 
 The repository includes an offline integrity/admission validator and a working
-six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall and a cone frustum. See the
+six-stage runner for the captured cylinder, block, tube, blind hole, through hole, stepped bore, two bores, a concave L-profile, two separated solids, a thin wall, a cone frustum and a cone sector. See the
 [cylinder](cylinder_capture.md), [block](block_capture.md), [tube](tube_capture.md)
 [blind-hole](blind_hole_capture.md), [through-hole](through_hole_capture.md),
 [stepped-bore](stepped_bore_capture.md), [two-bores](two_holes_capture.md) and
 [concave L-profile](concave_profile_capture.md),
 [multiple solids](multiple_solids_capture.md),
-[thin wall](thin_wall_capture.md) and [cone frustum](cone_frustum_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
+[thin wall](thin_wall_capture.md), [cone frustum](cone_frustum_capture.md) and
+[cone sector](cone_sector_capture.md) captures for native evidence, commands and exact checkpoint scope. Other cases
 remain planned. No library result is inferred from a manifest.
 
 ## Independent stages
@@ -112,3 +113,13 @@ radii, material normals and an importer-created generatrix seam. Seam acceptance
 requires a true straight periodic seam on the cone, represented as a line or a
 nonrational degree-one B-spline with two poles. Equal volume and area do not
 permit a reversed taper to pass. See the [capture](cone_frustum_capture.md).
+
+## Partial revolutions and arc trims
+
+`part-cone-sector-001` verifies a 90-degree first-quadrant frustum sector. It
+retains two open circular arcs, seven lines, six vertices and two outward radial
+cut faces. Interior/exterior support probes are classified directly in UV,
+without projecting outside points onto a bounded patch. Native holding-circle
+periodicity must not override a topological edge's partial parameter interval.
+The recipe's construction angle and analytic angle must agree. See the
+[capture](cone_sector_capture.md).

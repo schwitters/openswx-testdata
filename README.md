@@ -5,15 +5,16 @@ An MIT-licensed test corpus repository for `libopenswx`,
 **SolidWorks 2025**. All future CAD fixtures must be original synthetic models
 with recorded authorship and generation provenance.
 
-**Current state: 50 planned cases, eleven recipes and eleven captured parts.**
+**Current state: 50 planned cases, twelve recipes and twelve captured parts.**
 The [cylinder](docs/cylinder_capture.md), [block](docs/block_capture.md),
 [tube](docs/tube_capture.md), [blind-hole](docs/blind_hole_capture.md),
 [through-hole](docs/through_hole_capture.md),
 [stepped-bore](docs/stepped_bore_capture.md), [two-bores](docs/two_holes_capture.md),
 [concave L-profile](docs/concave_profile_capture.md),
 [multiple solids](docs/multiple_solids_capture.md),
-[thin wall](docs/thin_wall_capture.md) and
-[cone frustum](docs/cone_frustum_capture.md) captures
+[thin wall](docs/thin_wall_capture.md),
+[cone frustum](docs/cone_frustum_capture.md) and
+[cone sector](docs/cone_sector_capture.md) captures
 include native SLDPRT, Parasolid binary/text and STEP AP214 references, full
 capture provenance and a shared offline check of
 all three libraries. The general MCP generation adapter is still pending.
@@ -42,14 +43,14 @@ the matching environment variables are `OPENSWX_CORPUS_ROOT` and
 - `recipes/`: declarative, metre/radian construction instructions for a block,
   cylinder, tube, blind hole, through hole, stepped bore, two bores, a concave
   L-profile, two separate solid bodies, a plate with 10 micrometre thickness
-  and a revolved cone frustum.
+  a revolved cone frustum and a 90-degree cone sector.
   Step names are not promises about deployed MCP tool names.
 - `schemas/`: JSON Schema 2020-12 contracts for the plan, starter recipes,
   captured cases, native observations and export receipts. STEP protocol, file
   version and source-to-metre scale are recorded separately.
 - `cases/<id>/`: admitted immutable fixtures and `case.json`; currently `part-cylinder-001`,
   `part-block-001`, `part-tube-001`, `part-blind-hole-001`, `part-through-hole-001`, `part-stepped-bore-001`, `part-two-holes-001`, `part-concave-profile-001`,
-  `part-multiple-solids-001`, `part-thin-wall-001` and `part-cone-frustum-001`.
+  `part-multiple-solids-001`, `part-thin-wall-001`, `part-cone-frustum-001` and `part-cone-sector-001`.
 - `tools/corpus.py`: offline contract, provenance-association and SHA-256 audit.
 - `tools/run_case.py`: shared six-stage offline regression runner, using explicit
   manifest selection and fixture-specific OCCT geometry checks.
@@ -98,9 +99,10 @@ the block with one or two through bores, the coaxial stepped bore and the
 extruded L-profile with concave caps. The multiple-solids recipe adds two
 separated blocks, individual body measures and explicit selection of both bodies.
 The thin-wall case reuses the block recipe with 10 micrometre extrusion depth.
-All ten planned P0 cases and the first P1 case (cone frustum) now have captured
-fixtures and offline library checks. The revolution contract currently permits
-a full turn of one XZ polygon about document +Z through the origin.
+All ten planned P0 cases and the first two P1 cases (cone frustum and cone
+sector) now have captured fixtures and offline library checks. The revolution
+contract permits full or partial turns of one XZ polygon about document +Z
+through the origin; construction and analytic cone angles must agree.
 Extend and test those contracts before capturing the other planned cases. Configuration, history, assembly and drawing
 cases are intentionally queued for later batches.
 

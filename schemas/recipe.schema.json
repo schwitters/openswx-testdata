@@ -358,7 +358,9 @@
                     ]
                   },
                   "angle_rad": {
-                    "const": 6.283185307179586
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 6.283185307179586
                   }
                 },
                 "required": [
@@ -396,7 +398,8 @@
             "two_holes",
             "concave_profile",
             "multiple_solids",
-            "cone_frustum"
+            "cone_frustum",
+            "cone_sector"
           ]
         },
         "dimensions_m": {
@@ -405,13 +408,41 @@
             "type": "number",
             "exclusiveMinimum": 0
           }
+        },
+        "angle_rad": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 6.283185307179586
         }
       },
       "required": [
         "shape",
         "dimensions_m"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "shape": {
+                "const": "cone_sector"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "angle_rad"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "angle_rad"
+              ]
+            }
+          }
+        }
+      ]
     }
   },
   "required": [

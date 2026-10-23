@@ -150,6 +150,16 @@ retain their existing limits.
 payloads decode completely; the explicit checkpoint passes topology, binding
 and STEP equivalence with native/reference geometry. Taper direction, material
 normals and the straight periodic cone seam are checked independently. This is
-one full, axis-aligned frustum; partial cones and oblique intersections remain
-planned. Native file envelopes and automatic history resolution retain their
+one full, axis-aligned frustum. The subsequent sector capture below adds a
+partial cone; oblique intersections remain planned. Native file envelopes and automatic history resolution retain their
 existing limits.
+
+## Cone-sector capture confirmation
+
+`part-cone-sector-001` adds a 90-degree partial revolution, open circular arcs
+and two radial cut faces. Both embedded payloads decode completely; the explicit
+checkpoint matches native/reference geometry and STEP without synthetic seams.
+Angular placement, arc intervals, trimmed-face membership and material normals
+are checked independently. Other cone angles and oblique intersections are not
+covered by this fixture. Native file envelopes and automatic history resolution
+retain their existing limits.

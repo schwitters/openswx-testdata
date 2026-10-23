@@ -16,7 +16,8 @@ rotation axis. A validated native `revolve` feature creates a new body through
 `2*pi` radians. The recipe records the geometric axis separately from the
 backend's sketch reference. Its initial revolution contract supports one XZ
 polygon, a full rotation around +Z through the document origin and `new_body`.
-Partial revolutions and other axes require an explicit contract extension.
+The subsequent [sector capture](cone_sector_capture.md) extends the angle
+contract to partial turns; other axes remain outside this recipe contract.
 
 The configured-default part was empty and custom properties were empty. Template
 file identity remains unavailable. Save, close, reopen and resave precede capture;
