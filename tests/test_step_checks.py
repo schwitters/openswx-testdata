@@ -16,6 +16,9 @@ try:
     from check_blind_hole_step import check_blind_hole_shape
     from check_through_hole_step import check_through_hole_shape
     from check_stepped_bore_step import check_stepped_bore_shape
+    from check_two_holes_step import check_two_holes_shape
+    from OCP.GProp import GProp_GProps
+    from OCP.BRepGProp import BRepGProp
     from step_check import measure
     HAS_OCCT = True
 except ModuleNotFoundError as error:
@@ -198,6 +201,53 @@ class SteppedBoreGeometryTest(unittest.TestCase):
             self.assertAlmostEqual(measure(reference,volume),measure(eccentric,volume),delta=1e-6)
         with self.assertRaisesRegex(RuntimeError,"eccentric bore"):
             check_stepped_bore_shape(eccentric)
+
+
+@unittest.skipUnless(HAS_OCCT,"install requirements-occt.txt for kernel checks")
+class TwoHolesGeometryTest(unittest.TestCase):
+    @staticmethod
+    def make_two_holes(centers=((10,15),(30,15)),second_depth=20):
+        shape = BRepPrimAPI_MakeBox(40,30,20).Shape()
+        for index,(x,y) in enumerate(centers):
+            depth = second_depth if index == 1 else 20
+            bore = BRepPrimAPI_MakeCylinder(3,depth).Shape()
+            transform = gp_Trsf()
+            transform.SetTranslation(gp_Vec(x,y,20-depth))
+            cut = BRepAlgoAPI_Cut(shape,bore.Moved(TopLoc_Location(transform)))
+            if not cut.IsDone():
+                raise RuntimeError("Test repeated bore construction failed")
+            shape = cut.Shape()
+        return shape
+
+    def test_expected_two_holes(self):
+        report = check_two_holes_shape(self.make_two_holes())
+        self.assertEqual([b["center_xy_mm"] for b in report["bores"]],[(10,15),(30,15)])
+
+    def test_reversed_construction_order_preserves_geometric_ownership(self):
+        report = check_two_holes_shape(self.make_two_holes(centers=((30,15),(10,15))))
+        self.assertEqual([b["center_xy_mm"] for b in report["bores"]],[(10,15),(30,15)])
+
+    def test_symmetric_shift_with_identical_measures_and_centroid_is_rejected(self):
+        reference,shifted = self.make_two_holes(),self.make_two_holes(centers=((11,15),(29,15)))
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(reference,volume),measure(shifted,volume),delta=1e-6)
+        centroids = []
+        for shape in (reference,shifted):
+            properties = GProp_GProps()
+            BRepGProp.VolumeProperties_s(shape,properties)
+            center = properties.CentreOfMass()
+            centroids.append((center.X(),center.Y(),center.Z()))
+        self.assertLess(sum((a-b)**2 for a,b in zip(*centroids))**.5,1e-8)
+        with self.assertRaisesRegex(RuntimeError,"bore position"):
+            check_two_holes_shape(shifted)
+
+    def test_one_missing_bore_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete two-hole"):
+            check_two_holes_shape(self.make_two_holes(centers=((10,15),)))
+
+    def test_one_blind_bore_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError,"incomplete two-hole"):
+            check_two_holes_shape(self.make_two_holes(second_depth=10))
 
 
 if __name__ == "__main__":

@@ -68,7 +68,7 @@ Install `requirements.txt` in the runner environment and `requirements-occt.txt`
 in the OCCT environment. The openswx build must provide `swx_dump` and
 `parasolid_inspect`. Use a new report directory for every run. Change `--case` to
 `part-cylinder-001`, `part-tube-001`, `part-blind-hole-001` or
-`part-through-hole-001` or `part-stepped-bore-001` to run the other admitted starters through
+`part-through-hole-001`, `part-stepped-bore-001` or `part-two-holes-001` to run the other admitted starters through
 the same driver. The older
 `run_cylinder.py`/`cylinder_export` entry points remain supported.
 

@@ -264,6 +264,20 @@ class CorpusTest(unittest.TestCase):
                 with self.assertRaisesRegex(corpus.CorpusError,"ordered radii"):
                     corpus.analytic_measures(recipe)
 
+    def test_two_holes_analytic_measures(self):
+        recipe = corpus.load_json(self.root / "recipes/part-two-holes-001.json")
+        measures = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(measures["volume_m3"],(24000-360*math.pi)*1e-9,delta=1e-17)
+        self.assertAlmostEqual(measures["area_m2"],(5200+204*math.pi)*1e-6,delta=1e-14)
+
+    def test_two_holes_require_clearance_and_separation(self):
+        for field,value in (("first_x",.003),("first_y",.002),("second_x",.016),("second_x",.015),("second_x",.01)):
+            with self.subTest(field=field,value=value):
+                recipe = corpus.load_json(self.root / "recipes/part-two-holes-001.json")
+                recipe["analytic"]["dimensions_m"][field] = value
+                with self.assertRaisesRegex(corpus.CorpusError,"clearance|separated"):
+                    corpus.analytic_measures(recipe)
+
     def test_missing_recipe_parameter(self):
         path = self.root / "recipes/part-cylinder-001.json"
         recipe = corpus.load_json(path)
@@ -542,6 +556,60 @@ class CapturedSteppedBoreTest(unittest.TestCase):
                             self.assertLess(normal[2],0)
                 count += 1
         self.assertEqual(count,69)
+
+
+class CapturedTwoHolesTest(unittest.TestCase):
+    def test_admitted_two_holes_integrity(self):
+        report = corpus.audit(ROOT,require_ready=True)
+        self.assertIn("part-two-holes-001",{case["id"] for case in report["cases"]})
+
+    def test_native_hole_ownership_caps_and_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-two-holes-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"],{"faces":8,"edges":16,"vertices":8,"shells":1})
+        for a,b in zip(body["measurements_si"]["centroid_m"],(.02,.015,.01)):
+            self.assertAlmostEqual(a,b,delta=1e-12)
+        centers = ((.01,.015),(.03,.015))
+        entities = native["observations"]["brep"]["entities"]
+        owners,count = set(),0
+        for label,evaluated in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            geometry = entity["geometry"]
+            for sample in evaluated["samples"]:
+                point = sample["position"]
+                x,y,z = point
+                for coordinate,maximum in zip(point,(.04,.03,.02)):
+                    self.assertGreaterEqual(coordinate,-1e-12)
+                    self.assertLessEqual(coordinate,maximum+1e-12)
+                for cx,cy in centers:
+                    self.assertGreaterEqual(math.hypot(x-cx,y-cy),.003-1e-12)
+                if entity["kind"] == "curve":
+                    if geometry["type"] == "line":
+                        target = [o+d*sample["parameter"] for o,d in zip(geometry["origin"],geometry["direction"])]
+                        self.assertLess(math.dist(point,target),1e-12)
+                    else:
+                        self.assertAlmostEqual(math.dist(point[:2],geometry["center"][:2]),.003,delta=1e-12)
+                        self.assertAlmostEqual(z,geometry["center"][2],delta=1e-12)
+                else:
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    normal = sample["face_normal"]
+                    if geometry["type"] == "cylinder":
+                        center = geometry["origin"][:2]
+                        matches = [c for c in centers if math.dist(center,c) < 1e-12]
+                        self.assertEqual(len(matches),1)
+                        owners.add(matches[0])
+                        self.assertAlmostEqual(math.dist(point[:2],center),.003,delta=1e-12)
+                        self.assertLess((x-center[0])*normal[0]+(y-center[1])*normal[1],0)
+                    else:
+                        self.assertAlmostEqual(sum((a-o)*n for a,o,n in zip(point,geometry["origin"],geometry["normal"])),0,delta=1e-12)
+                        axis = max(range(3),key=lambda i:abs(geometry["normal"][i]))
+                        if point[axis] > 1e-12:
+                            self.assertGreater(normal[axis],0)
+                        else:
+                            self.assertLess(normal[axis],0)
+                count += 1
+        self.assertEqual(owners,set(centers))
+        self.assertEqual(count,126)
 
 
 if __name__ == "__main__":

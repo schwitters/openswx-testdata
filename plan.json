@@ -132,7 +132,8 @@
       "coverage_targets": [
         "part",
         "two-holes"
-      ]
+      ],
+      "recipe": "recipes/part-two-holes-001.json"
     },
     {
       "id": "part-concave-profile-001",

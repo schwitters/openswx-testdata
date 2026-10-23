@@ -108,3 +108,12 @@ and the explicit checkpoint agrees with native/reference geometry and STEP.
 Native standalone file envelopes and automatic state reconstruction retain the
 same limits. Reopen provenance uses captured document handles verbatim; those
 handles are opaque and must not be reconstructed from decimal counters.
+
+## Repeated-bores capture confirmation
+
+`part-two-holes-001` adds two disjoint circle profiles in one cut and three-loop
+rectangular caps. Its partition and four-packet delta decode completely; the
+explicit checkpoint agrees with native/reference geometry and STEP. Primitive
+ownership is checked by geometric position, including equal-radius bores and
+reversed construction order. Native file envelopes and automatic history
+reconstruction retain their existing limits.

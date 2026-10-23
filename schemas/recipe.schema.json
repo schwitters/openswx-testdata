@@ -270,7 +270,8 @@
             "tube",
             "blind_hole",
             "through_hole",
-            "stepped_bore"
+            "stepped_bore",
+            "two_holes"
           ]
         },
         "dimensions_m": {

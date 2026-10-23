@@ -1,0 +1,169 @@
+{
+  "ocp_distribution_version": "7.9.3.1.1",
+  "native_reference": {
+    "topology": {
+      "faces": 8,
+      "edges": 18,
+      "vertices": 12,
+      "solids": 1
+    },
+    "volume_mm3": 22869.02664470768,
+    "area_mm2": 5840.88490133232,
+    "stock_plane_axis_position_wire_count": [
+      [
+        0,
+        0.0,
+        1
+      ],
+      [
+        0,
+        40.0,
+        1
+      ],
+      [
+        1,
+        0.0,
+        1
+      ],
+      [
+        1,
+        30.0,
+        1
+      ],
+      [
+        2,
+        0.0,
+        3
+      ],
+      [
+        2,
+        20.0,
+        3
+      ]
+    ],
+    "bores": [
+      {
+        "center_xy_mm": [
+          10,
+          15
+        ],
+        "ring_z_mm": [
+          0.0,
+          20.0
+        ],
+        "seam": {
+          "radius_mm": 3.0,
+          "z_span_mm": [
+            0.0,
+            20.0
+          ],
+          "representation": "polynomial_degree_1_bspline"
+        }
+      },
+      {
+        "center_xy_mm": [
+          30,
+          15
+        ],
+        "ring_z_mm": [
+          0.0,
+          20.0
+        ],
+        "seam": {
+          "radius_mm": 3.0,
+          "z_span_mm": [
+            0.0,
+            20.0
+          ],
+          "representation": "polynomial_degree_1_bspline"
+        }
+      }
+    ],
+    "brep_valid": true
+  },
+  "library_export": {
+    "topology": {
+      "faces": 8,
+      "edges": 18,
+      "vertices": 12,
+      "solids": 1
+    },
+    "volume_mm3": 22869.02664470768,
+    "area_mm2": 5840.88490133232,
+    "stock_plane_axis_position_wire_count": [
+      [
+        0,
+        0.0,
+        1
+      ],
+      [
+        0,
+        40.0,
+        1
+      ],
+      [
+        1,
+        0.0,
+        1
+      ],
+      [
+        1,
+        30.0,
+        1
+      ],
+      [
+        2,
+        0.0,
+        3
+      ],
+      [
+        2,
+        20.0,
+        3
+      ]
+    ],
+    "bores": [
+      {
+        "center_xy_mm": [
+          10,
+          15
+        ],
+        "ring_z_mm": [
+          0.0,
+          20.0
+        ],
+        "seam": {
+          "radius_mm": 3.0,
+          "z_span_mm": [
+            0.0,
+            20.0
+          ],
+          "representation": "polynomial_degree_1_bspline"
+        }
+      },
+      {
+        "center_xy_mm": [
+          30,
+          15
+        ],
+        "ring_z_mm": [
+          0.0,
+          20.0
+        ],
+        "seam": {
+          "radius_mm": 3.0,
+          "z_span_mm": [
+            0.0,
+            20.0
+          ],
+          "representation": "polynomial_degree_1_bspline"
+        }
+      }
+    ],
+    "brep_valid": true
+  },
+  "bidirectional_difference_volume_mm3": [
+    0.0,
+    0.0
+  ]
+}

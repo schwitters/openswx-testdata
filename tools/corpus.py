@@ -83,7 +83,8 @@ def analytic_measures(recipe):
             "tube": {"outer_radius", "inner_radius", "height"},
             "blind_hole": {"outer_radius", "inner_radius", "height", "hole_depth"},
             "through_hole": {"width", "depth", "height", "bore_radius", "bore_x", "bore_y"},
-            "stepped_bore": {"outer_radius", "bore_radius", "counterbore_radius", "height", "counterbore_depth"}}[kind]
+            "stepped_bore": {"outer_radius", "bore_radius", "counterbore_radius", "height", "counterbore_depth"},
+            "two_holes": {"width", "depth", "height", "bore_radius", "first_x", "first_y", "second_x", "second_y"}}[kind]
     if set(values) != keys:
         raise CorpusError(f"{kind}: expected dimensions {sorted(keys)}")
     height = values["height"]
@@ -91,6 +92,15 @@ def analytic_measures(recipe):
         width, depth = values["width"], values["depth"]
         volume = width * depth * height
         area = 2 * (width * depth + width * height + depth * height)
+    elif kind == "two_holes":
+        width, depth, radius = values["width"], values["depth"], values["bore_radius"]
+        centers = ((values["first_x"],values["first_y"]),(values["second_x"],values["second_y"]))
+        if not all(radius < x < width-radius and radius < y < depth-radius for x,y in centers):
+            raise CorpusError("both bores need positive side clearance")
+        if not math.dist(*centers) > 2*radius:
+            raise CorpusError("two bores must be strictly separated")
+        volume = (width*depth-2*math.pi*radius**2)*height
+        area = 2*(width*depth+width*height+depth*height)-4*math.pi*radius**2+4*math.pi*radius*height
     elif kind == "through_hole":
         width, depth, radius = values["width"], values["depth"], values["bore_radius"]
         x, y = values["bore_x"], values["bore_y"]

@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "id": "part-two-holes-001",
+  "description": "40 x 30 x 20 mm block with R3 through bores at (10,15) and (30,15) mm.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_rectangle",
+      "parameters": {
+        "plane": "XY",
+        "origin_m": [
+          0,
+          0,
+          0
+        ],
+        "width_m": 0.04,
+        "depth_m": 0.03,
+        "sketch_id": "base-profile"
+      }
+    },
+    {
+      "id": "extrude-base",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "height_m": 0.02,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    },
+    {
+      "id": "sketch-hole-one",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0.01,
+          0.015,
+          0.02
+        ],
+        "radius_m": 0.003,
+        "sketch_id": "holes-profile"
+      }
+    },
+    {
+      "id": "sketch-hole-two",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0.03,
+          0.015,
+          0.02
+        ],
+        "radius_m": 0.003,
+        "sketch_id": "holes-profile"
+      }
+    },
+    {
+      "id": "cut-holes",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-hole-one",
+          "sketch-hole-two"
+        ],
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "operation": "cut",
+        "end_condition": "through_all"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "two_holes",
+    "dimensions_m": {
+      "width": 0.04,
+      "depth": 0.03,
+      "height": 0.02,
+      "bore_radius": 0.003,
+      "first_x": 0.01,
+      "first_y": 0.015,
+      "second_x": 0.03,
+      "second_y": 0.015
+    }
+  }
+}
