@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "id": "part-blind-hole-001",
+  "document_kind": "part",
+  "configuration": "Default",
+  "document_revision": "0",
+  "recipe": "recipes/part-blind-hole-001.json",
+  "tags": [
+    "blind-hole",
+    "flat-floor",
+    "annular-entry",
+    "subtractive-feature",
+    "vertex-free-edges",
+    "periodic-seams",
+    "embedded-delta",
+    "save-reopen",
+    "native-xb-ascii-envelope"
+  ],
+  "producer": {
+    "application": "SolidWorks",
+    "year": 2025,
+    "build": "33.5.0",
+    "worker_version": "0.1.0",
+    "captured_at": "2026-10-23T20:22:08.034856+00:00"
+  },
+  "provenance": {
+    "origin": "original_synthetic",
+    "author": "openswx contributors",
+    "license": "MIT",
+    "description": "Original cylinder R10 x height20 mm with an R5 x depth10 mm top-entry flat-bottom blind bore generated in a fresh empty part through MCP, without imported CAD geometry."
+  },
+  "tolerances": {
+    "length_absolute_m": 1e-08,
+    "measure_relative": 1e-09,
+    "area_absolute_m2": 1e-14,
+    "volume_absolute_m3": 1e-17,
+    "angle_absolute_rad": 1e-09
+  },
+  "expectations": {
+    "metadata": {
+      "outcome": "pass",
+      "reason": "Native part type, Default configuration and saved mass properties."
+    },
+    "extraction": {
+      "outcome": "pass",
+      "reason": "Both Config-0 payloads and reviewed hashes must be retained."
+    },
+    "decode": {
+      "outcome": "pass",
+      "reason": "Complete binary decoding of embedded partition and delta; native standalone .x_b envelope is a separate known gap."
+    },
+    "topology": {
+      "outcome": "pass",
+      "reason": "Explicit partition 0 BODY 2; five faces and four vertex-free rings."
+    },
+    "binding": {
+      "outcome": "pass",
+      "reason": "Explicit checkpoint matches native blind-hole geometry; no inferred history state."
+    },
+    "step": {
+      "outcome": "pass",
+      "reason": "Complete selected checkpoint; analytic blind hole, native STEP and OCCT equivalence."
+    }
+  },
+  "selection": {
+    "payload_index": 0,
+    "body_id": 2,
+    "configuration": "Default",
+    "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+    "payload_path": "derived/partition.x_b"
+  },
+  "known_limits": [
+    {
+      "issue": "docs/known_limits.md#native-parasolid-file-envelope",
+      "scope": "reference/model.x_b",
+      "error_code": "unsupported_format",
+      "reason": "Native binary export starts with an ASCII header; the internal PS prologue is at byte 711."
+    },
+    {
+      "issue": "docs/known_limits.md#automatic-history-resolution",
+      "scope": "source/model.sldprt",
+      "error_code": "unsupported_format",
+      "reason": "Selected partition is independently shape-verified; automatic delta/current-state reconstruction is not implemented."
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "derived/delta.bin",
+      "role": "derived_payload",
+      "bytes": 3074,
+      "sha256": "5c9a0e3f01c5457e23df6681a588693f0238294a57a746935a63e655f0de54c3"
+    },
+    {
+      "path": "derived/partition.x_b",
+      "role": "derived_payload",
+      "bytes": 4921,
+      "sha256": "0efd02b1e9a47532e0ec27d21b2b2789a2518b8befe3d62967e160d2f1a37431"
+    },
+    {
+      "path": "provenance/capabilities.json",
+      "role": "capabilities",
+      "bytes": 5568,
+      "sha256": "bc47954a772acb45401819ba79a907db25663967c3d9104921554f67f8e17265"
+    },
+    {
+      "path": "provenance/capture.json",
+      "role": "capture_evidence",
+      "bytes": 1296174,
+      "sha256": "1fc9c8378de9a4e79fa2c6100e88cadad0a53a05e49e19aed51f727f3db8da93"
+    },
+    {
+      "path": "provenance/exports.json",
+      "role": "export_receipts",
+      "bytes": 1492,
+      "sha256": "191163e49e4fa33ff5058bd0cb5b0cd0b90fa511c55eac3910a8854952e5ff92"
+    },
+    {
+      "path": "provenance/extraction.json",
+      "role": "capture_evidence",
+      "bytes": 2384,
+      "sha256": "636c2d7ade750f8f05c21958bb7ffa364432b850fb21789db19e1f7a17276b5a"
+    },
+    {
+      "path": "provenance/tools.json",
+      "role": "capture_evidence",
+      "bytes": 270671,
+      "sha256": "ae2b4ee13401fef98e5491490015d6dace095a4752e6a0313e32200cd72658f9"
+    },
+    {
+      "path": "reference/model.step",
+      "role": "step_reference",
+      "bytes": 9406,
+      "sha256": "c4d15f5fa4893d732475c1f159133c456eb14262479504fafb95a57c6a03ccbb"
+    },
+    {
+      "path": "reference/model.x_b",
+      "role": "parasolid_binary",
+      "bytes": 4858,
+      "sha256": "baa144ba4b8cb8f4513aee2169db43fae52d1eea3ef67b955efae4c691c9aa82"
+    },
+    {
+      "path": "reference/model.x_t",
+      "role": "parasolid_text",
+      "bytes": 5194,
+      "sha256": "9efff90a2d62a2b83751ea71f7f7aca1a73a0814707ee9957d38445e248002c5"
+    },
+    {
+      "path": "reference/native.json",
+      "role": "native",
+      "bytes": 418350,
+      "sha256": "63deaad05edb4efe858940dfd218d30469f4e60779211a742f94154215f0730d"
+    },
+    {
+      "path": "source/model.sldprt",
+      "role": "source",
+      "bytes": 99504,
+      "sha256": "b6d855e5deae33f330df8925373c910c87a311560a4cb30b25e6e938492a252d"
+    },
+    {
+      "path": "validation/body-binding.json",
+      "role": "validation_report",
+      "bytes": 163860,
+      "sha256": "666e97c7affee398a6a4843a89eaf0a37d26ff25ef91ed5b07a7c9fb027bf074"
+    },
+    {
+      "path": "validation/delta-decode.json",
+      "role": "validation_report",
+      "bytes": 1434,
+      "sha256": "a7039ec29a82f216aec537f01fb0e03a8656f4002c5cc0d4d7766d57e6dc6aff"
+    },
+    {
+      "path": "validation/observations.json",
+      "role": "validation_report",
+      "bytes": 1658,
+      "sha256": "3b4a57f182f6cb836307913710cdfb0ec154dcfb165176655010dcbe169a4e40"
+    },
+    {
+      "path": "validation/occt.json",
+      "role": "validation_report",
+      "bytes": 1993,
+      "sha256": "aeeaa7ece94d876ad8aa4ff76a90954974d67776b269ce31617b108ac2705fc8"
+    },
+    {
+      "path": "validation/partition-decode.json",
+      "role": "validation_report",
+      "bytes": 2080,
+      "sha256": "08516bfddf28ee631ee87209420d0f03122cd59181eac269237e7c6e703a221f"
+    }
+  ]
+}

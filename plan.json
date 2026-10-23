@@ -75,7 +75,8 @@
       "coverage_targets": [
         "part",
         "blind-hole"
-      ]
+      ],
+      "recipe": "recipes/part-blind-hole-001.json"
     },
     {
       "id": "part-through-hole-001",

@@ -8,16 +8,15 @@ import math
 import sys
 from pathlib import Path
 
-from OCP.BRep import BRep_Tool
 from OCP.BRepAdaptor import BRepAdaptor_Curve, BRepAdaptor_Surface
-from OCP.GeomAbs import (GeomAbs_BSplineCurve, GeomAbs_Circle, GeomAbs_Cylinder,
-                         GeomAbs_Line, GeomAbs_Plane)
+from OCP.GeomAbs import GeomAbs_Circle, GeomAbs_Cylinder, GeomAbs_Plane
 from OCP.TopAbs import TopAbs_EDGE, TopAbs_FACE, TopAbs_WIRE
 from OCP.TopExp import TopExp, TopExp_Explorer
 from OCP.TopoDS import TopoDS
 from OCP.TopTools import TopTools_IndexedMapOfShape
 
-from step_check import compare_solids, measure, read_step, require, topology_counts
+from step_check import (axial_seam_data, compare_solids, measure, read_step,
+                        require, topology_counts)
 
 
 def check_tube_shape(shape):
@@ -60,24 +59,11 @@ def check_tube_shape(shape):
         if curve.GetType() == GeomAbs_Circle:
             circle_radii.append(curve.Circle().Radius())
         else:
-            # OCCT adds periodic seams absent from both original STEP files.
-            # Some are exact two-pole, degree-one polynomial B-splines.
-            require(any(BRep_Tool.IsClosed_s(edge, face) for face in cylindrical_faces),
-                    "extra edge is not a periodic cylinder seam")
-            if curve.GetType() == GeomAbs_BSplineCurve:
-                spline = curve.BSpline()
-                require(spline.Degree() == 1 and spline.NbPoles() == 2 and
-                        not spline.IsRational(), "uncertified spline seam")
-                seam_representations.append("polynomial_degree_1_bspline")
-            else:
-                require(curve.GetType() == GeomAbs_Line, "unexpected tube seam basis")
-                seam_representations.append("line")
-            first, last = curve.Value(curve.FirstParameter()), curve.Value(curve.LastParameter())
-            require(math.hypot(first.X()-last.X(), first.Y()-last.Y()) < 1e-8,
-                    "unexpected nonaxial seam edge")
-            require(all(abs(a-b) < 1e-8 for a,b in zip(
-                    sorted((first.Z(), last.Z())), (0,20))), "seam does not span both caps")
-            seam_radii.append(math.hypot(first.X(), first.Y()))
+            seam = axial_seam_data(edge, curve, cylindrical_faces)
+            require(all(abs(a-b) < 1e-8 for a,b in zip(seam["z_span_mm"], (0,20))),
+                    "seam does not span both caps")
+            seam_radii.append(seam["radius_mm"])
+            seam_representations.append(seam["representation"])
     require(len(circle_radii) == 4 and all(abs(a-b) < 1e-8 for a,b in
             zip(sorted(circle_radii), (5,5,10,10))), "tube rings were lost or changed")
     require(len(seam_radii) == 2 and all(abs(a-b) < 1e-8 for a,b in

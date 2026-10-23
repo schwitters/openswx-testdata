@@ -13,6 +13,7 @@ try:
     from OCP.gp import gp_Trsf, gp_Vec
     from check_block_step import check_block_shape
     from check_tube_step import check_tube_shape
+    from check_blind_hole_step import check_blind_hole_shape
     from step_check import measure
     HAS_OCCT = True
 except ModuleNotFoundError as error:
@@ -76,6 +77,47 @@ class TubeGeometryTest(unittest.TestCase):
     def test_filled_bore_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError, "incomplete tube"):
             check_tube_shape(BRepPrimAPI_MakeCylinder(10,20).Shape())
+
+
+@unittest.skipUnless(HAS_OCCT, "install requirements-occt.txt for kernel checks")
+class BlindHoleGeometryTest(unittest.TestCase):
+    @staticmethod
+    def make_blind_hole(top_entry=True, depth=10, eccentricity=0):
+        stock = BRepPrimAPI_MakeCylinder(10,20).Shape()
+        bore = BRepPrimAPI_MakeCylinder(5,depth).Shape()
+        transform = gp_Trsf()
+        transform.SetTranslation(gp_Vec(eccentricity,0,20-depth if top_entry else 0))
+        bore = bore.Moved(TopLoc_Location(transform))
+        cut = BRepAlgoAPI_Cut(stock,bore)
+        if not cut.IsDone():
+            raise RuntimeError("Test blind-hole construction failed")
+        return cut.Shape()
+
+    def test_expected_blind_hole(self):
+        report = check_blind_hole_shape(self.make_blind_hole())
+        self.assertEqual(report["plane_z_and_wire_count"], [(0,1),(10,1),(20,2)])
+
+    def test_wrong_entry_with_identical_measures_is_rejected(self):
+        reference, reversed_entry = self.make_blind_hole(), self.make_blind_hole(False)
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(reference,volume), measure(reversed_entry,volume), delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError, "entry or floor"):
+            check_blind_hole_shape(reversed_entry)
+
+    def test_wrong_depth_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError, "entry or floor"):
+            check_blind_hole_shape(self.make_blind_hole(depth=8))
+
+    def test_through_hole_is_rejected(self):
+        with self.assertRaisesRegex(RuntimeError, "incomplete blind-hole"):
+            check_blind_hole_shape(self.make_blind_hole(depth=20))
+
+    def test_eccentric_blind_hole_is_rejected(self):
+        reference, eccentric = self.make_blind_hole(), self.make_blind_hole(eccentricity=1)
+        for volume in (True,False):
+            self.assertAlmostEqual(measure(reference,volume), measure(eccentric,volume), delta=1e-6)
+        with self.assertRaisesRegex(RuntimeError, "eccentric bore"):
+            check_blind_hole_shape(eccentric)
 
 
 if __name__ == "__main__":

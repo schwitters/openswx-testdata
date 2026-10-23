@@ -1,0 +1,129 @@
+{
+  "ocp_distribution_version": "7.9.3.1.1",
+  "native_reference": {
+    "topology": {
+      "faces": 5,
+      "edges": 6,
+      "vertices": 4,
+      "solids": 1
+    },
+    "volume_mm3": 5497.787143782137,
+    "area_mm2": 2199.114857512855,
+    "plane_z_and_wire_count": [
+      [
+        0.0,
+        1
+      ],
+      [
+        10.0,
+        1
+      ],
+      [
+        20.0,
+        2
+      ]
+    ],
+    "ring_radius_and_z_mm": [
+      [
+        5.0,
+        10.0
+      ],
+      [
+        5.0,
+        20.0
+      ],
+      [
+        10.0,
+        0.0
+      ],
+      [
+        10.0,
+        20.0
+      ]
+    ],
+    "seams": [
+      {
+        "radius_mm": 5.0,
+        "z_span_mm": [
+          10.0,
+          20.0
+        ],
+        "representation": "polynomial_degree_1_bspline"
+      },
+      {
+        "radius_mm": 10.0,
+        "z_span_mm": [
+          0.0,
+          20.0
+        ],
+        "representation": "polynomial_degree_1_bspline"
+      }
+    ],
+    "brep_valid": true
+  },
+  "library_export": {
+    "topology": {
+      "faces": 5,
+      "edges": 6,
+      "vertices": 4,
+      "solids": 1
+    },
+    "volume_mm3": 5497.787143782137,
+    "area_mm2": 2199.114857512855,
+    "plane_z_and_wire_count": [
+      [
+        0.0,
+        1
+      ],
+      [
+        10.0,
+        1
+      ],
+      [
+        20.0,
+        2
+      ]
+    ],
+    "ring_radius_and_z_mm": [
+      [
+        5.0,
+        10.0
+      ],
+      [
+        5.0,
+        20.0
+      ],
+      [
+        10.0,
+        0.0
+      ],
+      [
+        10.0,
+        20.0
+      ]
+    ],
+    "seams": [
+      {
+        "radius_mm": 5.0,
+        "z_span_mm": [
+          10.0,
+          20.0
+        ],
+        "representation": "polynomial_degree_1_bspline"
+      },
+      {
+        "radius_mm": 10.0,
+        "z_span_mm": [
+          0.0,
+          20.0
+        ],
+        "representation": "polynomial_degree_1_bspline"
+      }
+    ],
+    "brep_valid": true
+  },
+  "bidirectional_difference_volume_mm3": [
+    0.0,
+    0.0
+  ]
+}

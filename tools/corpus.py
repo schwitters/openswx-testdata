@@ -80,7 +80,8 @@ def analytic_measures(recipe):
     values = recipe["analytic"]["dimensions_m"]
     keys = {"block": {"width", "depth", "height"},
             "cylinder": {"radius", "height"},
-            "tube": {"outer_radius", "inner_radius", "height"}}[kind]
+            "tube": {"outer_radius", "inner_radius", "height"},
+            "blind_hole": {"outer_radius", "inner_radius", "height", "hole_depth"}}[kind]
     if set(values) != keys:
         raise CorpusError(f"{kind}: expected dimensions {sorted(keys)}")
     height = values["height"]
@@ -88,6 +89,12 @@ def analytic_measures(recipe):
         width, depth = values["width"], values["depth"]
         volume = width * depth * height
         area = 2 * (width * depth + width * height + depth * height)
+    elif kind == "blind_hole":
+        radius, inner, depth = values["outer_radius"], values["inner_radius"], values["hole_depth"]
+        if not inner < radius or not depth < height:
+            raise CorpusError("blind hole requires a smaller radius and positive remaining floor")
+        volume = math.pi * (radius**2 * height - inner**2 * depth)
+        area = 2 * math.pi * radius**2 + 2 * math.pi * radius * height + 2 * math.pi * inner * depth
     else:
         radius = values["radius"] if kind == "cylinder" else values["outer_radius"]
         inner = 0 if kind == "cylinder" else values["inner_radius"]
@@ -111,12 +118,17 @@ def read_recipe(root, relative, case_id):
     if recipe["steps"][0]["operation"] != "create_part":
         raise CorpusError("starter recipe must create a fresh part first")
     profiles = set()
+    has_solid = False
     for step in recipe["steps"][1:]:
         if step["operation"].startswith("sketch_"):
             profiles.add(step["id"])
         elif step["operation"] == "extrude":
             if not set(step["parameters"]["profiles"]) <= profiles:
                 raise CorpusError("extrusion references an unknown or later sketch")
+            if step["parameters"]["operation"] == "cut" and not has_solid:
+                raise CorpusError("cut requires an earlier solid-body extrusion")
+            if step["parameters"]["operation"] == "new_body":
+                has_solid = True
         else:
             raise CorpusError("starter recipe must have exactly one create_part")
     if recipe["steps"][-1]["operation"] != "extrude":

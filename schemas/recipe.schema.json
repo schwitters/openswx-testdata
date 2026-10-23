@@ -184,14 +184,24 @@
                     "exclusiveMinimum": 0
                   },
                   "direction": {
-                    "const": [
-                      0,
-                      0,
-                      1
+                    "enum": [
+                      [
+                        0,
+                        0,
+                        1
+                      ],
+                      [
+                        0,
+                        0,
+                        -1
+                      ]
                     ]
                   },
                   "operation": {
-                    "const": "new_body"
+                    "enum": [
+                      "new_body",
+                      "cut"
+                    ]
                   }
                 },
                 "required": [
@@ -221,7 +231,8 @@
           "enum": [
             "block",
             "cylinder",
-            "tube"
+            "tube",
+            "blind_hole"
           ]
         },
         "dimensions_m": {

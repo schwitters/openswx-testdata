@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 openswx contributors
 """Shared OCCT import, validity and solid-difference checks for corpus fixtures."""
+import math
+
+from OCP.BRep import BRep_Tool
+from OCP.GeomAbs import GeomAbs_BSplineCurve, GeomAbs_Line
 from OCP.BRepAlgoAPI import BRepAlgoAPI_Cut
 from OCP.BRepCheck import BRepCheck_Analyzer
 from OCP.BRepGProp import BRepGProp
@@ -55,3 +59,23 @@ def compare_solids(native, exported):
         require(remainder < 1e-6, "solid difference exceeds 1e-6 mm^3")
         differences.append(remainder)
     return differences
+
+
+def axial_seam_data(edge, curve, cylindrical_faces):
+    """Certify an importer-created straight seam; leave its span to the caller."""
+    require(any(BRep_Tool.IsClosed_s(edge, face) for face in cylindrical_faces),
+            "extra edge is not a periodic cylinder seam")
+    if curve.GetType() == GeomAbs_BSplineCurve:
+        spline = curve.BSpline()
+        require(spline.Degree() == 1 and spline.NbPoles() == 2 and
+                not spline.IsRational(), "uncertified spline seam")
+        representation = "polynomial_degree_1_bspline"
+    else:
+        require(curve.GetType() == GeomAbs_Line, "unexpected seam basis")
+        representation = "line"
+    first, last = curve.Value(curve.FirstParameter()), curve.Value(curve.LastParameter())
+    require(math.hypot(first.X()-last.X(), first.Y()-last.Y()) < 1e-8,
+            "unexpected nonaxial seam edge")
+    return {"radius_mm": math.hypot(first.X(), first.Y()),
+            "z_span_mm": sorted((first.Z(), last.Z())),
+            "representation": representation}

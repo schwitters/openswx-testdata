@@ -201,6 +201,29 @@ class CorpusTest(unittest.TestCase):
                 with self.assertRaises(corpus.CorpusError):
                     corpus.load_json(path)
 
+    def test_blind_hole_analytic_measures(self):
+        recipe = corpus.load_json(self.root / "recipes/part-blind-hole-001.json")
+        measures = corpus.analytic_measures(recipe)
+        self.assertAlmostEqual(measures["volume_m3"], 1750*math.pi*1e-9, delta=1e-17)
+        self.assertAlmostEqual(measures["area_m2"], 700*math.pi*1e-6, delta=1e-14)
+
+    def test_blind_hole_requires_remaining_floor_and_wall(self):
+        for field,value in (("hole_depth",.02), ("hole_depth",.03), ("inner_radius",.01)):
+            with self.subTest(field=field, value=value):
+                recipe = corpus.load_json(self.root / "recipes/part-blind-hole-001.json")
+                recipe["analytic"]["dimensions_m"][field] = value
+                with self.assertRaisesRegex(corpus.CorpusError, "remaining floor"):
+                    corpus.analytic_measures(recipe)
+
+    def test_cut_before_solid_is_rejected(self):
+        path = self.root / "recipes/part-blind-hole-001.json"
+        recipe = corpus.load_json(path)
+        create, outer, base, hole, cut = recipe["steps"]
+        recipe["steps"] = [create, hole, cut, outer, base]
+        self.write_json(path, recipe)
+        with self.assertRaisesRegex(corpus.CorpusError, "earlier solid-body"):
+            corpus.audit(self.root)
+
     def test_missing_recipe_parameter(self):
         path = self.root / "recipes/part-cylinder-001.json"
         recipe = corpus.load_json(path)
@@ -316,6 +339,58 @@ class CapturedTubeTest(unittest.TestCase):
                             self.assertGreater(radial_dot, 0)
                 count += 1
         self.assertEqual(count, 46)
+
+
+class CapturedBlindHoleTest(unittest.TestCase):
+    def test_admitted_blind_hole_integrity(self):
+        report = corpus.audit(ROOT, require_ready=True)
+        self.assertIn("part-blind-hole-001", {case["id"] for case in report["cases"]})
+
+    def test_native_floor_entry_and_normals(self):
+        native = corpus.load_json(ROOT / "cases/part-blind-hole-001/reference/native.json")
+        body = native["bodies"][0]
+        self.assertEqual(body["counts"], {"faces": 5, "edges": 4, "vertices": 0, "shells": 1})
+        # Common pi factors cancel: stock center Z=10 mm, removed center Z=15 mm.
+        expected_z = (2000*.01-250*.015)/(2000-250)
+        self.assertAlmostEqual(body["measurements_si"]["centroid_m"][2], expected_z, delta=1e-12)
+        entities = native["observations"]["brep"]["entities"]
+        count = 0
+        for label,evaluated in native["observations"]["evaluations"].items():
+            entity = entities[int(label.split("-")[-1])]
+            geometry = entity["geometry"]
+            for sample in evaluated["samples"]:
+                x,y,z = sample["position"]
+                radius = math.hypot(x,y)
+                self.assertLessEqual(radius, .01+1e-12)
+                self.assertGreaterEqual(z, -1e-12)
+                self.assertLessEqual(z, .02+1e-12)
+                if entity["kind"] == "curve" or geometry["type"] == "cylinder":
+                    self.assertAlmostEqual(radius, geometry["radius"], delta=1e-12)
+                    if geometry["radius"] < .0075:
+                        self.assertGreaterEqual(z, .01-1e-12)
+                if entity["kind"] == "curve":
+                    self.assertAlmostEqual(z, geometry["center"][2], delta=1e-12)
+                else:
+                    self.assertTrue(sample["trim_membership"]["geometric_inside_or_boundary"])
+                    normal = sample["face_normal"]
+                    if geometry["type"] == "cylinder":
+                        radial_dot = x*normal[0]+y*normal[1]
+                        if geometry["radius"] < .0075:
+                            self.assertLess(radial_dot, 0)
+                        else:
+                            self.assertGreater(radial_dot, 0)
+                    else:
+                        self.assertAlmostEqual(z, geometry["origin"][2], delta=1e-12)
+                        if abs(z-.01) < 1e-12:
+                            self.assertLessEqual(radius, .005+1e-12)
+                        if abs(z-.02) < 1e-12:
+                            self.assertGreaterEqual(radius, .005-1e-12)
+                        if z > 1e-12:
+                            self.assertGreater(normal[2], 0)
+                        else:
+                            self.assertLess(normal[2], 0)
+                count += 1
+        self.assertEqual(count, 51)
 
 
 if __name__ == "__main__":

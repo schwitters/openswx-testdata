@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "id": "part-blind-hole-001",
+  "description": "Cylinder R10 x H20 mm with a concentric R5 mm blind bore, 10 mm deep from the top.",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "steps": [
+    {
+      "id": "create-document",
+      "operation": "create_part",
+      "parameters": {
+        "configuration": "Default"
+      }
+    },
+    {
+      "id": "sketch-outer",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0
+        ],
+        "radius_m": 0.01,
+        "sketch_id": "base-profile"
+      }
+    },
+    {
+      "id": "extrude-base",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-outer"
+        ],
+        "height_m": 0.02,
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "operation": "new_body"
+      }
+    },
+    {
+      "id": "sketch-hole",
+      "operation": "sketch_circle",
+      "parameters": {
+        "plane": "XY",
+        "center_m": [
+          0,
+          0,
+          0.02
+        ],
+        "radius_m": 0.005,
+        "sketch_id": "hole-profile"
+      }
+    },
+    {
+      "id": "cut-hole",
+      "operation": "extrude",
+      "parameters": {
+        "profiles": [
+          "sketch-hole"
+        ],
+        "height_m": 0.01,
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "operation": "cut"
+      }
+    }
+  ],
+  "analytic": {
+    "shape": "blind_hole",
+    "dimensions_m": {
+      "outer_radius": 0.01,
+      "inner_radius": 0.005,
+      "height": 0.02,
+      "hole_depth": 0.01
+    }
+  }
+}

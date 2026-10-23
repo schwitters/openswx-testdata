@@ -80,3 +80,12 @@ caps. OCCT adds two meridian seam edges as linear polynomial B-splines, absent
 from the serialized source edges. Their topology and exact linear basis are
 checked separately from the four original circular edges. No general spline
 seam acceptance, geometry fitting or automatic history resolution is claimed.
+
+## Blind-hole capture confirmation
+
+`part-blind-hole-001` extends the native construction sequence with a real cut.
+Its embedded partition and four-packet delta decode completely, and the explicit
+checkpoint agrees with native/reference geometry, including the floor at Z=10 mm.
+This adds a controlled subtractive-history example, without assigning unverified
+operation meanings to delta status bytes or claiming automatic state recovery.
+Its standalone native `.x_b` retains the ASCII-envelope limitation.

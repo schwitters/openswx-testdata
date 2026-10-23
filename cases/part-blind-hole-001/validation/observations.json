@@ -1,0 +1,46 @@
+{
+  "library_commit": "1607ee9a22b1aba7e2a6607061c209845d591dd0",
+  "case": "part-blind-hole-001",
+  "selected_payload_index": 0,
+  "selected_body_id": 2,
+  "state_scope": "explicit_checkpoint_not_automatic_history_resolution",
+  "stages": {
+    "metadata": "pass: native part, Default configuration and saved mass properties agree",
+    "extraction": "pass: partition and delta, no extraction issues",
+    "decode": "pass: both embedded streams complete, no uninterpreted bytes",
+    "topology": "pass: recorded ownership/incidence checked by body binding",
+    "binding": "pass: 5 faces, 4 vertex-free rings, no interval overrides",
+    "step": "pass: selected checkpoint and native/reference STEP agree with analytic blind-hole geometry"
+  },
+  "source_topology": {
+    "bodies": 1,
+    "edges": 4,
+    "faces": 5,
+    "loops": 8,
+    "shell_provenance": "connected_native_face_edge_incidence",
+    "shells": 1,
+    "vertices": 0
+  },
+  "export_topology": {
+    "faces": 5,
+    "edges": 4,
+    "vertices": 4,
+    "shells": 1,
+    "solids": 1
+  },
+  "topology_notes": [
+    "Native API reports one connected shell; XT records both material and void-side shell uses.",
+    "Four rings acquire synthetic seam vertices; OCCT adds an outer seam spanning Z=0..20 mm and an inner seam spanning Z=10..20 mm."
+  ],
+  "known_limits": [
+    {
+      "scope": "original reference/model.x_b",
+      "error_code": "unsupported_format",
+      "offset": 0,
+      "message": "Reader requires binary PS prologue at byte zero; native file has an ASCII header."
+    }
+  ],
+  "native_sample_count": 51,
+  "mcp_documents_closed": true,
+  "occt_report": "validation/occt.json"
+}
