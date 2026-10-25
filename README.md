@@ -169,3 +169,10 @@ old isolated-apex STEP failure and verify the fix against native SolidWorks
 AP214 references, including material normals and bidirectional solid differences.
 Run `tools/verify_cone_apex.py` with the existing generic export driver; these
 two verification fixtures are additional to the nineteen cases in `cases/`.
+
+The original [B-spline sweep fixtures](verification/bspline-sweep-001/README.md)
+add two native cubic-profile prisms, including a translated nonuniform profile.
+They reproduce the known inverse-mapping limitation with fully typed B_CURVE
+sections and preserve independently verified native spline-surface STEP
+references for the upcoming reader/exporter work. Their binding and library
+STEP stages are explicitly expected unsupported, with no partial output.

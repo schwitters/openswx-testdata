@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "assertion_scope": "Complete native reference geometry plus current binding/export limitation; no library STEP success is claimed.",
+  "cases": [
+    {
+      "name": "cubic",
+      "source": "cubic.sldprt",
+      "step": "cubic.step",
+      "configuration": "Default",
+      "selection": {
+        "payload_index": 0,
+        "body_id": 2
+      },
+      "state_scope": "explicit native-verified checkpoint, not automatic saved-state reconstruction",
+      "source_topology": {
+        "faces": 5,
+        "edges": 9,
+        "vertices": 6
+      },
+      "swept_pattern": {
+        "face_id": 43,
+        "surface_id": 7,
+        "section_id": 46,
+        "degree": 3,
+        "control_count": 4,
+        "knots": [
+          0.0,
+          1.0
+        ],
+        "multiplicities": [
+          4,
+          4
+        ],
+        "sweep": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "loop_count": 1,
+        "fin_count": 4,
+        "edge_families": [
+          "line",
+          "line",
+          "nurbs_curve",
+          "nurbs_curve"
+        ]
+      },
+      "native_measurement": {
+        "body_measurements": [
+          {
+            "area": 0.0004599728924930675,
+            "body_kind": "solid",
+            "calculation": {
+              "accuracy_setting": "native_body_API_default",
+              "api": "IBody2.GetMassProperties",
+              "certified_error_bound": null,
+              "density_argument": 1.0,
+              "mass_reported": false
+            },
+            "ref": "native:7b22636f6e66696775726174696f6e223a2244656661756c74222c22646f63756d656e74223a22646f632d3264222c226672616d65223a22646f63756d656e74222c226b696e64223a22626f6479222c226c656e6774685f756e6974223a226d65747265222c226e61746976655f7570646174655f7374616d70223a3130342c2270657273697374656e74223a22353034363030303030343030303030306666666566663030303030303030303030313030303030303635303030303030222c227265666572656e63655f73636f7065223a22646f63756d656e745f7265766973696f6e5f636f6e66696775726174696f6e5f7570646174655f7374616d70222c227265766973696f6e223a307d",
+            "sheet_perimeter": null,
+            "topology_counts": {
+              "bodies": 1,
+              "edges": 9,
+              "faces": 5,
+              "loops": 5,
+              "shell_provenance": "connected_native_face_edge_incidence",
+              "shells": 1,
+              "vertices": 6
+            },
+            "volume": 6.479994567536666e-07,
+            "wire_length": null
+          }
+        ],
+        "configuration": "Default",
+        "document": "doc-2d",
+        "frame": "document",
+        "geometry_totals": {
+          "aggregation": "sum_of_selected_bodies; overlapping bodies counted independently",
+          "sheet_area": 0.0,
+          "solid_volume": 6.479994567536666e-07,
+          "surface_area": 0.0004599728924930675,
+          "units": {
+            "area": "square_metre",
+            "length": "metre",
+            "volume": "cubic_metre"
+          },
+          "wire_length": 0.0
+        },
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "mass_properties": {
+          "area": 0.0004599728924930675,
+          "calculation": {
+            "api": "IMassProperty2.Recalculate",
+            "certified_error_bound": null,
+            "hidden_bodies": "included",
+            "native_accuracy_level": 0,
+            "units": "SI"
+          },
+          "center_of_mass": [
+            -0.004000000306640429,
+            0.00479999551174993,
+            0.00514286087875571
+          ],
+          "mass": 0.0006479994567536666,
+          "status": 0,
+          "volume": 6.479994567536666e-07
+        },
+        "native_update_stamp": 104,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 1,
+          "edges": 9,
+          "faces": 5,
+          "loops": 5,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 1,
+          "vertices": 6
+        }
+      },
+      "payload_inventory": [
+        {
+          "index": 0,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "bytes": 6079
+        },
+        {
+          "index": 1,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "bytes": 1064
+        }
+      ],
+      "payload_hashes": {
+        "0": "528859f56df0975560366f0ca09362044c249396a638882a18aaadcdfcaacabb",
+        "1": "b96ead4242f0edaff7b78b9da38d9103354fa5c9b58f17c8b1eeaa459c0775e9"
+      },
+      "expected_binding": "unsupported_format",
+      "expected_step": "unsupported_format"
+    },
+    {
+      "name": "multispan",
+      "source": "multispan.sldprt",
+      "step": "multispan.step",
+      "configuration": "Default",
+      "selection": {
+        "payload_index": 0,
+        "body_id": 2
+      },
+      "state_scope": "explicit native-verified checkpoint, not automatic saved-state reconstruction",
+      "source_topology": {
+        "faces": 5,
+        "edges": 9,
+        "vertices": 6
+      },
+      "swept_pattern": {
+        "face_id": 43,
+        "surface_id": 7,
+        "section_id": 46,
+        "degree": 3,
+        "control_count": 6,
+        "knots": [
+          0.0,
+          0.3,
+          0.75,
+          1.0
+        ],
+        "multiplicities": [
+          4,
+          1,
+          1,
+          4
+        ],
+        "sweep": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "loop_count": 1,
+        "fin_count": 4,
+        "edge_families": [
+          "line",
+          "line",
+          "nurbs_curve",
+          "nurbs_curve"
+        ]
+      },
+      "native_measurement": {
+        "body_measurements": [
+          {
+            "area": 0.0004160542483121919,
+            "body_kind": "solid",
+            "calculation": {
+              "accuracy_setting": "native_body_API_default",
+              "api": "IBody2.GetMassProperties",
+              "certified_error_bound": null,
+              "density_argument": 1.0,
+              "mass_reported": false
+            },
+            "ref": "native:7b22636f6e66696775726174696f6e223a2244656661756c74222c22646f63756d656e74223a22646f632d3266222c226672616d65223a22646f63756d656e74222c226b696e64223a22626f6479222c226c656e6774685f756e6974223a226d65747265222c226e61746976655f7570646174655f7374616d70223a3130342c2270657273697374656e74223a22353034363030303030343030303030306666666566663030303030303030303030313030303030303635303030303030222c227265666572656e63655f73636f7065223a22646f63756d656e745f7265766973696f6e5f636f6e66696775726174696f6e5f7570646174655f7374616d70222c227265766973696f6e223a307d",
+            "sheet_perimeter": null,
+            "topology_counts": {
+              "bodies": 1,
+              "edges": 9,
+              "faces": 5,
+              "loops": 5,
+              "shell_provenance": "connected_native_face_edge_incidence",
+              "shells": 1,
+              "vertices": 6
+            },
+            "volume": 5.449864899907273e-07,
+            "wire_length": null
+          }
+        ],
+        "configuration": "Default",
+        "document": "doc-2f",
+        "frame": "document",
+        "geometry_totals": {
+          "aggregation": "sum_of_selected_bodies; overlapping bodies counted independently",
+          "sheet_area": 0.0,
+          "solid_volume": 5.449864899907273e-07,
+          "surface_area": 0.0004160542483121919,
+          "units": {
+            "area": "square_metre",
+            "length": "metre",
+            "volume": "cubic_metre"
+          },
+          "wire_length": 0.0
+        },
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "mass_properties": {
+          "area": 0.0004160542483121919,
+          "calculation": {
+            "api": "IMassProperty2.Recalculate",
+            "certified_error_bound": null,
+            "hidden_bodies": "included",
+            "native_accuracy_level": 0,
+            "units": "SI"
+          },
+          "center_of_mass": [
+            0.017000111356235366,
+            -0.005171794282382406,
+            0.010690269395241352
+          ],
+          "mass": 0.0005449864899907273,
+          "status": 0,
+          "volume": 5.449864899907273e-07
+        },
+        "native_update_stamp": 104,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 1,
+          "edges": 9,
+          "faces": 5,
+          "loops": 5,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 1,
+          "vertices": 6
+        }
+      },
+      "payload_inventory": [
+        {
+          "index": 0,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "bytes": 6215
+        },
+        {
+          "index": 1,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "bytes": 1064
+        }
+      ],
+      "payload_hashes": {
+        "0": "ad8285a2e392e73708171ebfc2a2fa7c857b76ab33d307226cb8258eacf9f773",
+        "1": "b96ead4242f0edaff7b78b9da38d9103354fa5c9b58f17c8b1eeaa459c0775e9"
+      },
+      "expected_binding": "unsupported_format",
+      "expected_step": "unsupported_format"
+    }
+  ]
+}

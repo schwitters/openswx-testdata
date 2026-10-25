@@ -1,0 +1,126 @@
+{
+  "origin": "original_synthetic",
+  "author": "openswx contributors",
+  "license": "MIT",
+  "width_mm": 12,
+  "plane_normal": [
+    1,
+    0,
+    0
+  ],
+  "plane_x_axis": [
+    0,
+    1,
+    0
+  ],
+  "extrusion_direction": [
+    -1,
+    0,
+    0
+  ],
+  "profile_closure": "from spline end horizontally to local Y=0 at final height, then vertically to origin; convex epigraph",
+  "control_construction": "Single-span Bernstein controls; multi-span controls from exact Fraction collocation of the stated truncated-power cubic at Greville sites, independent of OpenSWX code.",
+  "cases": [
+    {
+      "name": "cubic",
+      "controls_m": [
+        [
+          0,
+          0
+        ],
+        [
+          0.004,
+          0
+        ],
+        [
+          0.008,
+          0
+        ],
+        [
+          0.012,
+          0.009
+        ]
+      ],
+      "knots": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "origin_m": [
+        0,
+        0,
+        0
+      ],
+      "depth_m": 0.008,
+      "polynomial_mm": {
+        "base_cubic": 9,
+        "truncated_terms": []
+      }
+    },
+    {
+      "name": "multispan",
+      "controls_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0012,
+          0.0
+        ],
+        [
+          0.004200000000000001,
+          0.0
+        ],
+        [
+          0.008199999999999999,
+          0.002025
+        ],
+        [
+          0.011,
+          0.0074115000000000006
+        ],
+        [
+          0.012,
+          0.00999775
+        ]
+      ],
+      "knots": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.3,
+        0.75,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "origin_m": [
+        0.02,
+        -0.01,
+        0.005
+      ],
+      "depth_m": 0.006,
+      "polynomial_mm": {
+        "base_cubic": 9,
+        "truncated_terms": [
+          [
+            0.3,
+            3
+          ],
+          [
+            0.75,
+            -2
+          ]
+        ]
+      }
+    }
+  ]
+}

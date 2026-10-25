@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "kind": "native_bspline_sweep_regression",
+  "origin": "original_synthetic",
+  "author": "openswx contributors",
+  "license": "MIT",
+  "producer": {
+    "revision": "33.5.0",
+    "version_major": 33,
+    "version_sp": 5
+  },
+  "command_schema": "1.12",
+  "captured_at": "2026-10-25T23:00:57.034847+00:00",
+  "description": "Original convex cubic-profile prisms: a single-span cubic and a translated nonuniform multi-span cubic. No private or imported geometry.",
+  "artifacts": [
+    {
+      "path": "capabilities.json",
+      "bytes": 7869,
+      "sha256": "dc01cf1e1fbe8920cff81e29e198c85868b9f199d197fa1da6aa769af6277bbc"
+    },
+    {
+      "path": "capture.json",
+      "bytes": 3082832,
+      "sha256": "0b6731aeac1383d54e3bbd1396e3ac835342c259664283db15c6c5c97b7a7fd0"
+    },
+    {
+      "path": "cubic.sldprt",
+      "bytes": 48410,
+      "sha256": "93a0f040aeb405f69eb558472db6cb586274e888621fdc964c052b86040cdcc7"
+    },
+    {
+      "path": "cubic.step",
+      "bytes": 12650,
+      "sha256": "355baa51831bf17af1530826a7049d4d9c3144004db76cc16ca4fb78c724f7e3"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 9397,
+      "sha256": "47cb0b408807efcdcc897351b09215c15910e1bdd75b8828b0581d1ffe9e25ae"
+    },
+    {
+      "path": "export-errors.json",
+      "bytes": 639,
+      "sha256": "3495ad64d8ce2ad4ede53b509e675ebd8b4b7108825b3eb5b4f1287b45f431a2"
+    },
+    {
+      "path": "multispan.sldprt",
+      "bytes": 50680,
+      "sha256": "c48d35ab56f4da5fac18423a115eaaa2d9c8a5f4c505cc3d044d85ed53672f77"
+    },
+    {
+      "path": "multispan.step",
+      "bytes": 13741,
+      "sha256": "40b13bbaab1b0de41d269b1bd6cf2a9b6722af39f0abd7b205a4f121794ec908"
+    },
+    {
+      "path": "occt.json",
+      "bytes": 1514,
+      "sha256": "bff0194ba4095ec89a89e132c78b7b410decb539b2a5b5742d4c1fb139d0a87e"
+    },
+    {
+      "path": "receipts.json",
+      "bytes": 4739,
+      "sha256": "45f78accb52b88180f29506533e0e26ac9c5d80faec72ef5c7280472f3197451"
+    },
+    {
+      "path": "recipe.json",
+      "bytes": 2048,
+      "sha256": "db26b85a7e3d8f77abf6e80ba7a599bc3287144b60cf0ec1a683434f17f411f9"
+    },
+    {
+      "path": "source-inspection.json",
+      "bytes": 1086967,
+      "sha256": "1bbabd0ca6dec50aff9bc794898fd615b55a4921ea60aa6fe5339b34a80d8ab9"
+    },
+    {
+      "path": "tools.json",
+      "bytes": 681033,
+      "sha256": "2d93422adbece6f04702f7aa288fc162cd3d8baaef22dc92ac2a6f3155939bce"
+    }
+  ]
+}

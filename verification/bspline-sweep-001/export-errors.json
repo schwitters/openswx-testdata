@@ -1,0 +1,25 @@
+{
+  "openswx_revision": "2b4e0294f6dbd26811a78719e18568145b2313e2",
+  "cases": [
+    {
+      "name": "cubic",
+      "exit_code": 2,
+      "error": {
+        "error_code": "unsupported_format",
+        "offset": 0,
+        "message": "Body 2, face 43: Swept inversion requires a typed analytic section"
+      },
+      "partial_output_created": false
+    },
+    {
+      "name": "multispan",
+      "exit_code": 2,
+      "error": {
+        "error_code": "unsupported_format",
+        "offset": 0,
+        "message": "Body 2, face 43: Swept inversion requires a typed analytic section"
+      },
+      "partial_output_created": false
+    }
+  ]
+}
