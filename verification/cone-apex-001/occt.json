@@ -1,0 +1,72 @@
+{
+  "cone": {
+    "ocp_distribution_version": "7.9.3.1.1",
+    "native_reference": {
+      "topology": {
+        "faces": 2,
+        "edges": 3,
+        "vertices": 2,
+        "solids": 1
+      },
+      "volume_mm3": 376.99111843077515,
+      "area_mm2": 332.9190431646103,
+      "apex_z_mm": 10,
+      "cone_material_normals_verified": true,
+      "reconstructed_pole_edges": 1,
+      "brep_valid": true
+    },
+    "library_export": {
+      "topology": {
+        "faces": 2,
+        "edges": 3,
+        "vertices": 2,
+        "solids": 1
+      },
+      "volume_mm3": 376.99111843077515,
+      "area_mm2": 332.9190431646103,
+      "apex_z_mm": 10,
+      "cone_material_normals_verified": true,
+      "reconstructed_pole_edges": 1,
+      "brep_valid": true
+    },
+    "bidirectional_difference_volume_mm3": [
+      0.0,
+      0.0
+    ]
+  },
+  "blind-drill": {
+    "ocp_distribution_version": "7.9.3.1.1",
+    "native_reference": {
+      "topology": {
+        "faces": 5,
+        "edges": 8,
+        "vertices": 5,
+        "solids": 1
+      },
+      "volume_mm3": 20661.207685108875,
+      "area_mm2": 4501.487463813108,
+      "apex_z_mm": 17.5,
+      "cone_material_normals_verified": true,
+      "reconstructed_pole_edges": 1,
+      "brep_valid": true
+    },
+    "library_export": {
+      "topology": {
+        "faces": 5,
+        "edges": 8,
+        "vertices": 5,
+        "solids": 1
+      },
+      "volume_mm3": 20661.207685108868,
+      "area_mm2": 4501.487463813116,
+      "apex_z_mm": 17.5,
+      "cone_material_normals_verified": true,
+      "reconstructed_pole_edges": 1,
+      "brep_valid": true
+    },
+    "bidirectional_difference_volume_mm3": [
+      0.0,
+      0.0
+    ]
+  }
+}

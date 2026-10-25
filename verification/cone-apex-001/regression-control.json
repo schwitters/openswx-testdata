@@ -1,0 +1,56 @@
+{
+  "before_body_writer_commit": "b419a94",
+  "fixed_openswx_commit": "2b4e029",
+  "method": "Control links the exact pre-fix body_writer.cc with otherwise unchanged library code. No source document is modified.",
+  "results": [
+    {
+      "fixture": "cone",
+      "control": "before",
+      "exit_code": 2,
+      "stdout": {
+        "error_code": "unsupported_format",
+        "offset": 2261,
+        "message": "STEP node 50: Ruled patches require one non-isolated loop"
+      },
+      "output_exists": false
+    },
+    {
+      "fixture": "cone",
+      "control": "after",
+      "exit_code": 0,
+      "stdout": {
+        "faces": 2,
+        "edges": 1,
+        "vertices": 1,
+        "shells": 1,
+        "solids": 1
+      },
+      "output_exists": true
+    },
+    {
+      "fixture": "blind-drill",
+      "control": "before",
+      "exit_code": 2,
+      "stdout": {
+        "error_code": "unsupported_format",
+        "offset": 2269,
+        "message": "STEP node 52: Ruled patches require one non-isolated loop"
+      },
+      "output_exists": false
+    },
+    {
+      "fixture": "blind-drill",
+      "control": "after",
+      "exit_code": 0,
+      "stdout": {
+        "faces": 5,
+        "edges": 4,
+        "vertices": 4,
+        "shells": 1,
+        "solids": 1
+      },
+      "output_exists": true
+    }
+  ],
+  "before_body_writer_sha256": "24c6f5f66ab7eea760caab72decbceeed8e66c59255cb542d3094eaa6cf4ef9d"
+}

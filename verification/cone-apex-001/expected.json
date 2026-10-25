@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "fixed_openswx_commit": "2b4e029",
+  "cases": [
+    {
+      "name": "cone",
+      "source": "cone.sldprt",
+      "step": "cone.step",
+      "configuration": "Default",
+      "source_units": "metre",
+      "state_scope": "explicit_native_verified_checkpoint_not_automatic_saved_state_resolution",
+      "selection": {
+        "payload_index": 0,
+        "body_id": 2
+      },
+      "native_measurement": {
+        "body_measurements": [
+          {
+            "area": 0.00033291904316461033,
+            "body_kind": "solid",
+            "calculation": {
+              "accuracy_setting": "native_body_API_default",
+              "api": "IBody2.GetMassProperties",
+              "certified_error_bound": null,
+              "density_argument": 1.0,
+              "mass_reported": false
+            },
+            "ref": "native:7b22636f6e66696775726174696f6e223a2244656661756c74222c22646f63756d656e74223a22646f632d3163222c226672616d65223a22646f63756d656e74222c226b696e64223a22626f6479222c226c656e6774685f756e6974223a226d65747265222c226e61746976655f7570646174655f7374616d70223a3130342c2270657273697374656e74223a22353034363030303030343030303030306666666566663030303030303030303030313030303030303635303030303030222c227265666572656e63655f73636f7065223a22646f63756d656e745f7265766973696f6e5f636f6e66696775726174696f6e5f7570646174655f7374616d70222c227265766973696f6e223a307d",
+            "sheet_perimeter": null,
+            "topology_counts": {
+              "bodies": 1,
+              "edges": 1,
+              "faces": 2,
+              "loops": 3,
+              "shell_provenance": "connected_native_face_edge_incidence",
+              "shells": 1,
+              "vertices": 1
+            },
+            "volume": 3.7699111843077514e-07,
+            "wire_length": null
+          }
+        ],
+        "configuration": "Default",
+        "document": "doc-1c",
+        "frame": "document",
+        "geometry_totals": {
+          "aggregation": "sum_of_selected_bodies; overlapping bodies counted independently",
+          "sheet_area": 0.0,
+          "solid_volume": 3.7699111843077514e-07,
+          "surface_area": 0.00033291904316461033,
+          "units": {
+            "area": "square_metre",
+            "length": "metre",
+            "volume": "cubic_metre"
+          },
+          "wire_length": 0.0
+        },
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "mass_properties": {
+          "area": 0.00033291904316461033,
+          "calculation": {
+            "api": "IMassProperty2.Recalculate",
+            "certified_error_bound": null,
+            "hidden_bodies": "included",
+            "native_accuracy_level": 0,
+            "units": "SI"
+          },
+          "center_of_mass": [
+            5.847257748779062e-20,
+            2.1740266174985465e-35,
+            0.0025
+          ],
+          "mass": 0.00037699111843077514,
+          "status": 0,
+          "volume": 3.7699111843077514e-07
+        },
+        "native_update_stamp": 104,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 1,
+          "edges": 1,
+          "faces": 2,
+          "loops": 3,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 1,
+          "vertices": 1
+        }
+      },
+      "source_topology": {
+        "faces": 2,
+        "edges": 1,
+        "vertices": 1
+      },
+      "apex_pattern": {
+        "face_id": 50,
+        "surface_id": 45,
+        "apex_vertex": 12,
+        "apex_position_m": [
+          0.0,
+          0.0,
+          0.01
+        ],
+        "circle_curve_id": 8,
+        "circle_radius_m": 0.006,
+        "circle_center_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "loop_count": 2,
+        "isolated_loop_count": 1,
+        "circle_loop_count": 1
+      },
+      "payload_inventory": [
+        {
+          "index": 0,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "bytes": 3449
+        },
+        {
+          "index": 1,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "bytes": 740
+        }
+      ],
+      "payload_hashes": {
+        "0": "00578f6ef4b6147d4579c8015414d357b95f85182440d8c29d735be56384e5e8",
+        "1": "1f8d621c45fd2fd8b054204cea70fa1d72e540cc59d05e7dab2793af1200fcc7"
+      }
+    },
+    {
+      "name": "blind-drill",
+      "source": "blind-drill.sldprt",
+      "step": "blind-drill.step",
+      "configuration": "Default",
+      "source_units": "metre",
+      "state_scope": "explicit_native_verified_checkpoint_not_automatic_saved_state_resolution",
+      "selection": {
+        "payload_index": 0,
+        "body_id": 2
+      },
+      "native_measurement": {
+        "body_measurements": [
+          {
+            "area": 0.004501487463813114,
+            "body_kind": "solid",
+            "calculation": {
+              "accuracy_setting": "native_body_API_default",
+              "api": "IBody2.GetMassProperties",
+              "certified_error_bound": null,
+              "density_argument": 1.0,
+              "mass_reported": false
+            },
+            "ref": "native:7b22636f6e66696775726174696f6e223a2244656661756c74222c22646f63756d656e74223a22646f632d3165222c226672616d65223a22646f63756d656e74222c226b696e64223a22626f6479222c226c656e6774685f756e6974223a226d65747265222c226e61746976655f7570646174655f7374616d70223a3130362c2270657273697374656e74223a223530343630303030303430303030303066666665666630303030303030303030303230303030303036363030303030303635303030303030222c227265666572656e63655f73636f7065223a22646f63756d656e745f7265766973696f6e5f636f6e66696775726174696f6e5f7570646174655f7374616d70222c227265766973696f6e223a307d",
+            "sheet_perimeter": null,
+            "topology_counts": {
+              "bodies": 1,
+              "edges": 4,
+              "faces": 5,
+              "loops": 9,
+              "shell_provenance": "connected_native_face_edge_incidence",
+              "shells": 1,
+              "vertices": 1
+            },
+            "volume": 2.066120768510887e-05,
+            "wire_length": null
+          }
+        ],
+        "configuration": "Default",
+        "document": "doc-1e",
+        "frame": "document",
+        "geometry_totals": {
+          "aggregation": "sum_of_selected_bodies; overlapping bodies counted independently",
+          "sheet_area": 0.0,
+          "solid_volume": 2.066120768510887e-05,
+          "surface_area": 0.004501487463813114,
+          "units": {
+            "area": "square_metre",
+            "length": "metre",
+            "volume": "cubic_metre"
+          },
+          "wire_length": 0.0
+        },
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "mass_properties": {
+          "area": 0.004501487463813114,
+          "calculation": {
+            "api": "IMassProperty2.Recalculate",
+            "certified_error_bound": null,
+            "hidden_bodies": "included",
+            "native_accuracy_level": 0,
+            "units": "SI"
+          },
+          "center_of_mass": [
+            3.5157142380608483e-19,
+            0.0,
+            0.014747845919918906
+          ],
+          "mass": 0.020661207685108866,
+          "status": 0,
+          "volume": 2.0661207685108868e-05
+        },
+        "native_update_stamp": 106,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 1,
+          "edges": 4,
+          "faces": 5,
+          "loops": 9,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 1,
+          "vertices": 1
+        }
+      },
+      "source_topology": {
+        "faces": 5,
+        "edges": 4,
+        "vertices": 1
+      },
+      "apex_pattern": {
+        "face_id": 52,
+        "surface_id": 56,
+        "apex_vertex": 12,
+        "apex_position_m": [
+          0.0,
+          0.0,
+          0.0175
+        ],
+        "circle_curve_id": 84,
+        "circle_radius_m": 0.004,
+        "circle_center_m": [
+          0.0,
+          0.0,
+          0.019999999999999997
+        ],
+        "loop_count": 2,
+        "isolated_loop_count": 1,
+        "circle_loop_count": 1
+      },
+      "payload_inventory": [
+        {
+          "index": 0,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "bytes": 5027
+        },
+        {
+          "index": 1,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "bytes": 2978
+        }
+      ],
+      "payload_hashes": {
+        "0": "b0af9ea4bb123bb8d6201f160b63312e52c3b125304273bb6989f29ea5710636",
+        "1": "944a7c0a29568a5f3dd3eee3c2dfcfe8392251c4f96e7781e24c6a5419bf5c1e"
+      }
+    }
+  ]
+}

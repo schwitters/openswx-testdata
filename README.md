@@ -162,3 +162,10 @@ The original native [saved-state regression](verification/saved-state-002/README
 checks that an already-current partition is not replayed merely because deltas
 exist. Its active/suppressed auxiliary sheet pair also demonstrates that matching
 kernel identifiers do not certify the complete SolidWorks body set.
+
+The independent [native cone-apex regression](verification/cone-apex-001/README.md)
+adds a complete cone and a blind drill with a conical bottom. Both reproduce the
+old isolated-apex STEP failure and verify the fix against native SolidWorks
+AP214 references, including material normals and bidirectional solid differences.
+Run `tools/verify_cone_apex.py` with the existing generic export driver; these
+two verification fixtures are additional to the nineteen cases in `cases/`.

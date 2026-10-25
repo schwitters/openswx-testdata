@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "kind": "native_cone_apex_regression",
+  "origin": "original_synthetic",
+  "author": "openswx contributors",
+  "license": "MIT",
+  "producer": {
+    "revision": "33.5.0",
+    "version_major": 33,
+    "version_sp": 5
+  },
+  "command_schema": "1.12",
+  "captured_at": "2026-10-25T19:23:45.148699+00:00",
+  "description": "Two independently constructed native parts: a complete cone and a blind drill with a conical bottom. No private model or imported geometry was used.",
+  "artifacts": [
+    {
+      "path": "blind-drill.sldprt",
+      "bytes": 94955,
+      "sha256": "c8e437f6759582cb4aea5ae4916166ba63a68ad285290939d2ab38bbc5bb4f75"
+    },
+    {
+      "path": "blind-drill.step",
+      "bytes": 9459,
+      "sha256": "31e04edf53e9a57a7d838060c156d70fa2227ca58943852e275ef3edfa0c1dad"
+    },
+    {
+      "path": "capabilities.json",
+      "bytes": 7869,
+      "sha256": "dc01cf1e1fbe8920cff81e29e198c85868b9f199d197fa1da6aa769af6277bbc"
+    },
+    {
+      "path": "capture.json",
+      "bytes": 1457491,
+      "sha256": "aa656dd870308988bb9a45a9d03cc6c5417bab3dfb0790a1697062a9197007ca"
+    },
+    {
+      "path": "cone.sldprt",
+      "bytes": 67927,
+      "sha256": "a59da044e8c0883cae6cc7f244529cf7dad7815207b9bf4936e1d5342a7ea856"
+    },
+    {
+      "path": "cone.step",
+      "bytes": 5303,
+      "sha256": "d10b0e584f6ada9f5eeb38db36aa6d1e4d04004b2aee5b0e68879a88d3c881dc"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 8938,
+      "sha256": "8d9ec075067f84593ae79e1ae29a02053439182930dc84023c7bd71b117ed69a"
+    },
+    {
+      "path": "occt.json",
+      "bytes": 1690,
+      "sha256": "74c84e13fc7240070a346430cc21ea0cda1b7f41c71d52289ee0c406d6439c42"
+    },
+    {
+      "path": "receipts.json",
+      "bytes": 4724,
+      "sha256": "cc9e327f7d5e5113fc884ba919a18ad70e4a993e1df575614c0e4dd1569535a4"
+    },
+    {
+      "path": "recipe.json",
+      "bytes": 1692,
+      "sha256": "2ebd38c9a2daf484acd8e239a53286780faacbecbdfe2028c6f690bfce0e390c"
+    },
+    {
+      "path": "regression-control.json",
+      "bytes": 1417,
+      "sha256": "4e9dcae434f2126310dc6fd69c9c93c1efeb0620ee1344ee02a60ab5f9ee9803"
+    },
+    {
+      "path": "source-inspection.json",
+      "bytes": 643688,
+      "sha256": "fdbb23d7812e1b478d7d774b4f5c08fc871aa2be55b48997e109d3bbf4435695"
+    },
+    {
+      "path": "tools.json",
+      "bytes": 673151,
+      "sha256": "b6791a0f24bfd6fcc6e57bf7697ba3fd0b46748bd913e3efe7fb4439e6587d16"
+    }
+  ]
+}

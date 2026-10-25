@@ -1,0 +1,97 @@
+{
+  "origin": "original_synthetic",
+  "license": "MIT",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "plane_xz": {
+    "origin": [
+      0,
+      0,
+      0
+    ],
+    "normal": [
+      0,
+      -1,
+      0
+    ],
+    "x_axis": [
+      1,
+      0,
+      0
+    ]
+  },
+  "revolve_axis_in_sketch": {
+    "start": [
+      0,
+      -0.01
+    ],
+    "end": [
+      0,
+      0.04
+    ]
+  },
+  "cone": {
+    "operation": "new_body",
+    "profile": [
+      [
+        0,
+        0
+      ],
+      [
+        0.006,
+        0
+      ],
+      [
+        0,
+        0.01
+      ]
+    ],
+    "angle": 6.283185307179586
+  },
+  "blind-drill": {
+    "blank": {
+      "type": "extrude",
+      "circle_radius": 0.015,
+      "depth": 0.03,
+      "direction": [
+        0,
+        0,
+        1
+      ]
+    },
+    "cut": {
+      "operation": "cut",
+      "profile": [
+        [
+          0,
+          0.03
+        ],
+        [
+          0.004,
+          0.03
+        ],
+        [
+          0.004,
+          0.02
+        ],
+        [
+          0,
+          0.0175
+        ]
+      ],
+      "angle": 6.283185307179586,
+      "target": "the unique native blank body after profile creation"
+    }
+  },
+  "workflow": [
+    "Create fresh parts without imports",
+    "Create explicit reference planes and sketches",
+    "Revolve new body or cut with an explicit native body target",
+    "Save immutable native artifacts and verify downloaded hashes",
+    "Close and reopen each generated source",
+    "Query native topology, geometry and measurements",
+    "Export native AP214 references and verify artifact hashes",
+    "Verify unchanged native measures after export",
+    "Close only the generated documents"
+  ]
+}
