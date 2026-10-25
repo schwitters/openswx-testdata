@@ -172,7 +172,7 @@ two verification fixtures are additional to the nineteen cases in `cases/`.
 
 The original [B-spline sweep fixtures](verification/bspline-sweep-001/README.md)
 add two native cubic-profile prisms, including a translated nonuniform profile.
-They reproduce the known inverse-mapping limitation with fully typed B_CURVE
-sections and preserve independently verified native spline-surface STEP
-references for the upcoming reader/exporter work. Their binding and library
-STEP stages are explicitly expected unsupported, with no partial output.
+They preserve the original inverse-mapping failure with fully typed B_CURVE
+sections and independently verified native spline-surface STEP references.
+Current verification requires complete body binding; library STEP export still
+reports the separate swept-surface writer limitation and creates no partial output.

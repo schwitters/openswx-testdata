@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 openswx contributors
-"""Reproduce the native B_CURVE/SWEPT_SURF binding limitation offline."""
+"""Verify native B_CURVE/SWEPT_SURF binding and the remaining STEP boundary."""
 import argparse
 import hashlib
 import json
@@ -12,7 +12,9 @@ import subprocess
 import tempfile
 
 
+# Immutable capture baseline; the live reader must now pass this boundary.
 MESSAGE = "Swept inversion requires a typed analytic section"
+EXPORT_MESSAGE = "Face export requires PLANE/CYLINDER/CONE/SPHERE or ring TORUS surfaces"
 
 
 def require(condition, message):
@@ -67,7 +69,7 @@ def verify(dataset, build, exporter, occt_python, output):
     expected = audit(dataset)
     require(not output.resolve().is_relative_to(dataset.resolve()), "Reports cannot overwrite admitted fixtures")
     output.mkdir(parents=True, exist_ok=False)
-    report = {"scope": "explicit native-verified checkpoints; binding/export remain unsupported", "cases": []}
+    report = {"scope": "explicit native-verified checkpoints; binding passes, swept STEP export remains unsupported", "cases": []}
 
     def run(label, command, success=True):
         r = subprocess.run([str(v) for v in command], capture_output=True, text=True, timeout=60)
@@ -112,18 +114,25 @@ def verify(dataset, build, exporter, occt_python, output):
         bound = run(name + "-binding", [inspect, "--body-geometry", selection["body_id"], "--binding-tolerance", "1e-8", path], success=False)
         parsed = json.loads(bound.stdout)
         error = parsed.get("body_geometry_error") or {}
-        require(bound.returncode == 2 and parsed["body_geometry"] is None and error.get("code") == "unsupported_format"
-                and MESSAGE in error.get("message", ""), "Binding limitation changed; review the expectation")
+        binding = parsed.get("body_geometry")
+        require(bound.returncode == 0 and not error and binding is not None,
+                "B-spline sweep body binding failed")
+        require(binding["body"] == selection["body_id"] and
+                {k: binding["counts"][k] for k in case["source_topology"]} == case["source_topology"],
+                "Body binding omitted source topology")
+        require({f["face"] for f in binding["faces"]} ==
+                {f["face"] for r in topology["body_topology"]["regions"] for shell in r["shells"] for f in shell["faces"]},
+                "Body binding omitted a source face")
         target = output / (name + ".step")
         exported = run(name + "-export", [exporter, source, selection["payload_index"], selection["body_id"], target], success=False)
         export_error = json.loads(exported.stdout)
         require(exported.returncode == 2 and export_error.get("error_code") == "unsupported_format"
-                and MESSAGE in export_error.get("message", "") and not target.exists() and not target.is_symlink(),
+                and EXPORT_MESSAGE in export_error.get("message", "") and not target.exists() and not target.is_symlink(),
                 "Exporter limitation changed or a partial STEP was published")
         oracle = query(name + "-native-occt", [occt_python, Path(__file__).with_name("check_bspline_sweep_step.py"), name, dataset / case["step"]])
         report["cases"].append({"name": name, "stages": {"metadata": "pass", "extraction": "pass", "decode": "pass",
-                                "topology": "pass", "binding": "expected_unsupported", "step": "expected_unsupported"},
-                                "swept_pattern": pattern, "binding_error": error, "export_error": export_error,
+                                "topology": "pass", "binding": "pass", "step": "expected_unsupported"},
+                                "swept_pattern": pattern, "binding_counts": binding["counts"], "binding_error": error, "export_error": export_error,
                                 "native_reference": oracle, "partial_output_created": False})
     (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
     return report

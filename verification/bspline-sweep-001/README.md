@@ -1,6 +1,6 @@
 # Native cubic B-spline sweep fixtures
 
-Two original synthetic SolidWorks 2025 SP5 parts reproduce the current
+Two original synthetic SolidWorks 2025 SP5 parts preserve the original
 `Swept inversion requires a typed analytic section` failure. Both models and
 all associated evidence are MIT licensed. No private geometry or imported CAD
 was used. They are verification fixtures, additional to the nineteen six-stage
@@ -54,12 +54,15 @@ The native STEP stores the wall as degree `(3,1)`
 `source-inspection.json` records the exact source pattern. At the recorded
 OpenSWX revision, binding fails at face 43 in both fixtures. STEP export returns
 `unsupported_format` with the same message and creates **no partial output**;
-see `export-errors.json`. This dataset documents a missing capability. It does
-not claim that binding or library STEP export succeeds.
+see `export-errors.json`. These immutable artifacts describe the capture
+baseline, rather than the current reader's expected behavior.
 
-The current failure is earlier than STEP serialization: inverse mapping of
-points onto a sweep only supports analytic sections. Supporting the B-spline
-inverse will still require a subsequent exact spline-surface export path.
+The reader now inverts these sections using their strictly monotone transverse
+control projection and the source B-spline evaluator. The live runner requires
+successful binding of every source face, edge and vertex. STEP export advances
+to the separate writer boundary:
+`Face export requires PLANE/CYLINDER/CONE/SPHERE or ring TORUS surfaces`.
+No partial STEP is accepted. An exact spline-surface export path remains needed.
 Rational, closed and nontransverse sections remain outside these fixtures.
 Neither an explicitly selected checkpoint nor a successful native export
 certifies generic saved-state reconstruction.
@@ -103,10 +106,9 @@ environment variables are `OPENSWX_CORPUS_BUILD`, `OPENSWX_CORPUS_EXPORTER`,
 `OPENSWX_CORPUS_BSPLINE_SWEEP_DATASET`. Native integration tests run when the first
 three are set; geometric tests require the existing optional OCP dependency.
 
-The runner expects metadata, extraction, decoding and topology to pass, and
-binding/STEP to remain **expected unsupported** with this exact diagnostic and
-no output file. A new binding capability must make this test fail for review,
-rather than silently accepting a different later error. After implementing the
-reader and exporter, update the expectations and compare library STEP geometry
-against these native references. The manifest hashes all admitted artifacts;
+The runner expects metadata, extraction, decoding, topology and complete body
+binding to pass. STEP remains **expected unsupported** with the explicit writer
+diagnostic above and no output file. A different failure or a partial export
+fails verification. After implementing the exporter, update that expectation
+and compare library STEP geometry against these native references. The manifest hashes all admitted artifacts;
 this explanatory README is outside that artifact list.

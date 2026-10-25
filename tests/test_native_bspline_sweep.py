@@ -61,7 +61,7 @@ class NativeBSplineSweepEvidenceTest(unittest.TestCase):
             self.assertEqual(captured["binding_error"]["code"], "unsupported_format")
             self.assertIn(MESSAGE, captured["binding_error"]["message"])
 
-    def test_current_export_failure_publishes_no_partial_step(self):
+    def test_captured_baseline_failure_published_no_partial_step(self):
         errors = json.loads((DATA / "export-errors.json").read_text())
         self.assertEqual({c["name"] for c in errors["cases"]}, {"cubic", "multispan"})
         for case in errors["cases"]:
@@ -138,7 +138,7 @@ class BSplineSweepGeometryTest(unittest.TestCase):
                          for name in ("BUILD", "EXPORTER", "OCCT_PYTHON")),
                      "set OPENSWX_CORPUS_BUILD, EXPORTER and OCCT_PYTHON for native integration")
 class BSplineSweepLibraryIntegrationTest(unittest.TestCase):
-    def test_exact_binding_limit_and_no_partial_export(self):
+    def test_complete_binding_and_explicit_step_limit(self):
         with tempfile.TemporaryDirectory(prefix="bspline-sweep-test-") as tmp:
             report = verify(DATA, Path(os.environ["OPENSWX_CORPUS_BUILD"]).resolve(),
                             Path(os.environ["OPENSWX_CORPUS_EXPORTER"]).resolve(),
@@ -146,6 +146,6 @@ class BSplineSweepLibraryIntegrationTest(unittest.TestCase):
             self.assertEqual(len(report["cases"]), 2)
             for case in report["cases"]:
                 self.assertEqual(case["stages"]["topology"], "pass")
-                self.assertEqual(case["stages"]["binding"], "expected_unsupported")
+                self.assertEqual(case["stages"]["binding"], "pass")
                 self.assertEqual(case["stages"]["step"], "expected_unsupported")
                 self.assertFalse(case["partial_output_created"])
