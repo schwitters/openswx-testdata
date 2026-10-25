@@ -1,0 +1,66 @@
+{
+  "byte_size": 307,
+  "catalog_source": "reviewed-13006-base-subset",
+  "complete": true,
+  "decoded_end": 303,
+  "delta_historical_mark_count": 0,
+  "delta_node_count": 0,
+  "delta_packet_count": 0,
+  "delta_prefix": null,
+  "delta_reference_count": 0,
+  "diagnostics": [],
+  "format": "binary_parasolid",
+  "header": {
+    "body_offset": 102,
+    "kind": "partition",
+    "schema": "SCH_3601228_36001_13006"
+  },
+  "interpretation": "geometry_model",
+  "library_version": "0.1.0",
+  "limits": {
+    "max_delta_entries": 100000,
+    "max_delta_packets": 10000,
+    "max_fields_per_type": 4096,
+    "max_input_bytes": 134217728,
+    "max_nodes": 10000,
+    "max_total_fields": 65536,
+    "max_types": 1024,
+    "max_values": 1000000
+  },
+  "model": {
+    "geometry_candidate_count": 0,
+    "geometry_count": 0,
+    "geometry_counts": {},
+    "invalid_geometry_count": 0,
+    "issue_count": 0,
+    "issues_truncated": false,
+    "limits": {
+      "max_diagnostics": 1000,
+      "max_fields": 65536,
+      "max_nodes": 10000,
+      "max_references": 1000000,
+      "max_values": 1000000
+    },
+    "missing_reference_count": 0,
+    "node_count": 1,
+    "node_type_counts": {
+      "101": 1
+    },
+    "null_reference_count": 15,
+    "references_verified": true,
+    "resolved_reference_count": 0,
+    "typed_geometry_complete": true,
+    "unsupported_geometry_count": 0,
+    "unverified_reference_count": 0,
+    "validation_scope": "references_and_supported_geometry_data",
+    "wrong_class_reference_count": 0
+  },
+  "node_count": 1,
+  "report_version": 1,
+  "schema_count": 1,
+  "source_file": "sheet.sldprt:configuration_partition",
+  "terminator_offset": 303,
+  "terminator_size": 4,
+  "uninterpreted_offset": 307,
+  "uninterpreted_size": 0
+}

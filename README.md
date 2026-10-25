@@ -32,6 +32,12 @@ The general MCP generation adapter is still pending.
 The local audit checks contracts and artifact integrity; library/OCCT
 verification is a separate runner.
 
+A separate [saved-geometry identity verification](verification/saved-geometry-001/README.md)
+adds four native snapshots and six configuration queries: one/two-body
+configurations, last-active changes and a sheet with an empty baseline partition.
+It verifies the new resolver's metadata identities and explicit unresolved-state
+contract. These snapshots are additional to the nineteen six-stage cases.
+
 ## Start locally
 
 ```sh

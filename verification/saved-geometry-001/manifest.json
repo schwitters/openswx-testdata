@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "kind": "saved_geometry_identity_verification",
+  "license": "MIT",
+  "author": "openswx contributors",
+  "origin": "original_synthetic",
+  "producer": {
+    "revision": "33.5.0",
+    "version_major": 33,
+    "version_sp": 5
+  },
+  "command_schema": "1.12",
+  "description": "Native cylinder, then two configurations with one/two disjoint cylinders via configuration-local suppression. Each snapshot saved individually and reopened. No imported CAD. Separate from the six-stage geometry cases. Separate original 20 x 30 mm planar sheet verifies source sheet classification.",
+  "artifacts": [
+    {
+      "path": "baseline.sldprt",
+      "bytes": 84138,
+      "sha256": "571997020b0bf995ee32e1fd9c7c6dae6819e613d7578725b300b3a9cb38ce7c"
+    },
+    {
+      "path": "capture.json",
+      "bytes": 955475,
+      "sha256": "da4d0116bd69ea6898e89cb2438d94d9140e7a059b92037e05959d318dbf40b8"
+    },
+    {
+      "path": "default-active.sldprt",
+      "bytes": 142348,
+      "sha256": "8e2a4e1d4b520ade37db18f6ed6fc725c99aa689793aa2fc7c60b6e22f163599"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 255829,
+      "sha256": "fdac020448341b0fdacb8979eddea5e91b0a9f009a78bb487b36c131bf0ffb32"
+    },
+    {
+      "path": "sheet-base-inspection.json",
+      "bytes": 1747,
+      "sha256": "a4451a5e5d74cb900bc0b8d71581a240b40dccd3cc23cc947c3961e7aecef15f"
+    },
+    {
+      "path": "sheet.sldprt",
+      "bytes": 33950,
+      "sha256": "2153aed412d4b068dd5ee0109abc9e763de7d72fb66eea86aa4b07f154aa791b"
+    },
+    {
+      "path": "tools.json",
+      "bytes": 673151,
+      "sha256": "b6791a0f24bfd6fcc6e57bf7697ba3fd0b46748bd913e3efe7fb4439e6587d16"
+    },
+    {
+      "path": "two-active.sldprt",
+      "bytes": 143655,
+      "sha256": "56d4b2965713cfe2f02c14f0bcc354e3cbf6462023326d18facf32e4e0746d43"
+    }
+  ],
+  "native_api_limitations": [
+    "Sheet mass/body measurement query reports unsupported; topology and native B-rep classify the sheet before save and after reopen."
+  ],
+  "admitted_at": "2026-10-25T18:01:44.696795+00:00"
+}
