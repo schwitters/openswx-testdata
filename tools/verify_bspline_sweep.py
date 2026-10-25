@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2026 openswx contributors
-"""Verify native B_CURVE/SWEPT_SURF binding and the remaining STEP boundary."""
+"""Verify native B_CURVE/SWEPT_SURF binding and exact STEP export."""
 import argparse
 import hashlib
 import json
@@ -14,7 +14,6 @@ import tempfile
 
 # Immutable capture baseline; the live reader must now pass this boundary.
 MESSAGE = "Swept inversion requires a typed analytic section"
-EXPORT_MESSAGE = "Face export requires PLANE/CYLINDER/CONE/SPHERE or ring TORUS surfaces"
 
 
 def require(condition, message):
@@ -69,7 +68,7 @@ def verify(dataset, build, exporter, occt_python, output):
     expected = audit(dataset)
     require(not output.resolve().is_relative_to(dataset.resolve()), "Reports cannot overwrite admitted fixtures")
     output.mkdir(parents=True, exist_ok=False)
-    report = {"scope": "explicit native-verified checkpoints; binding passes, swept STEP export remains unsupported", "cases": []}
+    report = {"scope": "explicit native-verified checkpoints; complete binding and exact native-verified swept STEP export", "cases": []}
 
     def run(label, command, success=True):
         r = subprocess.run([str(v) for v in command], capture_output=True, text=True, timeout=60)
@@ -125,14 +124,17 @@ def verify(dataset, build, exporter, occt_python, output):
                 "Body binding omitted a source face")
         target = output / (name + ".step")
         exported = run(name + "-export", [exporter, source, selection["payload_index"], selection["body_id"], target], success=False)
-        export_error = json.loads(exported.stdout)
-        require(exported.returncode == 2 and export_error.get("error_code") == "unsupported_format"
-                and EXPORT_MESSAGE in export_error.get("message", "") and not target.exists() and not target.is_symlink(),
-                "Exporter limitation changed or a partial STEP was published")
+        require(exported.returncode == 0 and target.is_file() and not target.is_symlink(),
+                "Complete spline sweep STEP export failed")
+        statistics = json.loads(exported.stdout)
+        require(statistics == {"faces": 5, "edges": 9, "vertices": 6, "shells": 1, "solids": 1},
+                "Export omitted source body topology")
+        library = query(name + "-library-occt", [occt_python, Path(__file__).with_name("check_bspline_sweep_step.py"),
+                                                 name, target, "--reference", dataset / case["step"]])
         oracle = query(name + "-native-occt", [occt_python, Path(__file__).with_name("check_bspline_sweep_step.py"), name, dataset / case["step"]])
         report["cases"].append({"name": name, "stages": {"metadata": "pass", "extraction": "pass", "decode": "pass",
-                                "topology": "pass", "binding": "pass", "step": "expected_unsupported"},
-                                "swept_pattern": pattern, "binding_counts": binding["counts"], "binding_error": error, "export_error": export_error,
+                                "topology": "pass", "binding": "pass", "step": "pass"},
+                                "swept_pattern": pattern, "binding_counts": binding["counts"], "binding_error": error, "export_statistics": statistics, "library_geometry": library,
                                 "native_reference": oracle, "partial_output_created": False})
     (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
     return report

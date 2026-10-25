@@ -174,5 +174,6 @@ The original [B-spline sweep fixtures](verification/bspline-sweep-001/README.md)
 add two native cubic-profile prisms, including a translated nonuniform profile.
 They preserve the original inverse-mapping failure with fully typed B_CURVE
 sections and independently verified native spline-surface STEP references.
-Current verification requires complete body binding; library STEP export still
-reports the separate swept-surface writer limitation and creates no partial output.
+Current verification requires complete body binding and exact STEP export,
+including OCCT topology, polynomial geometry, material normals and bidirectional
+solid differences against the native references.

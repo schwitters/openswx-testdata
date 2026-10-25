@@ -138,7 +138,7 @@ class BSplineSweepGeometryTest(unittest.TestCase):
                          for name in ("BUILD", "EXPORTER", "OCCT_PYTHON")),
                      "set OPENSWX_CORPUS_BUILD, EXPORTER and OCCT_PYTHON for native integration")
 class BSplineSweepLibraryIntegrationTest(unittest.TestCase):
-    def test_complete_binding_and_explicit_step_limit(self):
+    def test_complete_binding_and_native_equivalent_step(self):
         with tempfile.TemporaryDirectory(prefix="bspline-sweep-test-") as tmp:
             report = verify(DATA, Path(os.environ["OPENSWX_CORPUS_BUILD"]).resolve(),
                             Path(os.environ["OPENSWX_CORPUS_EXPORTER"]).resolve(),
@@ -147,5 +147,7 @@ class BSplineSweepLibraryIntegrationTest(unittest.TestCase):
             for case in report["cases"]:
                 self.assertEqual(case["stages"]["topology"], "pass")
                 self.assertEqual(case["stages"]["binding"], "pass")
-                self.assertEqual(case["stages"]["step"], "expected_unsupported")
+                self.assertEqual(case["stages"]["step"], "pass")
                 self.assertFalse(case["partial_output_created"])
+                self.assertTrue(case["library_geometry"]["brep_valid"])
+                self.assertTrue(all(v < 1e-6 for v in case["library_geometry"]["bidirectional_difference_mm3"]))

@@ -59,10 +59,12 @@ baseline, rather than the current reader's expected behavior.
 
 The reader now inverts these sections using their strictly monotone transverse
 control projection and the source B-spline evaluator. The live runner requires
-successful binding of every source face, edge and vertex. STEP export advances
-to the separate writer boundary:
-`Face export requires PLANE/CYLINDER/CONE/SPHERE or ring TORUS surfaces`.
-No partial STEP is accepted. An exact spline-surface export path remains needed.
+successful binding of every source face, edge and vertex. STEP export now emits
+an exact degree-(3,1) B-spline surface for the swept wall, retaining the source
+profile knots, all five faces, nine edges and six vertices. The library STEP
+must pass the same independent polynomial, trim and material-normal oracle as
+the native reference. Both directional Boolean differences must stay below
+`1e-6 mm³`; a partial body is never accepted.
 Rational, closed and nontransverse sections remain outside these fixtures.
 Neither an explicitly selected checkpoint nor a successful native export
 certifies generic saved-state reconstruction.
@@ -100,6 +102,11 @@ python3 tools/verify_bspline_sweep.py \
 python3 -m unittest discover -s tests -p 'test_native_bspline_sweep.py' -v
 ```
 
+The independent geometry oracle also accepts `--reference native.step`, with
+environment variable `OPENSWX_CORPUS_BSPLINE_SWEEP_REFERENCE`, to compare an
+exported solid in both Boolean directions against its original native reference.
+Explicit CLI values take precedence. The runner supplies this option itself.
+
 The output directory must be new; omitting it uses temporary files. Matching
 environment variables are `OPENSWX_CORPUS_BUILD`, `OPENSWX_CORPUS_EXPORTER`,
 `OPENSWX_CORPUS_OCCT_PYTHON`, `OPENSWX_CORPUS_OUTPUT` and
@@ -107,8 +114,8 @@ environment variables are `OPENSWX_CORPUS_BUILD`, `OPENSWX_CORPUS_EXPORTER`,
 three are set; geometric tests require the existing optional OCP dependency.
 
 The runner expects metadata, extraction, decoding, topology and complete body
-binding to pass. STEP remains **expected unsupported** with the explicit writer
-diagnostic above and no output file. A different failure or a partial export
-fails verification. After implementing the exporter, update that expectation
-and compare library STEP geometry against these native references. The manifest hashes all admitted artifacts;
+binding and STEP export to pass. The resulting solid must retain complete source
+topology and pass the native geometric oracle and bidirectional solid differences.
+The immutable captured failures remain historical evidence; live verification
+must no longer reproduce either the old inversion or surface-writer limit. The manifest hashes all admitted artifacts;
 this explanatory README is outside that artifact list.

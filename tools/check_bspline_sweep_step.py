@@ -5,6 +5,7 @@
 import argparse
 import json
 import math
+import os
 from pathlib import Path
 
 from OCP.BRepAdaptor import BRepAdaptor_Curve, BRepAdaptor_Surface
@@ -18,7 +19,7 @@ from OCP.TopTools import TopTools_IndexedMapOfShape
 from OCP.TopoDS import TopoDS
 from OCP.gp import gp_Pnt
 
-from step_check import measure, read_step, require, topology_counts
+from step_check import compare_solids, measure, read_step, require, topology_counts
 
 
 def spec(name):
@@ -149,9 +150,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("name", choices=("cubic", "multispan"))
     parser.add_argument("step", type=Path)
+    parser.add_argument("--reference", type=Path, default=os.environ.get("OPENSWX_CORPUS_BSPLINE_SWEEP_REFERENCE"), help="Independently captured native STEP for bidirectional solid differences")
     args = parser.parse_args()
     shape, _ = read_step(args.step)
-    print(json.dumps(check_shape(shape, args.name), indent=2))
+    report = check_shape(shape, args.name)
+    if args.reference:
+        native, _ = read_step(args.reference)
+        check_shape(native, args.name)
+        report["bidirectional_difference_mm3"] = compare_solids(native, shape)
+    print(json.dumps(report, indent=2))
 
 
 if __name__ == "__main__":
