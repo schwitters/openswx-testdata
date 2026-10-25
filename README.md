@@ -157,3 +157,8 @@ exporter outputs belong in ignored `results/`.
 The repository has no remote publication configured. Git LFS is not required
 for this small initial corpus; decide from actual fixture sizes before a
 large data batch.
+
+The original native [saved-state regression](verification/saved-state-002/README.md)
+checks that an already-current partition is not replayed merely because deltas
+exist. Its active/suppressed auxiliary sheet pair also demonstrates that matching
+kernel identifiers do not certify the complete SolidWorks body set.

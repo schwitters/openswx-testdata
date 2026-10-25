@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "kind": "saved_state_evidence_verification",
+  "origin": "original_synthetic",
+  "license": "MIT",
+  "author": "openswx contributors",
+  "producer": {
+    "revision": "33.5.0",
+    "version_major": 33,
+    "version_sp": 5
+  },
+  "command_schema": "1.12",
+  "description": "Original revolved profile with a bevel, rounded/suppressed/restored edge fillet, helper sketches and active/suppressed auxiliary sheet. No imported model or private geometry. Separate from six-stage export cases.",
+  "artifacts": [
+    {
+      "path": "auxiliary-active.sldprt",
+      "bytes": 74414,
+      "sha256": "62c567d4307988f40302793d76de21a5c6c7c29182c2e776fe182ee822379252"
+    },
+    {
+      "path": "auxiliary-suppressed.sldprt",
+      "bytes": 74912,
+      "sha256": "f8f5c650f1e6e3efe13b07f0c38319a87e14086d77f1d58b9eecddc328d20c1e"
+    },
+    {
+      "path": "byte-inspection.json",
+      "bytes": 11468,
+      "sha256": "4c590ac43edae623b231e3219d1003ab4bce734c2acb69d9da954c88b82f120b"
+    },
+    {
+      "path": "capture.json",
+      "bytes": 5284321,
+      "sha256": "be4ce178bb431798f494f16d62b5ec4618593e187b40fa5116ec832d814a1df6"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 19386,
+      "sha256": "77e7529a2e706cb68c203be40f2d6eca700f1f4592ef0303b398d1739aa86390"
+    },
+    {
+      "path": "restored.sldprt",
+      "bytes": 72753,
+      "sha256": "40c564450518c6113cb34417f2fc4220a6eee5db61dd9b1358f733774648b2fc"
+    },
+    {
+      "path": "rounded.sldprt",
+      "bytes": 72959,
+      "sha256": "9ba95111e73a11a66743e610b2ef46138ab72708ea93a9ea34a15aa0bd7b3ab9"
+    },
+    {
+      "path": "suppressed.sldprt",
+      "bytes": 58465,
+      "sha256": "630fadf530818908a8b7186ba4ab708ff8d6ef74e26cf293e1ee6b1a49c59ee6"
+    },
+    {
+      "path": "tools.json",
+      "bytes": 673151,
+      "sha256": "b6791a0f24bfd6fcc6e57bf7697ba3fd0b46748bd913e3efe7fb4439e6587d16"
+    },
+    {
+      "path": "turned.sldprt",
+      "bytes": 64814,
+      "sha256": "048d2d17c5b94ae613c88813b6e1edc67b0ddb623b5a3ed46b694fb4be9c1a71"
+    }
+  ]
+}

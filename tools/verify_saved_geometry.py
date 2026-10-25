@@ -57,6 +57,21 @@ def verify(dataset, executable):
                     raise RuntimeError("Internal feature inventory changed; review the source evidence")
             if not report["evidence"] or not report["limitations"]:
                 raise RuntimeError("Missing resolution evidence or limitations")
+            if "expected_state_evidence" in configuration:
+                evidence = report["state_evidence"]
+                for key, value in configuration["expected_state_evidence"].items():
+                    if evidence[key] != value:
+                        raise RuntimeError("Wrong saved-state evidence: " + key)
+                if evidence["baseline_payload_index"] != candidate["payload_index"]:
+                    raise RuntimeError("State evidence refers to another baseline")
+                delta = next(c for c in report["candidates"]
+                             if c["payload_index"] == evidence["delta_payload_index"])
+                if (delta["kind"] != "deltas" or not delta["decoded_complete"]
+                        or delta["body_candidates"] or delta["source"]["stream"] != candidate["source"]["stream"]
+                        or delta["source"]["container_offset"] != candidate["source"]["container_offset"]):
+                    raise RuntimeError("Delta framing/association was confused with a final body set")
+                if candidate["world_current_id"] != evidence["baseline_current_id"]:
+                    raise RuntimeError("Baseline identifier is not source evidence")
             results.append({"file": source.name, "configuration": configuration["name"],
                             "partition_index": report["partition_index"], "body_candidates": len(bodies),
                             "state_status": report["state_status"], "body_membership_status": report["body_membership_status"]})

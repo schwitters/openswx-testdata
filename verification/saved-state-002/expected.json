@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "snapshots": [
+    {
+      "file": "turned.sldprt",
+      "active_configuration": "Default",
+      "reopened_native_measurement": {
+        "body_measurements": [
+          {
+            "area": 0.0018061383362547529,
+            "body_kind": "solid",
+            "calculation": {
+              "accuracy_setting": "native_body_API_default",
+              "api": "IBody2.GetMassProperties",
+              "certified_error_bound": null,
+              "density_argument": 1.0,
+              "mass_reported": false
+            },
+            "ref": "native:7b22636f6e66696775726174696f6e223a2244656661756c74222c22646f63756d656e74223a22646f632d3133222c226672616d65223a22646f63756d656e74222c226b696e64223a22626f6479222c226c656e6774685f756e6974223a226d65747265222c226e61746976655f7570646174655f7374616d70223a3130342c2270657273697374656e74223a22353034363030303030343030303030306666666566663030303030303030303030313030303030303635303030303030222c227265666572656e63655f73636f7065223a22646f63756d656e745f7265766973696f6e5f636f6e66696775726174696f6e5f7570646174655f7374616d70222c227265766973696f6e223a307d",
+            "sheet_perimeter": null,
+            "topology_counts": {
+              "bodies": 1,
+              "edges": 3,
+              "faces": 4,
+              "loops": 6,
+              "shell_provenance": "connected_native_face_edge_incidence",
+              "shells": 1,
+              "vertices": 0
+            },
+            "volume": 6.165899181445568e-06,
+            "wire_length": null
+          }
+        ],
+        "configuration": "Default",
+        "document": "doc-13",
+        "frame": "document",
+        "geometry_totals": {
+          "aggregation": "sum_of_selected_bodies; overlapping bodies counted independently",
+          "sheet_area": 0.0,
+          "solid_volume": 6.165899181445568e-06,
+          "surface_area": 0.0018061383362547529,
+          "units": {
+            "area": "square_metre",
+            "length": "metre",
+            "volume": "cubic_metre"
+          },
+          "wire_length": 0.0
+        },
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "mass_properties": {
+          "area": 0.0018061383362547529,
+          "calculation": {
+            "api": "IMassProperty2.Recalculate",
+            "certified_error_bound": null,
+            "hidden_bodies": "included",
+            "native_accuracy_level": 0,
+            "units": "SI"
+          },
+          "center_of_mass": [
+            8.585861955495408e-20,
+            0.009822690217391303,
+            3.795491177893377e-19
+          ],
+          "mass": 0.006165899181445569,
+          "status": 0,
+          "volume": 6.165899181445569e-06
+        },
+        "native_update_stamp": 104,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 1,
+          "edges": 3,
+          "faces": 4,
+          "loops": 6,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 1,
+          "vertices": 0
+        }
+      },
+      "configurations": [
+        {
+          "name": "Default",
+          "partition_index": 0,
+          "resolved_features_index": 0,
+          "native_body_kinds": [
+            "solid"
+          ],
+          "expected_candidate_kinds": [
+            "solid"
+          ],
+          "expected_internal_candidate_kinds": [],
+          "expected_state_evidence": {
+            "baseline_current_id": 5,
+            "target_identifier": 5,
+            "relation": "matching_identifiers",
+            "history_path_status": "resolved",
+            "mark_path": [
+              112
+            ]
+          },
+          "native_body_inventory": [
+            {
+              "kind": "body",
+              "body_kind": "solid"
+            }
+          ],
+          "native_brep_capture_label": "reopened-brep-turned"
+        }
+      ]
+    },
+    {
+      "file": "rounded.sldprt",
+      "active_configuration": "Default",
+      "reopened_native_measurement": {
+        "body_measurements": [
+          {
+            "area": 0.0017787258476817346,
+            "body_kind": "solid",
+            "calculation": {
+              "accuracy_setting": "native_body_API_default",
+              "api": "IBody2.GetMassProperties",
+              "certified_error_bound": null,
+              "density_argument": 1.0,
+              "mass_reported": false
+            },
+            "ref": "native:7b22636f6e66696775726174696f6e223a2244656661756c74222c22646f63756d656e74223a22646f632d3134222c226672616d65223a22646f63756d656e74222c226b696e64223a22626f6479222c226c656e6774685f756e6974223a226d65747265222c226e61746976655f7570646174655f7374616d70223a3130362c2270657273697374656e74223a22353034363030303030343030303030306666666566663030303030303030303030313030303030303635303030303030222c227265666572656e63655f73636f7065223a22646f63756d656e745f7265766973696f6e5f636f6e66696775726174696f6e5f7570646174655f7374616d70222c227265766973696f6e223a307d",
+            "sheet_perimeter": null,
+            "topology_counts": {
+              "bodies": 1,
+              "edges": 4,
+              "faces": 5,
+              "loops": 8,
+              "shell_provenance": "connected_native_face_edge_incidence",
+              "shells": 1,
+              "vertices": 0
+            },
+            "volume": 6.152716535934658e-06,
+            "wire_length": null
+          }
+        ],
+        "configuration": "Default",
+        "document": "doc-14",
+        "frame": "document",
+        "geometry_totals": {
+          "aggregation": "sum_of_selected_bodies; overlapping bodies counted independently",
+          "sheet_area": 0.0,
+          "solid_volume": 6.152716535934658e-06,
+          "surface_area": 0.0017787258476817346,
+          "units": {
+            "area": "square_metre",
+            "length": "metre",
+            "volume": "cubic_metre"
+          },
+          "wire_length": 0.0
+        },
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "mass_properties": {
+          "area": 0.0017787258476817346,
+          "calculation": {
+            "api": "IMassProperty2.Recalculate",
+            "certified_error_bound": null,
+            "hidden_bodies": "included",
+            "native_accuracy_level": 0,
+            "units": "SI"
+          },
+          "center_of_mass": [
+            8.604257793155711e-20,
+            0.009843252935171931,
+            2.1645036491638779e-19
+          ],
+          "mass": 0.006152716535934658,
+          "status": 0,
+          "volume": 6.152716535934658e-06
+        },
+        "native_update_stamp": 106,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 1,
+          "edges": 4,
+          "faces": 5,
+          "loops": 8,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 1,
+          "vertices": 0
+        }
+      },
+      "configurations": [
+        {
+          "name": "Default",
+          "partition_index": 0,
+          "resolved_features_index": 0,
+          "native_body_kinds": [
+            "solid"
+          ],
+          "expected_candidate_kinds": [
+            "solid"
+          ],
+          "expected_internal_candidate_kinds": [],
+          "expected_state_evidence": {
+            "baseline_current_id": 9,
+            "target_identifier": 9,
+            "relation": "matching_identifiers",
+            "history_path_status": "resolved",
+            "mark_path": [
+              127
+            ]
+          },
+          "native_body_inventory": [
+            {
+              "kind": "body",
+              "body_kind": "solid"
+            }
+          ],
+          "native_brep_capture_label": "reopened-brep-rounded"
+        }
+      ]
+    },
+    {
+      "file": "suppressed.sldprt",
+      "active_configuration": "Default",
+      "reopened_native_measurement": {
+        "body_measurements": [
+          {
+            "area": 0.0018061383362547529,
+            "body_kind": "solid",
+            "calculation": {
+              "accuracy_setting": "native_body_API_default",
+              "api": "IBody2.GetMassProperties",
+              "certified_error_bound": null,
+              "density_argument": 1.0,
+              "mass_reported": false
+            },
+            "ref": "native:7b22636f6e66696775726174696f6e223a2244656661756c74222c22646f63756d656e74223a22646f632d3135222c226672616d65223a22646f63756d656e74222c226b696e64223a22626f6479222c226c656e6774685f756e6974223a226d65747265222c226e61746976655f7570646174655f7374616d70223a3130372c2270657273697374656e74223a22353034363030303030343030303030306666666566663030303030303030303030313030303030303635303030303030222c227265666572656e63655f73636f7065223a22646f63756d656e745f7265766973696f6e5f636f6e66696775726174696f6e5f7570646174655f7374616d70222c227265766973696f6e223a307d",
+            "sheet_perimeter": null,
+            "topology_counts": {
+              "bodies": 1,
+              "edges": 3,
+              "faces": 4,
+              "loops": 6,
+              "shell_provenance": "connected_native_face_edge_incidence",
+              "shells": 1,
+              "vertices": 0
+            },
+            "volume": 6.165899181445569e-06,
+            "wire_length": null
+          }
+        ],
+        "configuration": "Default",
+        "document": "doc-15",
+        "frame": "document",
+        "geometry_totals": {
+          "aggregation": "sum_of_selected_bodies; overlapping bodies counted independently",
+          "sheet_area": 0.0,
+          "solid_volume": 6.165899181445569e-06,
+          "surface_area": 0.0018061383362547529,
+          "units": {
+            "area": "square_metre",
+            "length": "metre",
+            "volume": "cubic_metre"
+          },
+          "wire_length": 0.0
+        },
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "mass_properties": {
+          "area": 0.0018061383362547529,
+          "calculation": {
+            "api": "IMassProperty2.Recalculate",
+            "certified_error_bound": null,
+            "hidden_bodies": "included",
+            "native_accuracy_level": 0,
+            "units": "SI"
+          },
+          "center_of_mass": [
+            8.585861955495408e-20,
+            0.009822690217391303,
+            3.795491177893377e-19
+          ],
+          "mass": 0.006165899181445569,
+          "status": 0,
+          "volume": 6.165899181445569e-06
+        },
+        "native_update_stamp": 107,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 1,
+          "edges": 3,
+          "faces": 4,
+          "loops": 6,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 1,
+          "vertices": 0
+        }
+      },
+      "configurations": [
+        {
+          "name": "Default",
+          "partition_index": 0,
+          "resolved_features_index": 0,
+          "native_body_kinds": [
+            "solid"
+          ],
+          "expected_candidate_kinds": [
+            "solid"
+          ],
+          "expected_internal_candidate_kinds": [],
+          "expected_state_evidence": {
+            "baseline_current_id": 5,
+            "target_identifier": 5,
+            "relation": "matching_identifiers",
+            "history_path_status": "resolved",
+            "mark_path": [
+              112
+            ]
+          },
+          "native_body_inventory": [
+            {
+              "kind": "body",
+              "body_kind": "solid"
+            }
+          ],
+          "native_brep_capture_label": "reopened-brep-suppressed"
+        }
+      ]
+    },
+    {
+      "file": "restored.sldprt",
+      "active_configuration": "Default",
+      "reopened_native_measurement": {
+        "body_measurements": [
+          {
+            "area": 0.0017787258476817346,
+            "body_kind": "solid",
+            "calculation": {
+              "accuracy_setting": "native_body_API_default",
+              "api": "IBody2.GetMassProperties",
+              "certified_error_bound": null,
+              "density_argument": 1.0,
+              "mass_reported": false
+            },
+            "ref": "native:7b22636f6e66696775726174696f6e223a2244656661756c74222c22646f63756d656e74223a22646f632d3136222c226672616d65223a22646f63756d656e74222c226b696e64223a22626f6479222c226c656e6774685f756e6974223a226d65747265222c226e61746976655f7570646174655f7374616d70223a3130392c2270657273697374656e74223a22353034363030303030343030303030306666666566663030303030303030303030313030303030303635303030303030222c227265666572656e63655f73636f7065223a22646f63756d656e745f7265766973696f6e5f636f6e66696775726174696f6e5f7570646174655f7374616d70222c227265766973696f6e223a307d",
+            "sheet_perimeter": null,
+            "topology_counts": {
+              "bodies": 1,
+              "edges": 4,
+              "faces": 5,
+              "loops": 8,
+              "shell_provenance": "connected_native_face_edge_incidence",
+              "shells": 1,
+              "vertices": 0
+            },
+            "volume": 6.152716535934658e-06,
+            "wire_length": null
+          }
+        ],
+        "configuration": "Default",
+        "document": "doc-16",
+        "frame": "document",
+        "geometry_totals": {
+          "aggregation": "sum_of_selected_bodies; overlapping bodies counted independently",
+          "sheet_area": 0.0,
+          "solid_volume": 6.152716535934658e-06,
+          "surface_area": 0.0017787258476817346,
+          "units": {
+            "area": "square_metre",
+            "length": "metre",
+            "volume": "cubic_metre"
+          },
+          "wire_length": 0.0
+        },
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "mass_properties": {
+          "area": 0.0017787258476817346,
+          "calculation": {
+            "api": "IMassProperty2.Recalculate",
+            "certified_error_bound": null,
+            "hidden_bodies": "included",
+            "native_accuracy_level": 0,
+            "units": "SI"
+          },
+          "center_of_mass": [
+            8.604257793155711e-20,
+            0.009843252935171931,
+            2.1645036491638779e-19
+          ],
+          "mass": 0.006152716535934658,
+          "status": 0,
+          "volume": 6.152716535934658e-06
+        },
+        "native_update_stamp": 109,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 1,
+          "edges": 4,
+          "faces": 5,
+          "loops": 8,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 1,
+          "vertices": 0
+        }
+      },
+      "configurations": [
+        {
+          "name": "Default",
+          "partition_index": 0,
+          "resolved_features_index": 0,
+          "native_body_kinds": [
+            "solid"
+          ],
+          "expected_candidate_kinds": [
+            "solid"
+          ],
+          "expected_internal_candidate_kinds": [],
+          "expected_state_evidence": {
+            "baseline_current_id": 13,
+            "target_identifier": 13,
+            "relation": "matching_identifiers",
+            "history_path_status": "resolved",
+            "mark_path": [
+              127
+            ]
+          },
+          "native_body_inventory": [
+            {
+              "kind": "body",
+              "body_kind": "solid"
+            }
+          ],
+          "native_brep_capture_label": "reopened-brep-restored"
+        }
+      ]
+    },
+    {
+      "file": "auxiliary-active.sldprt",
+      "active_configuration": "Default",
+      "reopened_native_measurement": {
+        "configuration": "Default",
+        "document": "doc-18",
+        "frame": "document",
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "native_update_stamp": 110,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 2,
+          "edges": 8,
+          "faces": 6,
+          "loops": 9,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 2,
+          "vertices": 4
+        }
+      },
+      "configurations": [
+        {
+          "name": "Default",
+          "partition_index": 0,
+          "resolved_features_index": 0,
+          "native_body_kinds": [
+            "sheet",
+            "solid"
+          ],
+          "expected_candidate_kinds": [
+            "solid"
+          ],
+          "expected_internal_candidate_kinds": [
+            "sheet"
+          ],
+          "expected_state_evidence": {
+            "baseline_current_id": 13,
+            "target_identifier": 13,
+            "relation": "matching_identifiers",
+            "history_path_status": "resolved",
+            "mark_path": [
+              126
+            ]
+          },
+          "native_body_inventory": [
+            {
+              "kind": "body",
+              "body_kind": "solid"
+            },
+            {
+              "kind": "body",
+              "body_kind": "sheet"
+            }
+          ],
+          "native_brep_capture_label": "reopened-brep-auxiliary-active"
+        }
+      ]
+    },
+    {
+      "file": "auxiliary-suppressed.sldprt",
+      "active_configuration": "Default",
+      "reopened_native_measurement": {
+        "configuration": "Default",
+        "document": "doc-19",
+        "frame": "document",
+        "hidden_bodies": "included",
+        "length_unit": "metre",
+        "native_update_stamp": 111,
+        "reference_scope": "document_revision_configuration_update_stamp",
+        "revision": 0,
+        "selection_scope": "whole_document",
+        "topology_counts": {
+          "bodies": 1,
+          "edges": 4,
+          "faces": 5,
+          "loops": 8,
+          "shell_provenance": "connected_native_face_edge_incidence",
+          "shells": 1,
+          "vertices": 0
+        }
+      },
+      "configurations": [
+        {
+          "name": "Default",
+          "partition_index": 0,
+          "resolved_features_index": 0,
+          "native_body_kinds": [
+            "solid"
+          ],
+          "expected_candidate_kinds": [
+            "solid"
+          ],
+          "expected_internal_candidate_kinds": [
+            "sheet"
+          ],
+          "expected_state_evidence": {
+            "baseline_current_id": 13,
+            "target_identifier": 13,
+            "relation": "matching_identifiers",
+            "history_path_status": "resolved",
+            "mark_path": [
+              126
+            ]
+          },
+          "native_body_inventory": [
+            {
+              "kind": "body",
+              "body_kind": "solid"
+            }
+          ],
+          "native_brep_capture_label": "reopened-brep-auxiliary-suppressed"
+        }
+      ]
+    }
+  ],
+  "expected_state_status": "unsupported",
+  "expected_body_membership_status": "unresolved",
+  "assertion_scope": "Native save/reopen body sets are independent of reviewed raw identifier/path expectations. Matching identifiers do not certify final membership."
+}

@@ -1,0 +1,409 @@
+{
+  "method": "Independent parasolid_inspect --nodes reports on extracted original synthetic payloads; this is byte evidence, not native final-body truth.",
+  "snapshots": [
+    {
+      "file": "turned.sldprt",
+      "payloads": [
+        {
+          "index": 0,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 8979,
+          "marker_offset": 4,
+          "decoded_complete": true,
+          "world_current_id": 5,
+          "bodies": [
+            {
+              "body_id": 2,
+              "raw_body_type": 1
+            }
+          ],
+          "delta_prefix": null,
+          "diagnostics": [],
+          "historical_mark_count": 0,
+          "delta_node_count": 0
+        },
+        {
+          "index": 1,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 8979,
+          "marker_offset": 2135,
+          "decoded_complete": true,
+          "world_current_id": null,
+          "bodies": [],
+          "delta_prefix": {
+            "current_mark": {
+              "delta_is_forward": false,
+              "delta_key": 3,
+              "first_following": 0,
+              "identifier": 5,
+              "index": 112,
+              "n_copy_mod_nodes": 0,
+              "n_del_nodes": 0,
+              "n_new_nodes": 95,
+              "next_sibling": 0,
+              "offset": 110,
+              "preceding": 113,
+              "prev_sibling": 0
+            },
+            "offset": 99,
+            "partition": {
+              "current_pmark": 112,
+              "highest_id": 5,
+              "index": 111,
+              "offset": 99
+            },
+            "size": 45
+          },
+          "diagnostics": [],
+          "historical_mark_count": 2,
+          "delta_node_count": 2
+        }
+      ]
+    },
+    {
+      "file": "rounded.sldprt",
+      "payloads": [
+        {
+          "index": 0,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 9884,
+          "marker_offset": 4,
+          "decoded_complete": true,
+          "world_current_id": 9,
+          "bodies": [
+            {
+              "body_id": 2,
+              "raw_body_type": 1
+            }
+          ],
+          "delta_prefix": null,
+          "diagnostics": [],
+          "historical_mark_count": 0,
+          "delta_node_count": 0
+        },
+        {
+          "index": 1,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 9884,
+          "marker_offset": 2404,
+          "decoded_complete": true,
+          "world_current_id": null,
+          "bodies": [],
+          "delta_prefix": {
+            "current_mark": {
+              "delta_is_forward": false,
+              "delta_key": 4,
+              "first_following": 0,
+              "identifier": 9,
+              "index": 127,
+              "n_copy_mod_nodes": 11,
+              "n_del_nodes": 17,
+              "n_new_nodes": 34,
+              "next_sibling": 0,
+              "offset": 110,
+              "preceding": 128,
+              "prev_sibling": 0
+            },
+            "offset": 99,
+            "partition": {
+              "current_pmark": 127,
+              "highest_id": 9,
+              "index": 126,
+              "offset": 99
+            },
+            "size": 45
+          },
+          "diagnostics": [],
+          "historical_mark_count": 3,
+          "delta_node_count": 59
+        }
+      ]
+    },
+    {
+      "file": "suppressed.sldprt",
+      "payloads": [
+        {
+          "index": 0,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 9173,
+          "marker_offset": 4,
+          "decoded_complete": true,
+          "world_current_id": 5,
+          "bodies": [
+            {
+              "body_id": 2,
+              "raw_body_type": 1
+            }
+          ],
+          "delta_prefix": null,
+          "diagnostics": [],
+          "historical_mark_count": 0,
+          "delta_node_count": 0
+        },
+        {
+          "index": 1,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 9173,
+          "marker_offset": 2136,
+          "decoded_complete": true,
+          "world_current_id": null,
+          "bodies": [],
+          "delta_prefix": {
+            "current_mark": {
+              "delta_is_forward": false,
+              "delta_key": 1,
+              "first_following": 0,
+              "identifier": 5,
+              "index": 112,
+              "n_copy_mod_nodes": 0,
+              "n_del_nodes": 0,
+              "n_new_nodes": 95,
+              "next_sibling": 0,
+              "offset": 110,
+              "preceding": 113,
+              "prev_sibling": 0
+            },
+            "offset": 99,
+            "partition": {
+              "current_pmark": 112,
+              "highest_id": 9,
+              "index": 111,
+              "offset": 99
+            },
+            "size": 45
+          },
+          "diagnostics": [],
+          "historical_mark_count": 2,
+          "delta_node_count": 2
+        }
+      ]
+    },
+    {
+      "file": "restored.sldprt",
+      "payloads": [
+        {
+          "index": 0,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 9792,
+          "marker_offset": 4,
+          "decoded_complete": true,
+          "world_current_id": 13,
+          "bodies": [
+            {
+              "body_id": 2,
+              "raw_body_type": 1
+            }
+          ],
+          "delta_prefix": null,
+          "diagnostics": [],
+          "historical_mark_count": 0,
+          "delta_node_count": 0
+        },
+        {
+          "index": 1,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 9792,
+          "marker_offset": 2407,
+          "decoded_complete": true,
+          "world_current_id": null,
+          "bodies": [],
+          "delta_prefix": {
+            "current_mark": {
+              "delta_is_forward": false,
+              "delta_key": 4,
+              "first_following": 0,
+              "identifier": 13,
+              "index": 127,
+              "n_copy_mod_nodes": 11,
+              "n_del_nodes": 17,
+              "n_new_nodes": 34,
+              "next_sibling": 0,
+              "offset": 110,
+              "preceding": 128,
+              "prev_sibling": 0
+            },
+            "offset": 99,
+            "partition": {
+              "current_pmark": 127,
+              "highest_id": 13,
+              "index": 126,
+              "offset": 99
+            },
+            "size": 45
+          },
+          "diagnostics": [],
+          "historical_mark_count": 3,
+          "delta_node_count": 59
+        }
+      ]
+    },
+    {
+      "file": "auxiliary-active.sldprt",
+      "payloads": [
+        {
+          "index": 0,
+          "kind": "transmit",
+          "source_stream": "Config-0-FeatureBodies/LocalBodies",
+          "container_marker_offset": 885,
+          "marker_offset": 68,
+          "decoded_complete": true,
+          "world_current_id": null,
+          "bodies": [
+            {
+              "body_id": 1,
+              "raw_body_type": 3
+            }
+          ],
+          "delta_prefix": null,
+          "diagnostics": [],
+          "historical_mark_count": 0,
+          "delta_node_count": 0
+        },
+        {
+          "index": 1,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 12091,
+          "marker_offset": 4,
+          "decoded_complete": true,
+          "world_current_id": 13,
+          "bodies": [
+            {
+              "body_id": 2,
+              "raw_body_type": 1
+            }
+          ],
+          "delta_prefix": null,
+          "diagnostics": [],
+          "historical_mark_count": 0,
+          "delta_node_count": 0
+        },
+        {
+          "index": 2,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 12091,
+          "marker_offset": 2394,
+          "decoded_complete": true,
+          "world_current_id": null,
+          "bodies": [],
+          "delta_prefix": {
+            "current_mark": {
+              "delta_is_forward": false,
+              "delta_key": 1,
+              "first_following": 0,
+              "identifier": 13,
+              "index": 126,
+              "n_copy_mod_nodes": 11,
+              "n_del_nodes": 15,
+              "n_new_nodes": 43,
+              "next_sibling": 0,
+              "offset": 110,
+              "preceding": 127,
+              "prev_sibling": 0
+            },
+            "offset": 99,
+            "partition": {
+              "current_pmark": 126,
+              "highest_id": 14,
+              "index": 125,
+              "offset": 99
+            },
+            "size": 45
+          },
+          "diagnostics": [],
+          "historical_mark_count": 3,
+          "delta_node_count": 64
+        }
+      ]
+    },
+    {
+      "file": "auxiliary-suppressed.sldprt",
+      "payloads": [
+        {
+          "index": 0,
+          "kind": "transmit",
+          "source_stream": "Config-0-FeatureBodies/LocalBodies",
+          "container_marker_offset": 492,
+          "marker_offset": 68,
+          "decoded_complete": true,
+          "world_current_id": null,
+          "bodies": [
+            {
+              "body_id": 1,
+              "raw_body_type": 3
+            }
+          ],
+          "delta_prefix": null,
+          "diagnostics": [],
+          "historical_mark_count": 0,
+          "delta_node_count": 0
+        },
+        {
+          "index": 1,
+          "kind": "partition",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 11195,
+          "marker_offset": 4,
+          "decoded_complete": true,
+          "world_current_id": 13,
+          "bodies": [
+            {
+              "body_id": 2,
+              "raw_body_type": 1
+            }
+          ],
+          "delta_prefix": null,
+          "diagnostics": [],
+          "historical_mark_count": 0,
+          "delta_node_count": 0
+        },
+        {
+          "index": 2,
+          "kind": "deltas",
+          "source_stream": "Contents/Config-0-Partition",
+          "container_marker_offset": 11195,
+          "marker_offset": 2392,
+          "decoded_complete": true,
+          "world_current_id": null,
+          "bodies": [],
+          "delta_prefix": {
+            "current_mark": {
+              "delta_is_forward": false,
+              "delta_key": 2,
+              "first_following": 0,
+              "identifier": 13,
+              "index": 126,
+              "n_copy_mod_nodes": 11,
+              "n_del_nodes": 15,
+              "n_new_nodes": 43,
+              "next_sibling": 0,
+              "offset": 110,
+              "preceding": 127,
+              "prev_sibling": 0
+            },
+            "offset": 99,
+            "partition": {
+              "current_pmark": 126,
+              "highest_id": 14,
+              "index": 125,
+              "offset": 99
+            },
+            "size": 45
+          },
+          "diagnostics": [],
+          "historical_mark_count": 3,
+          "delta_node_count": 64
+        }
+      ]
+    }
+  ]
+}
