@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "payload_index": 0,
+  "body": 2,
+  "configuration": "Default",
+  "source_units": "metre",
+  "binding_tolerance": 1e-08,
+  "intersection": {
+    "chart_tolerance": 1e-07,
+    "solve_tolerance": 1e-11
+  },
+  "body_geometry_counts": {
+    "edges": 9,
+    "face_uses": 10,
+    "faces": 5,
+    "fins": 18,
+    "loops": 5,
+    "regions": 2,
+    "shells": 2,
+    "vertices": 6,
+    "wire_edges": 0
+  },
+  "step_statistics": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "shells": 1,
+    "solids": 1
+  },
+  "step_counts": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "solids": 1
+  },
+  "oracle": {
+    "volume_mm3": 761.0124313550398,
+    "area_mm2": 513.7784286656572
+  },
+  "baseline": {
+    "code_commit": "b3dbf31",
+    "error": {
+      "error_code": "unsupported_format",
+      "offset": 0,
+      "message": "Swept plane recovery requires one open clamped polynomial quadratic/cubic span"
+    },
+    "output_created": false
+  }
+}

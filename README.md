@@ -243,3 +243,11 @@ verify the complete body. Native STEP approximation error is recorded
 separately and never becomes an increased library tolerance. Run
 `tests/test_slanted_sweep.py` with the existing build/exporter environment
 variables for live extraction, binding and export checks.
+
+The original [rational graph strip](verification/rational-strip-001/README.md)
+adds a weighted cubic oblique cut with direct plane/SWEPT_SURF intersection.
+The complete export preserves source 3D weights and writes explicit rational
+UV curves. Independent rational recipe integrals verify whole-body measures;
+native STEP approximation and kernel area integration sensitivity are recorded
+separately. Run `tests/test_rational_strip.py` with the existing build/exporter
+environment variables for live verification.

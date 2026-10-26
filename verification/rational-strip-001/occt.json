@@ -1,0 +1,31 @@
+{
+  "oracle": {
+    "volume_mm3": 761.0124313550398,
+    "area_mm2": 513.7784286656572
+  },
+  "native_counts": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "solids": 1
+  },
+  "native_volume_mm3": 761.0124942219118,
+  "export_counts": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "solids": 1
+  },
+  "export_volume_mm3": 761.0124312518985,
+  "native_area_mm2_at_1e14": 513.778428299988,
+  "native_area_mm2_default_1e12": 513.7784263973334,
+  "native_maximum_sampled_coherence_mm": 0.0007431734264861077,
+  "export_area_mm2_at_1e14": 513.7784290822583,
+  "export_area_mm2_default_1e12": 513.7784271796063,
+  "export_maximum_sampled_coherence_mm": 9.768226637074436e-15,
+  "without_explicit_pcurve_observation": {
+    "scope": "local development diagnostic before UV serialization",
+    "maximum_sampled_coherence_mm": 6.811501796377684e-05,
+    "volume_mm3": 761.0125100535175
+  }
+}

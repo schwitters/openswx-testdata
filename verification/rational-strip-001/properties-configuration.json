@@ -1,0 +1,27 @@
+{
+  "id": "f7a952a62ab842baa900bf91b5e80bae",
+  "jsonrpc": "2.0",
+  "result": {
+    "content": [
+      {
+        "text": "{\"id\":\"f7a952a62ab842baa900bf91b5e80bae\",\"jsonrpc\":\"2.0\",\"result\":{\"configuration\":\"Default\",\"document\":\"doc-1\",\"properties\":[],\"revision\":6,\"scope\":{\"configuration\":\"Default\",\"kind\":\"configuration\"}}}",
+        "type": "text"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "id": "f7a952a62ab842baa900bf91b5e80bae",
+      "jsonrpc": "2.0",
+      "result": {
+        "configuration": "Default",
+        "document": "doc-1",
+        "properties": [],
+        "revision": 6,
+        "scope": {
+          "configuration": "Default",
+          "kind": "configuration"
+        }
+      }
+    }
+  }
+}

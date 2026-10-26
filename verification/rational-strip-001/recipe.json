@@ -1,0 +1,158 @@
+{
+  "origin": "original_synthetic",
+  "license": "MIT",
+  "profile": {
+    "id": "profile:rational",
+    "support": {
+      "kind": "reference",
+      "ref": "plane:profile"
+    },
+    "entities": [
+      {
+        "id": "rational",
+        "type": "bspline",
+        "degree": 3,
+        "knots": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "control_points": [
+          [
+            0,
+            0
+          ],
+          [
+            0.004,
+            0
+          ],
+          [
+            0.008,
+            0
+          ],
+          [
+            0.012,
+            0.009
+          ]
+        ],
+        "weights": [
+          1,
+          0.75,
+          1.25,
+          1
+        ],
+        "knot_convention": "expanded"
+      },
+      {
+        "id": "top",
+        "type": "line",
+        "start": [
+          0.012,
+          0.009
+        ],
+        "end": [
+          0,
+          0.009
+        ]
+      },
+      {
+        "id": "left",
+        "type": "line",
+        "start": [
+          0,
+          0.009
+        ],
+        "end": [
+          0,
+          0
+        ]
+      }
+    ],
+    "constraints": [],
+    "dimensions": []
+  },
+  "cut_plane": {
+    "id": "plane:cut",
+    "origin": [
+      0,
+      0.02,
+      0
+    ],
+    "normal": [
+      0,
+      -1,
+      0
+    ],
+    "x_axis": [
+      1,
+      0,
+      0
+    ]
+  },
+  "cut": {
+    "id": "profile:cut",
+    "support": {
+      "kind": "reference",
+      "ref": "plane:cut"
+    },
+    "entities": [
+      {
+        "id": "side-0",
+        "type": "line",
+        "start": [
+          -0.002,
+          0.0075
+        ],
+        "end": [
+          0.014,
+          0.0115
+        ]
+      },
+      {
+        "id": "side-1",
+        "type": "line",
+        "start": [
+          0.014,
+          0.0115
+        ],
+        "end": [
+          0.014,
+          0.02
+        ]
+      },
+      {
+        "id": "side-2",
+        "type": "line",
+        "start": [
+          0.014,
+          0.02
+        ],
+        "end": [
+          -0.002,
+          0.02
+        ]
+      },
+      {
+        "id": "side-3",
+        "type": "line",
+        "start": [
+          -0.002,
+          0.02
+        ],
+        "end": [
+          -0.002,
+          0.0075
+        ]
+      }
+    ],
+    "constraints": [],
+    "dimensions": []
+  },
+  "extrusion_metres": 0.014,
+  "final_upper_plane": "z = 0.008 + 0.25*x (metres)"
+}

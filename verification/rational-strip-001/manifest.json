@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "origin": "original_synthetic",
+  "license": "MIT",
+  "kind": "rational_swept_plane_strip_and_uv_verification",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "bytes": 3391,
+      "sha256": "a2c8a691da1914bd134ec309188ffa72d40181f8b8cf1d3c6ab1602af7fd2a8b"
+    },
+    {
+      "path": "brep.json",
+      "bytes": 1113023,
+      "sha256": "35a9d8a60e1e28b2aa5593fe30f44c93b5ec79c2c4ebda2c632adca2b34192f9"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 977,
+      "sha256": "48a9316078fb2aa946b204688229cf327fbe8e3fafff3764ccd75575f1db45fa"
+    },
+    {
+      "path": "journal.json",
+      "bytes": 1173249,
+      "sha256": "d2ffb7e958512f7d837185cb272aee69c12fb6599ffe04588b50936bb06e939c"
+    },
+    {
+      "path": "occt.json",
+      "bytes": 904,
+      "sha256": "3093eaa1da80b4df55315401ef53f1cfa6ccea92ef7ff5344c4dc6ed227adbcf"
+    },
+    {
+      "path": "properties-configuration.json",
+      "bytes": 769,
+      "sha256": "a2123fb26465f519ad99a63a053c4bb1668a8b8e606cb0c39ef4170f7b56f0da"
+    },
+    {
+      "path": "properties-document.json",
+      "bytes": 691,
+      "sha256": "770440f080a3766566b1aadfd081539ff0c3ffed411ee8ae98341b56839493d5"
+    },
+    {
+      "path": "receipts.json",
+      "bytes": 4377,
+      "sha256": "3e591a32667a5b40e302857e78f9886e9bb86a537dcd6ecd8c92898aec003d42"
+    },
+    {
+      "path": "recipe.json",
+      "bytes": 2450,
+      "sha256": "927375c49eb9947f8e0125f879bb96b033c812662b1decdc3a6986eab32b9b78"
+    },
+    {
+      "path": "strip.sldprt",
+      "bytes": 63453,
+      "sha256": "2e4408a038a79cebaa8bdec72b25881b4d0c05ba7b8adcc0be57b91a88418536"
+    },
+    {
+      "path": "strip.step",
+      "bytes": 15554,
+      "sha256": "3e0dfc2a40d20b7e3b9f41110afac865425acd687e8016ef66da4db7200914cc"
+    },
+    {
+      "path": "strip.x_b",
+      "bytes": 7162,
+      "sha256": "b128910036e81ee3a14a4ba1449753f9dbbae93db566bc9ce121b1a9eebc903c"
+    },
+    {
+      "path": "strip.x_t",
+      "bytes": 8315,
+      "sha256": "8f88775d4c665f223248d6354ca348ac4912ce7c759a444c86fa8fdddd2a815b"
+    }
+  ]
+}
