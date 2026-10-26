@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "origin": "original_synthetic",
+  "license": "MIT",
+  "kind": "rational_sweep_step_verification",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "bytes": 2171,
+      "sha256": "1d5ddbd59b8a818ae9c64cab9ec5aa1c677ee9e13d820f67693e445e053c1f15"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 844,
+      "sha256": "86eb5ee847be8687404ba6495a9ec7170e0fd7296a6fd0bfa00c60d73be81ba3"
+    },
+    {
+      "path": "occt.json",
+      "bytes": 407,
+      "sha256": "f22712f370f8ea1a6045ac80c899fd84706eea820fa13ce1ad61b945960ed599"
+    }
+  ]
+}

@@ -103,6 +103,18 @@ class NativeRationalTrimTest(unittest.TestCase):
         self.assertEqual(opened, closed)
         self.assertEqual(properties, 2)
 
+    def test_current_export_contract_keeps_original_native_artifacts(self):
+        current = ROOT/'verification/rational-sweep-001'
+        manifest = json.loads((current/'manifest.json').read_text())
+        for artifact in manifest['artifacts']:
+            data=(current/artifact['path']).read_bytes()
+            self.assertEqual(len(data),artifact['bytes'])
+            self.assertEqual(hashlib.sha256(data).hexdigest(),artifact['sha256'])
+        expected=json.loads((current/'expected.json').read_text())
+        self.assertTrue(expected['step_supported'])
+        self.assertEqual(hashlib.sha256((DATA/'rational.sldprt').read_bytes()).hexdigest(),expected['source_sha256'])
+        self.assertEqual(hashlib.sha256((DATA/'rational.step').read_bytes()).hexdigest(),expected['native_reference_sha256'])
+
     def check_binding(self, report):
         self.assertTrue(report['complete'])
         self.assertTrue(report['model']['typed_geometry_complete'])
@@ -168,7 +180,7 @@ class NativeRationalTrimTest(unittest.TestCase):
 
     @unittest.skipUnless(os.environ.get('OPENSWX_CORPUS_BUILD') and
                          os.environ.get('OPENSWX_CORPUS_EXPORTER'), 'library drivers not configured')
-    def test_live_complete_binding_and_explicit_remaining_step_boundary(self):
+    def test_live_complete_binding_and_rational_sweep_export(self):
         build = Path(os.environ['OPENSWX_CORPUS_BUILD']).absolute()
         exporter = str(Path(os.environ['OPENSWX_CORPUS_EXPORTER']).absolute())
         with tempfile.TemporaryDirectory() as directory:
@@ -185,9 +197,19 @@ class NativeRationalTrimTest(unittest.TestCase):
             target = Path(directory)/'output.step'
             run = subprocess.run([exporter,str(DATA/'rational.sldprt'),'0','2',str(target)],
                                  capture_output=True,text=True)
-            self.assertEqual(run.returncode,2)
-            self.assertIn(load('expected')['remaining_step_error'],json.loads(run.stdout)['message'])
-            self.assertFalse(target.exists())
+            self.assertEqual(run.returncode,0,run.stdout+run.stderr)
+            current = json.loads((ROOT/'verification/rational-sweep-001/expected.json').read_text())
+            self.assertEqual(json.loads(run.stdout), current['step_statistics'])
+            self.assertIn('RATIONAL_B_SPLINE_SURFACE', target.read_text())
+            if HAVE_OCP:
+                from step_check import compare_solids
+                native, _ = read_step(DATA/'rational.step')
+                exported, counts = read_step(target)
+                self.assertEqual(counts,current['step_counts'])
+                self.assertEqual(compare_solids(native,exported),[0,0])
+                volume,area = analytic_measures()
+                self.assertLess(abs(measure(exported,True)-volume),1e-6)
+                self.assertLess(abs(measure(exported,False)-area),1e-6)
 
 
 if __name__ == '__main__':

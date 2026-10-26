@@ -208,6 +208,12 @@ recorded native sphere STEP integration residual and optional live drivers.
 The original [rational trim coupon](verification/rational-trim-001/README.md)
 adds a native partial rational cubic profile and independent rational geometry
 oracles. Its complete body now binds automatically with unchanged homogeneous
-controls and knot units. Tests deliberately retain the unsupported whole-body
-STEP boundary at rational sweep export; this fixture is not a spring export
-success claim.
+controls and knot units. The frozen capture records the earlier unsupported
+STEP boundary; the current complete export is verified below. This is not a
+spring export success claim.
+
+The [rational sweep export verification](verification/rational-sweep-001/README.md)
+extends that original coupon to complete STEP export without changing frozen
+native artifacts. It checks exact weighted surfaces, whole-body native solid
+differences and the existing independent rational geometry oracles. Historical
+unsupported expectations remain preserved in the earlier capture.

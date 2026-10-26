@@ -1,0 +1,24 @@
+{
+  "origin": "original_synthetic",
+  "license": "MIT",
+  "source_fixture": "verification/rational-trim-001",
+  "source_sha256": "5a24325802126b3863a012d57c83913e4b357cccd73293ebc6c6ccec3ab3a264",
+  "baseline_openswx": "2bb5941",
+  "native_reference_sha256": "85e7a42df5cd617dc4ed55d2922a908b812df9668adac3da8a8197babbe0126d",
+  "step_supported": true,
+  "step_statistics": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "shells": 1,
+    "solids": 1
+  },
+  "step_counts": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "solids": 1
+  },
+  "representation": "Exact tensor-product rational B-spline surface; exactly restricted positive profile weights duplicated at both ends of the linear axis",
+  "scope": "Open quadratic/cubic profile; four rectangular boundary edges; convex planar caps; identical corresponding weights"
+}
