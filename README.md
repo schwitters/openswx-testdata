@@ -195,3 +195,12 @@ sections and independently verified native spline-surface STEP references.
 Current verification requires complete body binding and exact STEP export,
 including OCCT topology, polynomial geometry, material normals and bidirectional
 solid differences against the native references.
+
+The original [analytic cut fixtures](verification/analytic-cuts-001/README.md)
+add native quarter/three-quarter torus revolutions and an independent oblique
+sphere-cap reference. They freeze the old torus cut-plane failures and verify
+winding-selected meridian sectors against native STEP by solid differences.
+An equivalent C++ sphere fixture changes only the polar frame; surface-area
+comparisons and exact sphere/circle supports verify its cut without using an
+open sheet's volume as evidence. See the fixture README for the separately
+recorded native sphere STEP integration residual and optional live drivers.

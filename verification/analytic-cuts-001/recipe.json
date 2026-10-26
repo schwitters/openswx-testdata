@@ -1,0 +1,271 @@
+{
+  "origin": "original_synthetic",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "cases": {
+    "torus-minor": [
+      {
+        "name": "sw.document.new",
+        "arguments": {
+          "operation_id": "openswx-torus-meridian-minor-20261026-new",
+          "params": {
+            "type": "part",
+            "template": {
+              "kind": "configured_default"
+            }
+          }
+        }
+      },
+      {
+        "name": "sw.reference_plane.create",
+        "arguments": {
+          "document": "doc-36",
+          "expected_revision": 0,
+          "operation_id": "openswx-torus-meridian-minor-20261026-plane",
+          "params": {
+            "id": "plane:profile",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "normal": [
+              0,
+              -1,
+              0
+            ],
+            "x_axis": [
+              1,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "name": "sw.sketch.create",
+        "arguments": {
+          "document": "doc-36",
+          "expected_revision": 1,
+          "operation_id": "openswx-torus-meridian-minor-20261026-profile",
+          "params": {
+            "sketch": {
+              "id": "sketch:profile",
+              "support": {
+                "kind": "reference",
+                "ref": "plane:profile"
+              },
+              "entities": [
+                {
+                  "id": "circle:section",
+                  "type": "circle",
+                  "center": [
+                    0.02,
+                    0
+                  ],
+                  "radius": 0.004
+                },
+                {
+                  "id": "line:axis",
+                  "type": "centerline",
+                  "start": [
+                    0,
+                    -0.015
+                  ],
+                  "end": [
+                    0,
+                    0.015
+                  ]
+                }
+              ],
+              "constraints": [],
+              "dimensions": []
+            }
+          }
+        }
+      },
+      {
+        "name": "sw.feature.create",
+        "arguments": {
+          "document": "doc-36",
+          "expected_revision": 2,
+          "operation_id": "openswx-torus-meridian-minor-20261026-revolve",
+          "params": {
+            "feature": {
+              "id": "feature:torus",
+              "type": "revolve",
+              "operation": "new_body",
+              "profile": {
+                "ref": "sketch:profile"
+              },
+              "axis": {
+                "ref": "line:axis"
+              },
+              "angle": 1.5707963267948966,
+              "reversed": false
+            }
+          }
+        }
+      }
+    ],
+    "torus-major": [
+      {
+        "name": "sw.document.new",
+        "arguments": {
+          "operation_id": "openswx-torus-meridian-major-20261026-new",
+          "params": {
+            "type": "part",
+            "template": {
+              "kind": "configured_default"
+            }
+          }
+        }
+      },
+      {
+        "name": "sw.reference_plane.create",
+        "arguments": {
+          "document": "doc-37",
+          "expected_revision": 0,
+          "operation_id": "openswx-torus-meridian-major-20261026-plane",
+          "params": {
+            "id": "plane:profile",
+            "origin": [
+              0,
+              0,
+              0
+            ],
+            "normal": [
+              0,
+              -1,
+              0
+            ],
+            "x_axis": [
+              1,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "name": "sw.sketch.create",
+        "arguments": {
+          "document": "doc-37",
+          "expected_revision": 1,
+          "operation_id": "openswx-torus-meridian-major-20261026-profile",
+          "params": {
+            "sketch": {
+              "id": "sketch:profile",
+              "support": {
+                "kind": "reference",
+                "ref": "plane:profile"
+              },
+              "entities": [
+                {
+                  "id": "circle:section",
+                  "type": "circle",
+                  "center": [
+                    0.02,
+                    0
+                  ],
+                  "radius": 0.004
+                },
+                {
+                  "id": "line:axis",
+                  "type": "centerline",
+                  "start": [
+                    0,
+                    -0.015
+                  ],
+                  "end": [
+                    0,
+                    0.015
+                  ]
+                }
+              ],
+              "constraints": [],
+              "dimensions": []
+            }
+          }
+        }
+      },
+      {
+        "name": "sw.feature.create",
+        "arguments": {
+          "document": "doc-37",
+          "expected_revision": 2,
+          "operation_id": "openswx-torus-meridian-major-20261026-revolve",
+          "params": {
+            "feature": {
+              "id": "feature:torus",
+              "type": "revolve",
+              "operation": "new_body",
+              "profile": {
+                "ref": "sketch:profile"
+              },
+              "axis": {
+                "ref": "line:axis"
+              },
+              "angle": 4.71238898038469,
+              "reversed": false
+            }
+          }
+        }
+      }
+    ],
+    "sphere": [
+      {
+        "name": "sw.document.new",
+        "arguments": {
+          "operation_id": "openswx-analytic-sphere-20261026-new",
+          "params": {
+            "type": "part",
+            "template": {
+              "kind": "configured_default"
+            }
+          }
+        }
+      },
+      {
+        "name": "sw.feature.create",
+        "arguments": {
+          "document": "doc-35",
+          "expected_revision": 0,
+          "operation_id": "openswx-analytic-sphere-20261026-surface",
+          "params": {
+            "feature": {
+              "id": "feature:sphere-cap",
+              "type": "surface",
+              "geometry": {
+                "type": "sphere",
+                "origin": [
+                  0.01,
+                  0.02,
+                  0.03
+                ],
+                "normal": [
+                  0,
+                  0.6,
+                  0.8
+                ],
+                "x_axis": [
+                  1,
+                  0,
+                  0
+                ],
+                "radius": 0.005
+              },
+              "uv_bounds": [
+                0,
+                6.283185307179586,
+                0.6435011087932844,
+                1.5707963267948966
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "sphere_equivalent_fixture": "The native saved sphere uses its cut axis; the C++ fixture uses the same sphere and cut but retains the global Z polar axis. The native SLDPRT was already supported at baseline."
+}

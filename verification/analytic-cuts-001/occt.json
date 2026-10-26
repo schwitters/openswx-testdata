@@ -1,0 +1,113 @@
+{
+  "torus-minor": {
+    "native_counts": {
+      "faces": 3,
+      "edges": 3,
+      "vertices": 2,
+      "solids": 1
+    },
+    "native_volume_mm3": 1579.1367041742978,
+    "native_area_mm2": 890.0993170020223,
+    "native_export": {
+      "counts": {
+        "faces": 3,
+        "edges": 3,
+        "vertices": 2,
+        "solids": 1
+      },
+      "area_mm2": 890.0993170020223,
+      "volume_mm3": 1579.1367041742978,
+      "difference_mm3": [
+        0.0,
+        0.0
+      ]
+    },
+    "equivalent_source_frame": {
+      "counts": {
+        "faces": 3,
+        "edges": 3,
+        "vertices": 2,
+        "solids": 1
+      },
+      "area_mm2": 890.099317002022,
+      "volume_mm3": 1579.136704174298,
+      "difference_mm3": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "torus-major": {
+    "native_counts": {
+      "faces": 3,
+      "edges": 3,
+      "vertices": 2,
+      "solids": 1
+    },
+    "native_volume_mm3": 4737.410112522889,
+    "native_area_mm2": 2469.236021176318,
+    "native_export": {
+      "counts": {
+        "faces": 3,
+        "edges": 3,
+        "vertices": 2,
+        "solids": 1
+      },
+      "area_mm2": 2469.236021176318,
+      "volume_mm3": 4737.410112522889,
+      "difference_mm3": [
+        0.0,
+        0.0
+      ]
+    },
+    "equivalent_source_frame": {
+      "counts": {
+        "faces": 3,
+        "edges": 3,
+        "vertices": 2,
+        "solids": 1
+      },
+      "area_mm2": 2469.2360211763184,
+      "volume_mm3": 4737.410112521652,
+      "difference_mm3": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "sphere": {
+    "native_counts": {
+      "faces": 1,
+      "edges": 1,
+      "vertices": 1,
+      "solids": 0
+    },
+    "native_area_mm2": 62.833706522374165,
+    "native_export": {
+      "counts": {
+        "faces": 1,
+        "edges": 3,
+        "vertices": 2,
+        "solids": 0
+      },
+      "area_mm2": 62.83185307179578,
+      "difference_mm2": [
+        0.0,
+        0.0
+      ]
+    },
+    "equivalent_source_frame": {
+      "counts": {
+        "faces": 1,
+        "edges": 3,
+        "vertices": 2,
+        "solids": 0
+      },
+      "area_mm2": 62.83185307179582,
+      "difference_mm2": [
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

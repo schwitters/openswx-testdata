@@ -1,0 +1,20 @@
+{
+  "torus-minor": {
+    "exit_code": 2,
+    "stdout": "{\"error_code\":\"invalid_record\",\"offset\":2256,\"message\":\"STEP node 37: Torus cut circle is tilted or degenerate\"}\n",
+    "stderr": "Export failed at 2256: STEP node 37: Torus cut circle is tilted or degenerate\n",
+    "output_created": false
+  },
+  "torus-major": {
+    "exit_code": 2,
+    "stdout": "{\"error_code\":\"invalid_record\",\"offset\":2256,\"message\":\"STEP node 37: Torus cut circle is tilted or degenerate\"}\n",
+    "stderr": "Export failed at 2256: STEP node 37: Torus cut circle is tilted or degenerate\n",
+    "output_created": false
+  },
+  "sphere": {
+    "exit_code": 0,
+    "stdout": "{\"faces\":1,\"edges\":1,\"vertices\":1,\"shells\":1,\"solids\":0}\n",
+    "stderr": "",
+    "output_created": true
+  }
+}
