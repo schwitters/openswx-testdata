@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "kind": "native_partial_rational_curve_regression",
+  "origin": "original_synthetic",
+  "author": "openswx contributors",
+  "license": "MIT",
+  "producer": {
+    "revision": "33.5.0",
+    "version_major": 33,
+    "version_sp": 5
+  },
+  "command_schema": "1.12",
+  "baseline_commit": "9bf7caa",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "bytes": 2242,
+      "sha256": "596d8501a5a2e49ca7d5e18583d855b04305bdf777f0049280ead6faadfd6d5f"
+    },
+    {
+      "path": "baseline-error.json",
+      "bytes": 347,
+      "sha256": "994793feea95035e9783e32d6984b42a9ee46a57a0c8ff85118241b44e24b422"
+    },
+    {
+      "path": "capture.json",
+      "bytes": 1457360,
+      "sha256": "1994503f448d16fa11c1e6b7d0b2fbdef6de9faf10016da30d33aaddac6b04c9"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 719,
+      "sha256": "81cc3abe97a9e71d15fd02a0ba2a3e70c9d6e9301a03ca5abd7f19da9cc33c74"
+    },
+    {
+      "path": "rational.sldprt",
+      "bytes": 62727,
+      "sha256": "5a24325802126b3863a012d57c83913e4b357cccd73293ebc6c6ccec3ab3a264"
+    },
+    {
+      "path": "rational.step",
+      "bytes": 13467,
+      "sha256": "85e7a42df5cd617dc4ed55d2922a908b812df9668adac3da8a8197babbe0126d"
+    },
+    {
+      "path": "rational.x_b",
+      "bytes": 6512,
+      "sha256": "e8ff76f9cff6d6d0ec2e5e4e2fc725a79b76213576dc5925c7477134c5b2f350"
+    },
+    {
+      "path": "rational.x_t",
+      "bytes": 7310,
+      "sha256": "36799c565b72ee8f4b4b1907d4c200e3ba652dd55ef75787fb8babece3a3a776"
+    },
+    {
+      "path": "receipts.json",
+      "bytes": 4346,
+      "sha256": "26b500dd44220d115f21d84d4b8e1b336b29101a7c643ccca68d704311505fb0"
+    },
+    {
+      "path": "recipe.json",
+      "bytes": 5366,
+      "sha256": "ba0682dcee482d0ae0d89d8172d0fc6fcfd1a9b99f06e598747ef063c9ef942b"
+    },
+    {
+      "path": "source-inspection.json",
+      "bytes": 221520,
+      "sha256": "28c4fee33bb90341704e6c4d6dca8f8e46691a3bb2b7cd5f9cc5feb6358ca7c9"
+    }
+  ]
+}

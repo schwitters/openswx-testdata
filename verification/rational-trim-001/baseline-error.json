@@ -1,0 +1,6 @@
+{
+  "exit_code": 2,
+  "stdout": "{\"error_code\":\"unsupported_format\",\"offset\":0,\"message\":\"Body 2, face 41: Partial spline inversion requires open nonrational clamped 3D controls\"}\n",
+  "stderr": "Export failed at 0: Body 2, face 41: Partial spline inversion requires open nonrational clamped 3D controls\n",
+  "output_created": false
+}

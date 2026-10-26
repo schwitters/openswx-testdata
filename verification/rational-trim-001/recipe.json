@@ -1,0 +1,230 @@
+{
+  "origin": "original_synthetic",
+  "length_unit": "metre",
+  "angle_unit": "radian",
+  "construction": [
+    {
+      "name": "sw.reference_plane.create",
+      "arguments": {
+        "document": "doc-39",
+        "expected_revision": 0,
+        "operation_id": "openswx-rational-trim-20261026-plane",
+        "params": {
+          "id": "plane:profile",
+          "origin": [
+            0,
+            0,
+            0
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ],
+          "x_axis": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "name": "sw.sketch.create",
+      "arguments": {
+        "document": "doc-39",
+        "expected_revision": 1,
+        "operation_id": "openswx-rational-trim-20261026-profile",
+        "params": {
+          "sketch": {
+            "id": "profile:rational",
+            "support": {
+              "kind": "reference",
+              "ref": "plane:profile"
+            },
+            "entities": [
+              {
+                "id": "rational",
+                "type": "bspline",
+                "degree": 3,
+                "knots": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "control_points": [
+                  [
+                    0,
+                    0
+                  ],
+                  [
+                    0.004,
+                    0
+                  ],
+                  [
+                    0.008,
+                    0
+                  ],
+                  [
+                    0.012,
+                    0.009
+                  ]
+                ],
+                "weights": [
+                  1,
+                  0.75,
+                  1.25,
+                  1
+                ],
+                "knot_convention": "expanded"
+              },
+              {
+                "id": "top",
+                "type": "line",
+                "start": [
+                  0.012,
+                  0.009
+                ],
+                "end": [
+                  0,
+                  0.009
+                ]
+              },
+              {
+                "id": "left",
+                "type": "line",
+                "start": [
+                  0,
+                  0.009
+                ],
+                "end": [
+                  0,
+                  0
+                ]
+              }
+            ],
+            "constraints": [],
+            "dimensions": []
+          }
+        }
+      }
+    },
+    {
+      "name": "sw.feature.create",
+      "arguments": {
+        "document": "doc-39",
+        "expected_revision": 2,
+        "operation_id": "openswx-rational-trim-20261026-prism",
+        "params": {
+          "feature": {
+            "id": "feature:prism",
+            "type": "extrude",
+            "profile": {
+              "ref": "profile:rational"
+            },
+            "operation": "new_body",
+            "end_condition": {
+              "kind": "blind",
+              "depth": 0.008
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sw.sketch.create",
+      "arguments": {
+        "document": "doc-39",
+        "expected_revision": 3,
+        "operation_id": "openswx-rational-trim-20261026-cut-profile",
+        "params": {
+          "sketch": {
+            "id": "profile:cut",
+            "support": {
+              "kind": "reference",
+              "ref": "plane:profile"
+            },
+            "entities": [
+              {
+                "id": "side-0",
+                "type": "line",
+                "start": [
+                  -0.002,
+                  -0.002
+                ],
+                "end": [
+                  0.005,
+                  -0.002
+                ]
+              },
+              {
+                "id": "side-1",
+                "type": "line",
+                "start": [
+                  0.005,
+                  -0.002
+                ],
+                "end": [
+                  0.005,
+                  0.011
+                ]
+              },
+              {
+                "id": "side-2",
+                "type": "line",
+                "start": [
+                  0.005,
+                  0.011
+                ],
+                "end": [
+                  -0.002,
+                  0.011
+                ]
+              },
+              {
+                "id": "side-3",
+                "type": "line",
+                "start": [
+                  -0.002,
+                  0.011
+                ],
+                "end": [
+                  -0.002,
+                  -0.002
+                ]
+              }
+            ],
+            "constraints": [],
+            "dimensions": []
+          }
+        }
+      }
+    },
+    {
+      "name": "sw.feature.create",
+      "arguments": {
+        "document": "doc-39",
+        "expected_revision": 4,
+        "operation_id": "openswx-rational-trim-20261026-trim",
+        "params": {
+          "feature": {
+            "id": "feature:trim",
+            "type": "extrude",
+            "profile": {
+              "ref": "profile:cut"
+            },
+            "operation": "cut",
+            "end_condition": {
+              "kind": "through_all"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "source_counts": {
+    "edges": 9,
+    "face_uses": 10,
+    "faces": 5,
+    "fins": 18,
+    "loops": 5,
+    "regions": 2,
+    "shells": 2,
+    "vertices": 6,
+    "wire_edges": 0
+  },
+  "payload": 0,
+  "body": 2,
+  "source_unit": "metre",
+  "control_points_mm": [
+    [
+      0,
+      0
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      8,
+      0
+    ],
+    [
+      12,
+      9
+    ]
+  ],
+  "weights": [
+    1,
+    0.75,
+    1.25,
+    1
+  ],
+  "degree": 3,
+  "cut_x_mm": 5,
+  "top_y_mm": 9,
+  "depth_mm": 8,
+  "full_step_export_supported": false,
+  "remaining_step_error": "Spline sweeps require an open polynomial",
+  "native_step_counts": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "solids": 1
+  }
+}

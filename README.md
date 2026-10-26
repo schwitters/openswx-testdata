@@ -204,3 +204,10 @@ An equivalent C++ sphere fixture changes only the polar frame; surface-area
 comparisons and exact sphere/circle supports verify its cut without using an
 open sheet's volume as evidence. See the fixture README for the separately
 recorded native sphere STEP integration residual and optional live drivers.
+
+The original [rational trim coupon](verification/rational-trim-001/README.md)
+adds a native partial rational cubic profile and independent rational geometry
+oracles. Its complete body now binds automatically with unchanged homogeneous
+controls and knot units. Tests deliberately retain the unsupported whole-body
+STEP boundary at rational sweep export; this fixture is not a spring export
+success claim.
