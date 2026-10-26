@@ -235,3 +235,11 @@ the entire body now binds and exports. Independent piecewise rational area and
 volume oracles, unchanged source knot/weight checks and two-way native STEP
 solid differences verify the extension. Run `tests/test_rational_spans.py`
 with the existing build/exporter environment variables for live checks.
+
+The original [slanted cubic extrusion](verification/slanted-sweep-001/README.md)
+adds a direct plane/SWEPT_SURF intersection and a non-rectangular parameter
+strip. Exact control derivation and independent polynomial volume/area oracles
+verify the complete body. Native STEP approximation error is recorded
+separately and never becomes an increased library tolerance. Run
+`tests/test_slanted_sweep.py` with the existing build/exporter environment
+variables for live extraction, binding and export checks.

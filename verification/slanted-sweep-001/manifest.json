@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "origin": "original_synthetic",
+  "license": "MIT",
+  "kind": "plane_swept_intersection_and_strip_verification",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "bytes": 3059,
+      "sha256": "f5b0e7563b70294102b2ec76a9629e62c62c8f9a7192e463b945b468c181a472"
+    },
+    {
+      "path": "brep.json",
+      "bytes": 1117941,
+      "sha256": "5d91e0f62e646ee4d22abafc16e5000983272f5970ffc1db9467b961c3a9e033"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 944,
+      "sha256": "4fcaadc819e6d710f48b4d1b11308e8ff78b3bd43f646dba822206655e2f2332"
+    },
+    {
+      "path": "journal.json",
+      "bytes": 1193759,
+      "sha256": "3b7a649b2b3549b21953f7b9452be10cdf72a017893768ebde264e122e7b917f"
+    },
+    {
+      "path": "occt.json",
+      "bytes": 911,
+      "sha256": "717a18d9c674d69bf52189e1617e2134b16d981ccfe4f9b079cd4d6b32a0fac4"
+    },
+    {
+      "path": "properties-configuration.json",
+      "bytes": 771,
+      "sha256": "40cdee254341a2530fb7be873272d1b57f8584e22080b216c63d2aef61710f83"
+    },
+    {
+      "path": "properties-document.json",
+      "bytes": 693,
+      "sha256": "7d89dcd2a836e29ee38ddaf732e0a9b44f42a1b3dda09714bea40365df2932c0"
+    },
+    {
+      "path": "receipts.json",
+      "bytes": 4345,
+      "sha256": "656105351fc2b01ffc8b83691d3b3d9b06df2c111d665c2d8e505b7654aee7a4"
+    },
+    {
+      "path": "recipe.json",
+      "bytes": 2361,
+      "sha256": "c6809a299ab6b36277ad95662aebd5a4939d4f7781137c3e5e5db64f7a32e115"
+    },
+    {
+      "path": "strip.sldprt",
+      "bytes": 62775,
+      "sha256": "c5cc83f119d6d965a49770d0a90b0fb9b0cad3163ad6b49729d3ac655a88850f"
+    },
+    {
+      "path": "strip.step",
+      "bytes": 14969,
+      "sha256": "371779c2a1e1366f4c9ad876dbd00655ef0f385da2be5df2135406991ac34a41"
+    },
+    {
+      "path": "strip.x_b",
+      "bytes": 7042,
+      "sha256": "c3f16b1675859f7a19162ecf0b473e0ef07f8382aa188ac9a752217e7bb8f0de"
+    },
+    {
+      "path": "strip.x_t",
+      "bytes": 8158,
+      "sha256": "70a8b6abb30758856a107806b0f568dcded272f8ad0070b8ed13e8fed23424e5"
+    }
+  ]
+}
