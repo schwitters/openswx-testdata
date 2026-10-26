@@ -1,0 +1,336 @@
+{
+  "backend": "solidworks",
+  "backend_version": "33.5.0",
+  "command_schema": "1.12",
+  "data_tools": {
+    "configurations": true,
+    "custom_properties": [
+      "document",
+      "configuration",
+      "cutlist"
+    ],
+    "drawings": [
+      "sheets",
+      "model_views",
+      "notes",
+      "model_dimensions",
+      "pdf"
+    ],
+    "model_inspection": {
+      "default_profile": "0.1",
+      "definition_complete": false,
+      "definition_max_page": 16,
+      "optional_definition_profile": "extrusion_scalars_0.1",
+      "profiles": [
+        "0.1",
+        "0.2"
+      ],
+      "reconstruction_ready": false,
+      "selection_access": false
+    },
+    "persistent_ids": "GetPersistReference3_document_owned",
+    "sketch_inspection": {
+      "controls": "optional_native_provenance",
+      "default_profile": "0.1",
+      "dimension_coverage_complete": false,
+      "dimension_inventory": "optional_visibility_limited_feature_display_walk",
+      "dimensions": "optional_relation_display_dimensions",
+      "entities": [
+        "point",
+        "line",
+        "circle",
+        "arc"
+      ],
+      "expressions_decoded": false,
+      "frame": "sketch_to_document_rigid",
+      "max_control_bytes": 1048576,
+      "max_control_text_bytes": 4096,
+      "max_dimension_inventory_links": 512,
+      "max_dimensions": 128,
+      "max_equations": 256,
+      "max_points": 512,
+      "max_relations": 256,
+      "max_segments": 128,
+      "parametric_complete": false,
+      "profiles": [
+        "0.1",
+        "0.2",
+        "0.3",
+        "0.4"
+      ],
+      "relations": "optional_native_inventory",
+      "solver_status": true
+    },
+    "sketch_planning": {
+      "default_policy": "strict_parametric",
+      "geometry_only_templates": true,
+      "observed_dimension_coverage_complete": false,
+      "observed_max_circles": 16,
+      "observed_parametric_variant": "fixed_centers_radial_dimensions_0.1",
+      "observed_parametric_variants": [
+        {
+          "max_circles": 16,
+          "min_circles": 1,
+          "variant": "fixed_centers_radial_dimensions_0.1"
+        },
+        {
+          "max_circles": 2,
+          "min_circles": 2,
+          "variant": "fixed_anchor_concentric_pair_0.1"
+        }
+      ],
+      "policies": [
+        "strict_parametric",
+        "geometry_only",
+        "observed_parametric"
+      ],
+      "strict_ready": false,
+      "target": "new_owned_part",
+      "verification_required": true
+    },
+    "trace": "current_feature_ownership_and_dependencies"
+  },
+  "exports": {
+    "artifact_access": {
+      "encoding": "base64",
+      "immutable": true,
+      "lifetime": "addin_host_session",
+      "max_artifact_bytes": 1073741824,
+      "max_artifacts": 256,
+      "max_chunk_bytes": 262144,
+      "max_total_bytes": 4294967296,
+      "snapshot_root": "C:\\work\\swagent-artifacts"
+    },
+    "drawing": {
+      "command": "sw.drawing.export",
+      "formats": [
+        "pdf"
+      ],
+      "length_units": [
+        "point"
+      ],
+      "selection_scopes": [
+        "all_sheets"
+      ]
+    },
+    "formats": {
+      "parasolid_binary": {
+        "extensions": [
+          ".x_b"
+        ],
+        "length_units": [
+          "metre",
+          "native"
+        ],
+        "selection_scopes": [
+          "whole_document"
+        ],
+        "versions": [
+          "native"
+        ]
+      },
+      "parasolid_text": {
+        "extensions": [
+          ".x_t"
+        ],
+        "length_units": [
+          "metre",
+          "native"
+        ],
+        "selection_scopes": [
+          "whole_document"
+        ],
+        "versions": [
+          "native"
+        ]
+      },
+      "step": {
+        "application_protocols": [
+          "AP214"
+        ],
+        "extensions": [
+          ".step",
+          ".stp"
+        ],
+        "length_units": [
+          "native"
+        ],
+        "selection_scopes": [
+          "whole_document"
+        ],
+        "versions": [
+          "native"
+        ]
+      }
+    },
+    "native_capture": {
+      "command": "sw.document.save",
+      "extensions": [
+        ".sldprt",
+        ".sldasm",
+        ".slddrw"
+      ]
+    }
+  },
+  "features": {
+    "extrude": {
+      "end_conditions": [
+        "blind",
+        "through_all",
+        "mid_plane"
+      ],
+      "operations": [
+        "new_body",
+        "join",
+        "cut"
+      ],
+      "support": "exact"
+    },
+    "feature_delete": {
+      "support": "unsupported"
+    },
+    "feature_state": {
+      "configurations": "active_only",
+      "support": "exact"
+    },
+    "feature_update": {
+      "support": "unsupported"
+    },
+    "fillet": {
+      "support": "native_readback"
+    },
+    "loft": {
+      "end_conditions": [
+        "none"
+      ],
+      "join_cut_targets": "explicit_required",
+      "support": "native_readback"
+    },
+    "reference_plane": {
+      "frame": "explicit_origin_normal_x_axis",
+      "max_id_utf8_bytes": 128,
+      "support": "exact"
+    },
+    "revolve": {
+      "join_cut_targets": "explicit_required",
+      "support": "native_readback"
+    },
+    "sketch2d": {
+      "controlled_spline": {
+        "closed_variants": "polynomial_uniform_periodic",
+        "constraints_and_dimensions": "unsupported_for_controlled_sketches",
+        "construction_comparison_tolerance": 1e-08,
+        "controls": "cartesian_with_separate_positive_weights",
+        "degree": [
+          1,
+          7
+        ],
+        "interior_knots": "C1_or_smoother",
+        "knots": "expanded_in_0_1",
+        "max_entities": 128,
+        "max_id_utf8_bytes": 128,
+        "nonperiodic_closed_seam": "unsupported",
+        "rational_periodic": "unsupported"
+      },
+      "entities": [
+        "point",
+        "line",
+        "centerline",
+        "circle",
+        "circular_arc",
+        "ellipse",
+        "elliptic_arc",
+        "bspline"
+      ],
+      "point_selectors": {
+        "circle": [
+          "center"
+        ],
+        "circular_arc": [
+          "start",
+          "end",
+          "center"
+        ],
+        "line": [
+          "start",
+          "end"
+        ]
+      },
+      "support": "exact"
+    },
+    "surface": {
+      "periodic_spline_construction": false,
+      "support": "native_readback",
+      "trimming": "rectangular_native_uv_bounds",
+      "types": [
+        "plane",
+        "cylinder",
+        "cone",
+        "sphere",
+        "torus",
+        "bspline"
+      ]
+    },
+    "sweep": {
+      "join_cut_targets": "explicit_required",
+      "orientation": [
+        "follow_path"
+      ],
+      "support": "native_readback"
+    }
+  },
+  "geometry_queries": {
+    "bounding_box_accuracy": "approximate",
+    "brep": true,
+    "enumerated_body_kinds": [
+      "solid",
+      "sheet"
+    ],
+    "evaluation": true,
+    "face_parameter_curves": "not_exposed_in_original_support_parameterization",
+    "hidden_bodies": "included",
+    "measurement_body_kinds": [
+      "solid",
+      "sheet"
+    ],
+    "native_exact_descriptors": [
+      "line",
+      "circle",
+      "ellipse",
+      "bspline",
+      "plane",
+      "cylinder",
+      "cone",
+      "sphere",
+      "torus"
+    ],
+    "reads_activate_or_select": false,
+    "reference_scope": "document_revision_configuration_update_stamp",
+    "regions": "not_exposed",
+    "unsupported_descriptors": "native type retained; no fitted conversion",
+    "wire_document_enumeration": "unsupported_by_IPartDoc_GetBodies2",
+    "wrapping": "reject"
+  },
+  "limits": {
+    "max_brep_entities": 8192,
+    "max_brep_page": 1024,
+    "max_brep_targets": 64,
+    "max_evaluation_samples": 256,
+    "max_measure_targets": 1,
+    "max_payload_bytes": 16777216,
+    "max_sketch_entities": 4096
+  },
+  "model_ir": [
+    "1.0"
+  ],
+  "rollback": {
+    "guaranteed": false,
+    "level": "none"
+  },
+  "units": {
+    "angle": "radian",
+    "length": "metre"
+  },
+  "worker_abi": 7,
+  "worker_version": "0.1.0"
+}

@@ -28,6 +28,10 @@ third export limitation, currently rejected as `invalid_record` despite valid
 native geometry. The elliptic extrusion adds a fourth limitation: its swept
 mantle is currently rejected as `unsupported_format`. Its default native mass
 precision and independent geometric checks are documented separately.
+These pass/unsupported counts describe frozen capture expectations, not a
+fresh run against every later library commit. Current library extensions and
+remaining trimming boundaries are tracked separately in the code repository's
+`libopenparasolid/OPEN_ISSUES.md`.
 The general MCP generation adapter is still pending.
 The local audit checks contracts and artifact integrity; library/OCCT
 verification is a separate runner.
@@ -37,6 +41,13 @@ adds four native snapshots and six configuration queries: one/two-body
 configurations, last-active changes and a sheet with an empty baseline partition.
 It verifies the new resolver's metadata identities and explicit unresolved-state
 contract. These snapshots are additional to the nineteen six-stage cases.
+
+The original [perpendicular cylinder cross-bore](verification/cross-bore-001/README.md)
+adds a focused non-circular intersection benchmark. Native SLDPRT, binary
+Parasolid, STEP, topology, receipts and MCP construction provenance are frozen.
+Reader binding succeeds; exact STEP export remains explicitly unsupported.
+The independent analytic oracle also records the native STEP's approximation
+error rather than treating that export as an exact curve representation.
 
 ## Start locally
 

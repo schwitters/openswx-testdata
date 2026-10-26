@@ -1,0 +1,6548 @@
+{
+  "body_geometry": {
+    "binding_tolerance": 1e-07,
+    "body": 2,
+    "counts": {
+      "edges": 4,
+      "face_uses": 8,
+      "faces": 4,
+      "fins": 8,
+      "loops": 8,
+      "regions": 2,
+      "shells": 2,
+      "vertices": 0,
+      "wire_edges": 0
+    },
+    "faces": [
+      {
+        "face": 39,
+        "face_sense": 45,
+        "loops": [
+          {
+            "fins": [
+              {
+                "curve": 52,
+                "edge": 10,
+                "edge_curve": 52,
+                "end": -6.283185307179586,
+                "end_vertex": 0,
+                "fin": 54,
+                "fin_curve": 0,
+                "sense": "reverse",
+                "start": 0.0,
+                "start_vertex": 0
+              }
+            ],
+            "isolated_vertex_uv": null,
+            "loop": 77
+          },
+          {
+            "fins": [
+              {
+                "curve": 56,
+                "edge": 51,
+                "edge_curve": 56,
+                "end": 6.283185307179586,
+                "end_vertex": 0,
+                "fin": 55,
+                "fin_curve": 0,
+                "sense": "forward",
+                "start": 0.0,
+                "start_vertex": 0
+              }
+            ],
+            "isolated_vertex_uv": null,
+            "loop": 80
+          },
+          {
+            "fins": [
+              {
+                "curve": 44,
+                "edge": 57,
+                "edge_curve": 44,
+                "end": 0.0,
+                "end_vertex": 0,
+                "fin": 82,
+                "fin_curve": 0,
+                "sense": "reverse",
+                "start": 0.025045768783411995,
+                "start_vertex": 0
+              }
+            ],
+            "isolated_vertex_uv": null,
+            "loop": 81
+          },
+          {
+            "fins": [
+              {
+                "curve": 8,
+                "edge": 43,
+                "edge_curve": 8,
+                "end": 0.0,
+                "end_vertex": 0,
+                "fin": 84,
+                "fin_curve": 0,
+                "sense": "reverse",
+                "start": 0.025045768783411995,
+                "start_vertex": 0
+              }
+            ],
+            "isolated_vertex_uv": null,
+            "loop": 83
+          }
+        ],
+        "surface": 7
+      },
+      {
+        "face": 62,
+        "face_sense": 43,
+        "loops": [
+          {
+            "fins": [
+              {
+                "curve": 44,
+                "edge": 57,
+                "edge_curve": 44,
+                "end": 0.025045768783411995,
+                "end_vertex": 0,
+                "fin": 61,
+                "fin_curve": 0,
+                "sense": "forward",
+                "start": 0.0,
+                "start_vertex": 0
+              }
+            ],
+            "isolated_vertex_uv": null,
+            "loop": 67
+          },
+          {
+            "fins": [
+              {
+                "curve": 8,
+                "edge": 43,
+                "edge_curve": 8,
+                "end": 0.025045768783411995,
+                "end_vertex": 0,
+                "fin": 85,
+                "fin_curve": 0,
+                "sense": "forward",
+                "start": 0.0,
+                "start_vertex": 0
+              }
+            ],
+            "isolated_vertex_uv": null,
+            "loop": 86
+          }
+        ],
+        "surface": 45
+      },
+      {
+        "face": 66,
+        "face_sense": 45,
+        "loops": [
+          {
+            "fins": [
+              {
+                "curve": 56,
+                "edge": 51,
+                "edge_curve": 56,
+                "end": -6.283185307179586,
+                "end_vertex": 0,
+                "fin": 76,
+                "fin_curve": 0,
+                "sense": "reverse",
+                "start": 0.0,
+                "start_vertex": 0
+              }
+            ],
+            "isolated_vertex_uv": null,
+            "loop": 72
+          }
+        ],
+        "surface": 41
+      },
+      {
+        "face": 68,
+        "face_sense": 43,
+        "loops": [
+          {
+            "fins": [
+              {
+                "curve": 52,
+                "edge": 10,
+                "edge_curve": 52,
+                "end": 6.283185307179586,
+                "end_vertex": 0,
+                "fin": 50,
+                "fin_curve": 0,
+                "sense": "forward",
+                "start": 0.0,
+                "start_vertex": 0
+              }
+            ],
+            "isolated_vertex_uv": null,
+            "loop": 53
+          }
+        ],
+        "surface": 63
+      }
+    ],
+    "intersection": {
+      "chart_parameter_tolerance": 0.0,
+      "chart_tolerance": 1e-07,
+      "minimum_chord_projection": 0.0,
+      "minimum_normal_sine": 0.0,
+      "solve_tolerance": 1e-09
+    },
+    "limits": {
+      "max_faces": 10000,
+      "max_fins": 100000,
+      "max_model_nodes": 300000,
+      "max_model_references": 5000000,
+      "max_vertices": 100000,
+      "max_wire_edges": 100000
+    },
+    "regions": [
+      {
+        "kind": "void",
+        "region": 9,
+        "shells": [
+          {
+            "face_uses": [
+              {
+                "face": 39,
+                "side": "front"
+              },
+              {
+                "face": 68,
+                "side": "front"
+              },
+              {
+                "face": 66,
+                "side": "front"
+              },
+              {
+                "face": 62,
+                "side": "front"
+              }
+            ],
+            "isolated_vertex": null,
+            "shell": 49,
+            "wire_edges": []
+          }
+        ]
+      },
+      {
+        "kind": "solid",
+        "region": 40,
+        "shells": [
+          {
+            "face_uses": [
+              {
+                "face": 39,
+                "side": "back"
+              },
+              {
+                "face": 68,
+                "side": "back"
+              },
+              {
+                "face": 66,
+                "side": "back"
+              },
+              {
+                "face": 62,
+                "side": "back"
+              }
+            ],
+            "isolated_vertex": null,
+            "shell": 6,
+            "wire_edges": []
+          }
+        ]
+      }
+    ],
+    "validation_scope": "sampled_source_boundary_geometry",
+    "vertices": [],
+    "wires": []
+  },
+  "body_geometry_overrides": {
+    "fin_count": 0,
+    "fins": [],
+    "wire_count": 0,
+    "wires": []
+  },
+  "byte_size": 6925,
+  "catalog_source": "reviewed-13006-base-subset",
+  "complete": true,
+  "decoded_end": 6921,
+  "delta_historical_mark_count": 0,
+  "delta_node_count": 0,
+  "delta_packet_count": 0,
+  "delta_prefix": null,
+  "delta_reference_count": 0,
+  "diagnostics": [],
+  "format": "binary_parasolid",
+  "header": {
+    "body_offset": 102,
+    "kind": "partition",
+    "schema": "SCH_3601228_36001_13006"
+  },
+  "interpretation": "geometry_model",
+  "library_version": "0.1.0",
+  "limits": {
+    "max_delta_entries": 100000,
+    "max_delta_packets": 10000,
+    "max_fields_per_type": 4096,
+    "max_input_bytes": 134217728,
+    "max_nodes": 100000,
+    "max_total_fields": 1000000,
+    "max_types": 1024,
+    "max_values": 1000000
+  },
+  "model": {
+    "geometry": [
+      {
+        "axis": [
+          -0.0,
+          -0.0,
+          -1.0
+        ],
+        "kind": "cylinder",
+        "origin": [
+          0.0,
+          0.0,
+          0.01
+        ],
+        "radius": 0.026,
+        "sense": 45,
+        "source": 7,
+        "x_axis": [
+          -1.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "chart": {
+          "angular_error": 0.3410306752006858,
+          "base_parameter": 0.0,
+          "base_scale": 1.0,
+          "chordal_error": 0.00022913400083460775,
+          "parameter_error": [
+            null,
+            null
+          ],
+          "positions": [
+            [
+              0.0,
+              0.026,
+              -0.004
+            ],
+            [
+              -0.0013152265305562281,
+              0.025966712906591024,
+              -0.003777589068879916
+            ],
+            [
+              -0.00248204792631547,
+              0.025881256501404118,
+              -0.0031367878620450367
+            ],
+            [
+              -0.0033786420652939255,
+              0.025779541846096224,
+              -0.0021412094233461613
+            ],
+            [
+              -0.003898173406322837,
+              0.025706112971319434,
+              -0.0008967965734978105
+            ],
+            [
+              -0.003975648546910813,
+              0.025694244854275163,
+              0.0004407024295893391
+            ],
+            [
+              -0.0036126446395635054,
+              0.025747792113271245,
+              0.001717206658568814
+            ],
+            [
+              -0.0028496541544998535,
+              0.025843364161806447,
+              0.0028070395792973287
+            ],
+            [
+              -0.0017587670221435349,
+              0.02594044599774299,
+              0.003592594962115875
+            ],
+            [
+              -0.00046613055443486286,
+              0.02599582124700472,
+              0.0039727474505966585
+            ],
+            [
+              0.0008670562868371089,
+              0.025985538543494845,
+              0.003904896079981674
+            ],
+            [
+              0.0020963541341804,
+              0.025915348721252136,
+              0.0034066551548556758
+            ],
+            [
+              0.0031004287275532014,
+              0.02581447930339411,
+              0.002527319074704031
+            ],
+            [
+              0.0037636356829019403,
+              0.025726154909865313,
+              0.0013546388619802856
+            ],
+            [
+              0.003999879580214124,
+              0.025690483906376425,
+              3.10377799800064e-05
+            ],
+            [
+              0.003788814742043354,
+              0.0257224587248279,
+              -0.0012825298633852363
+            ],
+            [
+              0.0031606648183165878,
+              0.025807173380791932,
+              -0.0024515704979167475
+            ],
+            [
+              0.0021740289767982414,
+              0.02590894822272879,
+              -0.0033576179067966606
+            ],
+            [
+              0.0009347542372405547,
+              0.02598319138435386,
+              -0.0038892460086706816
+            ],
+            [
+              -1.0866673351095251e-20,
+              0.026,
+              -0.004
+            ]
+          ],
+          "source": 46
+        },
+        "end": {
+          "positions": [
+            [
+              0.0,
+              0.026,
+              -0.004
+            ]
+          ],
+          "source": 47,
+          "term_use": 63,
+          "type": 72
+        },
+        "intersection_data": 48,
+        "kind": "intersection_curve",
+        "sense": 43,
+        "source": 8,
+        "start": {
+          "positions": [
+            [
+              0.0,
+              0.026,
+              -0.004
+            ]
+          ],
+          "source": 47,
+          "term_use": 63,
+          "type": 72
+        },
+        "surfaces": [
+          7,
+          45
+        ]
+      },
+      {
+        "center": [
+          0.0,
+          0.0,
+          0.01
+        ],
+        "kind": "circle",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "radius": 0.026,
+        "sense": 43,
+        "source": 52,
+        "x_axis": [
+          1.0,
+          0.0,
+          -0.0
+        ]
+      },
+      {
+        "center": [
+          0.0,
+          0.0,
+          -0.01
+        ],
+        "kind": "circle",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "radius": 0.026,
+        "sense": 43,
+        "source": 56,
+        "x_axis": [
+          1.0,
+          0.0,
+          -0.0
+        ]
+      },
+      {
+        "chart": {
+          "angular_error": 0.3410306752006858,
+          "base_parameter": 0.0,
+          "base_scale": 1.0,
+          "chordal_error": 0.00022913400083460775,
+          "parameter_error": [
+            null,
+            null
+          ],
+          "positions": [
+            [
+              0.0,
+              -0.026,
+              -0.004
+            ],
+            [
+              0.0013152265305562281,
+              -0.025966712906591024,
+              -0.003777589068879916
+            ],
+            [
+              0.00248204792631547,
+              -0.025881256501404118,
+              -0.0031367878620450367
+            ],
+            [
+              0.0033786420652939255,
+              -0.025779541846096224,
+              -0.0021412094233461613
+            ],
+            [
+              0.003898173406322837,
+              -0.025706112971319434,
+              -0.0008967965734978105
+            ],
+            [
+              0.003975648546910813,
+              -0.025694244854275163,
+              0.0004407024295893391
+            ],
+            [
+              0.0036126446395635054,
+              -0.025747792113271245,
+              0.001717206658568814
+            ],
+            [
+              0.0028496541544998535,
+              -0.025843364161806447,
+              0.0028070395792973287
+            ],
+            [
+              0.0017587670221435349,
+              -0.02594044599774299,
+              0.003592594962115875
+            ],
+            [
+              0.00046613055443486286,
+              -0.02599582124700472,
+              0.0039727474505966585
+            ],
+            [
+              -0.0008670562868371089,
+              -0.025985538543494845,
+              0.003904896079981674
+            ],
+            [
+              -0.0020963541341804,
+              -0.025915348721252136,
+              0.0034066551548556758
+            ],
+            [
+              -0.0031004287275532014,
+              -0.02581447930339411,
+              0.002527319074704031
+            ],
+            [
+              -0.0037636356829019403,
+              -0.025726154909865313,
+              0.0013546388619802856
+            ],
+            [
+              -0.003999879580214124,
+              -0.025690483906376425,
+              3.10377799800064e-05
+            ],
+            [
+              -0.003788814742043354,
+              -0.0257224587248279,
+              -0.0012825298633852363
+            ],
+            [
+              -0.0031606648183165878,
+              -0.025807173380791932,
+              -0.0024515704979167475
+            ],
+            [
+              -0.0021740289767982414,
+              -0.02590894822272879,
+              -0.0033576179067966606
+            ],
+            [
+              -0.0009347542372405547,
+              -0.02598319138435386,
+              -0.0038892460086706816
+            ],
+            [
+              1.0866673351095251e-20,
+              -0.026,
+              -0.004
+            ]
+          ],
+          "source": 58
+        },
+        "end": {
+          "positions": [
+            [
+              0.0,
+              -0.026,
+              -0.004
+            ]
+          ],
+          "source": 59,
+          "term_use": 63,
+          "type": 72
+        },
+        "intersection_data": 60,
+        "kind": "intersection_curve",
+        "sense": 43,
+        "source": 44,
+        "start": {
+          "positions": [
+            [
+              0.0,
+              -0.026,
+              -0.004
+            ]
+          ],
+          "source": 59,
+          "term_use": 63,
+          "type": 72
+        },
+        "surfaces": [
+          7,
+          45
+        ]
+      },
+      {
+        "axis": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "kind": "cylinder",
+        "origin": [
+          0.0,
+          0.04,
+          0.0
+        ],
+        "radius": 0.004,
+        "sense": 45,
+        "source": 45,
+        "x_axis": [
+          0.0,
+          -0.0,
+          -1.0
+        ]
+      },
+      {
+        "kind": "plane",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "origin": [
+          0.0,
+          0.0,
+          0.01
+        ],
+        "sense": 43,
+        "source": 63,
+        "x_axis": [
+          1.0,
+          0.0,
+          -0.0
+        ]
+      },
+      {
+        "kind": "plane",
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "origin": [
+          0.0,
+          0.0,
+          -0.01
+        ],
+        "sense": 43,
+        "source": 41,
+        "x_axis": [
+          1.0,
+          0.0,
+          -0.0
+        ]
+      }
+    ],
+    "geometry_candidate_count": 8,
+    "geometry_count": 8,
+    "geometry_counts": {
+      "circle": 2,
+      "cylinder": 2,
+      "intersection_curve": 2,
+      "plane": 2
+    },
+    "invalid_geometry_count": 0,
+    "issue_count": 0,
+    "issues": [],
+    "issues_truncated": false,
+    "limits": {
+      "max_diagnostics": 1000,
+      "max_fields": 1000000,
+      "max_nodes": 100000,
+      "max_references": 1000000,
+      "max_values": 1000000
+    },
+    "missing_reference_count": 0,
+    "node_count": 120,
+    "node_type_counts": {
+      "101": 1,
+      "12": 1,
+      "13": 2,
+      "14": 4,
+      "141": 4,
+      "15": 8,
+      "16": 4,
+      "17": 8,
+      "19": 2,
+      "204": 2,
+      "31": 2,
+      "38": 2,
+      "40": 2,
+      "41": 2,
+      "50": 2,
+      "51": 2,
+      "70": 1,
+      "74": 1,
+      "79": 13,
+      "80": 13,
+      "81": 21,
+      "82": 20,
+      "83": 2,
+      "98": 1
+    },
+    "nodes": [
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 1,
+        "node_type": 101,
+        "references": [
+          {
+            "element": 0,
+            "field": "assemblies",
+            "pointer_class": 10,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "attributes",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "bodies",
+            "pointer_class": 12,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "transforms",
+            "pointer_class": 100,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "surfaces",
+            "pointer_class": 1006,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "curves",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "points",
+            "pointer_class": 29,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "mesh",
+            "pointer_class": 1006,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "polyline",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "lattice",
+            "pointer_class": 222,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "attribute_definitions",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 3,
+            "target_node": 2
+          },
+          {
+            "element": 0,
+            "field": "attdef_list",
+            "pointer_class": 74,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "index_map",
+            "pointer_class": 82,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "schema_embedding_map",
+            "pointer_class": 82,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "mesh_offset_data",
+            "pointer_class": 206,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 102,
+        "topology_sense": null
+      },
+      {
+        "body_type": 1,
+        "geometry": null,
+        "id": 2,
+        "node_type": 12,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 4,
+            "target_node": 28
+          },
+          {
+            "element": 0,
+            "field": "attribute_chains",
+            "pointer_class": 70,
+            "status": "resolved",
+            "target": 5,
+            "target_node": 29
+          },
+          {
+            "element": 0,
+            "field": "lattice",
+            "pointer_class": 222,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "surface",
+            "pointer_class": 1006,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "point",
+            "pointer_class": 29,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "mesh",
+            "pointer_class": 1006,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "polyline",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "key",
+            "pointer_class": 102,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "ref_instance",
+            "pointer_class": 11,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 12,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 12,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1040,
+            "status": "resolved",
+            "target": 1,
+            "target_node": 0
+          },
+          {
+            "element": 0,
+            "field": "shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 6,
+            "target_node": 30
+          },
+          {
+            "element": 0,
+            "field": "boundary_lattice",
+            "pointer_class": 222,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "boundary_surface",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 7,
+            "target_node": 31
+          },
+          {
+            "element": 0,
+            "field": "boundary_curve",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 8,
+            "target_node": 32
+          },
+          {
+            "element": 0,
+            "field": "boundary_point",
+            "pointer_class": 29,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "boundary_mesh",
+            "pointer_class": 1006,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "boundary_polyline",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "region",
+            "pointer_class": 19,
+            "status": "resolved",
+            "target": 9,
+            "target_node": 33
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 10,
+            "target_node": 34
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "index_map",
+            "pointer_class": 82,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "node_id_index_map",
+            "pointer_class": 82,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "schema_embedding_map",
+            "pointer_class": 82,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "child",
+            "pointer_class": 12,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "mesh_offset_data",
+            "pointer_class": 206,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 303,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 3,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 11,
+            "target_node": 3
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 12,
+            "target_node": 4
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 674,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 11,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 13,
+            "target_node": 5
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 14,
+            "target_node": 6
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 747,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 12,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 792,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 13,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 15,
+            "target_node": 7
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 16,
+            "target_node": 8
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 811,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 14,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 855,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 15,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 17,
+            "target_node": 9
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 18,
+            "target_node": 10
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 887,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 16,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 931,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 17,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 19,
+            "target_node": 11
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 20,
+            "target_node": 12
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 962,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 18,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1007,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 19,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 21,
+            "target_node": 13
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 22,
+            "target_node": 14
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1032,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 20,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1077,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 21,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 23,
+            "target_node": 15
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 24,
+            "target_node": 16
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1107,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 22,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1151,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 23,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 25,
+            "target_node": 17
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 26,
+            "target_node": 18
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1175,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 24,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1220,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 25,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 27,
+            "target_node": 19
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 28,
+            "target_node": 20
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1242,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 26,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1287,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 27,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 29,
+            "target_node": 21
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 30,
+            "target_node": 22
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1318,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 28,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1363,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 29,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 31,
+            "target_node": 23
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 32,
+            "target_node": 24
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1401,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 30,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1446,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 31,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 33,
+            "target_node": 25
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 34,
+            "target_node": 26
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1466,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 32,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1513,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 33,
+        "node_type": 80,
+        "references": [
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 80,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "identifier",
+            "pointer_class": 79,
+            "status": "resolved",
+            "target": 35,
+            "target_node": 27
+          },
+          {
+            "element": 0,
+            "field": "field_names",
+            "pointer_class": 99,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1540,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 34,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1586,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 35,
+        "node_type": 79,
+        "references": [],
+        "region_type": null,
+        "source_offset": 1606,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 4,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 11,
+            "target_node": 3
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 36,
+            "target_node": 112
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 37,
+            "target_node": 119
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1632,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 5,
+        "node_type": 70,
+        "references": [
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1013,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 70,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 70,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "finger_block",
+            "pointer_class": 1012,
+            "status": "resolved",
+            "target": 38,
+            "target_node": 104
+          },
+          {
+            "element": 0,
+            "field": "list_block",
+            "pointer_class": 1012,
+            "status": "resolved",
+            "target": 38,
+            "target_node": 104
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1661,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 6,
+        "node_type": 13,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "body",
+            "pointer_class": 12,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 13,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "region",
+            "pointer_class": 19,
+            "status": "resolved",
+            "target": 40,
+            "target_node": 98
+          },
+          {
+            "element": 0,
+            "field": "front_face",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1777,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": 0,
+        "id": 7,
+        "node_type": 51,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1007,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 41,
+            "target_node": 50
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1006,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "geometric_owner",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 42,
+            "target_node": 102
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1802,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": 1,
+        "id": 8,
+        "node_type": 38,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1010,
+            "status": "resolved",
+            "target": 43,
+            "target_node": 66
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 44,
+            "target_node": 39
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "geometric_owner",
+            "pointer_class": 141,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "surface",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 7,
+            "target_node": 31
+          },
+          {
+            "element": 1,
+            "field": "surface",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 45,
+            "target_node": 41
+          },
+          {
+            "element": 0,
+            "field": "chart",
+            "pointer_class": 40,
+            "status": "resolved",
+            "target": 46,
+            "target_node": 99
+          },
+          {
+            "element": 0,
+            "field": "start",
+            "pointer_class": 41,
+            "status": "resolved",
+            "target": 47,
+            "target_node": 100
+          },
+          {
+            "element": 0,
+            "field": "end",
+            "pointer_class": 41,
+            "status": "resolved",
+            "target": 47,
+            "target_node": 100
+          },
+          {
+            "element": 0,
+            "field": "intersection_data",
+            "pointer_class": 204,
+            "status": "resolved",
+            "target": 48,
+            "target_node": 101
+          }
+        ],
+        "region_type": null,
+        "source_offset": 1902,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 9,
+        "node_type": 19,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "body",
+            "pointer_class": 12,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 19,
+            "status": "resolved",
+            "target": 40,
+            "target_node": 98
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 19,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 49,
+            "target_node": 54
+          },
+          {
+            "element": 0,
+            "field": "frame",
+            "pointer_class": 230,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 12,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": 86,
+        "source_offset": 1969,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 10,
+        "node_type": 16,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 50,
+            "target_node": 35
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 51,
+            "target_node": 36
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 52,
+            "target_node": 37
+          },
+          {
+            "element": 0,
+            "field": "next_on_curve",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_on_curve",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1029,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          }
+        ],
+        "region_type": null,
+        "source_offset": 2023,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 50,
+        "node_type": 17,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 53,
+            "target_node": 97
+          },
+          {
+            "element": 0,
+            "field": "forward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 50,
+            "target_node": 35
+          },
+          {
+            "element": 0,
+            "field": "backward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 50,
+            "target_node": 35
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "other",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 54,
+            "target_node": 58
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 10,
+            "target_node": 34
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_at_vx",
+            "pointer_class": 17,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 2056,
+        "topology_sense": 43
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 51,
+        "node_type": 16,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 55,
+            "target_node": 60
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 10,
+            "target_node": 34
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 43,
+            "target_node": 66
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 56,
+            "target_node": 38
+          },
+          {
+            "element": 0,
+            "field": "next_on_curve",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_on_curve",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1029,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          }
+        ],
+        "region_type": null,
+        "source_offset": 2080,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": 2,
+        "id": 52,
+        "node_type": 31,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1010,
+            "status": "resolved",
+            "target": 10,
+            "target_node": 34
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 56,
+            "target_node": 38
+          },
+          {
+            "element": 0,
+            "field": "geometric_owner",
+            "pointer_class": 141,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 2112,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": 3,
+        "id": 56,
+        "node_type": 31,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1010,
+            "status": "resolved",
+            "target": 51,
+            "target_node": 36
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 52,
+            "target_node": 37
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 44,
+            "target_node": 39
+          },
+          {
+            "element": 0,
+            "field": "geometric_owner",
+            "pointer_class": 141,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 2212,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": 4,
+        "id": 44,
+        "node_type": 38,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1010,
+            "status": "resolved",
+            "target": 57,
+            "target_node": 40
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 56,
+            "target_node": 38
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 8,
+            "target_node": 32
+          },
+          {
+            "element": 0,
+            "field": "geometric_owner",
+            "pointer_class": 141,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "surface",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 7,
+            "target_node": 31
+          },
+          {
+            "element": 1,
+            "field": "surface",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 45,
+            "target_node": 41
+          },
+          {
+            "element": 0,
+            "field": "chart",
+            "pointer_class": 40,
+            "status": "resolved",
+            "target": 58,
+            "target_node": 42
+          },
+          {
+            "element": 0,
+            "field": "start",
+            "pointer_class": 41,
+            "status": "resolved",
+            "target": 59,
+            "target_node": 43
+          },
+          {
+            "element": 0,
+            "field": "end",
+            "pointer_class": 41,
+            "status": "resolved",
+            "target": 59,
+            "target_node": 43
+          },
+          {
+            "element": 0,
+            "field": "intersection_data",
+            "pointer_class": 204,
+            "status": "resolved",
+            "target": 60,
+            "target_node": 44
+          }
+        ],
+        "region_type": null,
+        "source_offset": 2311,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 57,
+        "node_type": 16,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 61,
+            "target_node": 68
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 43,
+            "target_node": 66
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 44,
+            "target_node": 39
+          },
+          {
+            "element": 0,
+            "field": "next_on_curve",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_on_curve",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1029,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          }
+        ],
+        "region_type": null,
+        "source_offset": 2342,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": 5,
+        "id": 45,
+        "node_type": 51,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1007,
+            "status": "resolved",
+            "target": 62,
+            "target_node": 45
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1006,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 63,
+            "target_node": 46
+          },
+          {
+            "element": 0,
+            "field": "geometric_owner",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 64,
+            "target_node": 47
+          }
+        ],
+        "region_type": null,
+        "source_offset": 2374,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 58,
+        "node_type": 40,
+        "references": [],
+        "region_type": null,
+        "source_offset": 2473,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 59,
+        "node_type": 41,
+        "references": [],
+        "region_type": null,
+        "source_offset": 3014,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 60,
+        "node_type": 204,
+        "references": [],
+        "region_type": null,
+        "source_offset": 3068,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 62,
+        "node_type": 14,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 65,
+            "target_node": 72
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 66,
+            "target_node": 51
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 67,
+            "target_node": 69
+          },
+          {
+            "element": 0,
+            "field": "shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 6,
+            "target_node": 30
+          },
+          {
+            "element": 0,
+            "field": "surface",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 45,
+            "target_node": 41
+          },
+          {
+            "element": 0,
+            "field": "next_on_surface",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_on_surface",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_front",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_front",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 66,
+            "target_node": 51
+          },
+          {
+            "element": 0,
+            "field": "front_shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 49,
+            "target_node": 54
+          }
+        ],
+        "region_type": null,
+        "source_offset": 3782,
+        "topology_sense": 43
+      },
+      {
+        "body_type": null,
+        "geometry": 6,
+        "id": 63,
+        "node_type": 50,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1007,
+            "status": "resolved",
+            "target": 68,
+            "target_node": 49
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 45,
+            "target_node": 41
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 41,
+            "target_node": 50
+          },
+          {
+            "element": 0,
+            "field": "geometric_owner",
+            "pointer_class": 141,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 3822,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 64,
+        "node_type": 141,
+        "references": [
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1003,
+            "status": "resolved",
+            "target": 44,
+            "target_node": 39
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 69,
+            "target_node": 48
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 69,
+            "target_node": 48
+          },
+          {
+            "element": 0,
+            "field": "shared_geometry",
+            "pointer_class": 1003,
+            "status": "resolved",
+            "target": 45,
+            "target_node": 41
+          }
+        ],
+        "region_type": null,
+        "source_offset": 3914,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 69,
+        "node_type": 141,
+        "references": [
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1003,
+            "status": "resolved",
+            "target": 8,
+            "target_node": 32
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 64,
+            "target_node": 47
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 64,
+            "target_node": 47
+          },
+          {
+            "element": 0,
+            "field": "shared_geometry",
+            "pointer_class": 1003,
+            "status": "resolved",
+            "target": 45,
+            "target_node": 41
+          }
+        ],
+        "region_type": null,
+        "source_offset": 3927,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 68,
+        "node_type": 14,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 70,
+            "target_node": 88
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 66,
+            "target_node": 51
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 53,
+            "target_node": 97
+          },
+          {
+            "element": 0,
+            "field": "shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 6,
+            "target_node": 30
+          },
+          {
+            "element": 0,
+            "field": "surface",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 63,
+            "target_node": 46
+          },
+          {
+            "element": 0,
+            "field": "next_on_surface",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_on_surface",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_front",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 66,
+            "target_node": 51
+          },
+          {
+            "element": 0,
+            "field": "previous_front",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "front_shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 49,
+            "target_node": 54
+          }
+        ],
+        "region_type": null,
+        "source_offset": 3939,
+        "topology_sense": 43
+      },
+      {
+        "body_type": null,
+        "geometry": 7,
+        "id": 41,
+        "node_type": 50,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1007,
+            "status": "resolved",
+            "target": 66,
+            "target_node": 51
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 63,
+            "target_node": 46
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 7,
+            "target_node": 31
+          },
+          {
+            "element": 0,
+            "field": "geometric_owner",
+            "pointer_class": 141,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 3978,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 66,
+        "node_type": 14,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 71,
+            "target_node": 52
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 62,
+            "target_node": 45
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 68,
+            "target_node": 49
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 72,
+            "target_node": 53
+          },
+          {
+            "element": 0,
+            "field": "shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 6,
+            "target_node": 30
+          },
+          {
+            "element": 0,
+            "field": "surface",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 41,
+            "target_node": 50
+          },
+          {
+            "element": 0,
+            "field": "next_on_surface",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_on_surface",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_front",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 62,
+            "target_node": 45
+          },
+          {
+            "element": 0,
+            "field": "previous_front",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 68,
+            "target_node": 49
+          },
+          {
+            "element": 0,
+            "field": "front_shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 49,
+            "target_node": 54
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4069,
+        "topology_sense": 45
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 71,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 21,
+            "target_node": 13
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 66,
+            "target_node": 51
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 73,
+            "target_node": 83
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 70,
+            "target_node": 88
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 74,
+            "target_node": 56
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 75,
+            "target_node": 96
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4108,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 72,
+        "node_type": 15,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 76,
+            "target_node": 70
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 66,
+            "target_node": 51
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 15,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4134,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 49,
+        "node_type": 13,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "body",
+            "pointer_class": 12,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 13,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "region",
+            "pointer_class": 19,
+            "status": "resolved",
+            "target": 9,
+            "target_node": 33
+          },
+          {
+            "element": 0,
+            "field": "front_face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4151,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 39,
+        "node_type": 14,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 74,
+            "target_node": 56
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 68,
+            "target_node": 49
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 77,
+            "target_node": 57
+          },
+          {
+            "element": 0,
+            "field": "shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 6,
+            "target_node": 30
+          },
+          {
+            "element": 0,
+            "field": "surface",
+            "pointer_class": 1006,
+            "status": "resolved",
+            "target": 7,
+            "target_node": 31
+          },
+          {
+            "element": 0,
+            "field": "next_on_surface",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_on_surface",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_front",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 68,
+            "target_node": 49
+          },
+          {
+            "element": 0,
+            "field": "previous_front",
+            "pointer_class": 14,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "front_shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 49,
+            "target_node": 54
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4175,
+        "topology_sense": 45
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 74,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 21,
+            "target_node": 13
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 78,
+            "target_node": 71
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 71,
+            "target_node": 52
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 65,
+            "target_node": 72
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 79,
+            "target_node": 73
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4214,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 77,
+        "node_type": 15,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 54,
+            "target_node": 58
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 80,
+            "target_node": 59
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4240,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 54,
+        "node_type": 17,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 77,
+            "target_node": 57
+          },
+          {
+            "element": 0,
+            "field": "forward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 54,
+            "target_node": 58
+          },
+          {
+            "element": 0,
+            "field": "backward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 54,
+            "target_node": 58
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "other",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 50,
+            "target_node": 35
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 10,
+            "target_node": 34
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_at_vx",
+            "pointer_class": 17,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4256,
+        "topology_sense": 45
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 80,
+        "node_type": 15,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 55,
+            "target_node": 60
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 81,
+            "target_node": 61
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4279,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 55,
+        "node_type": 17,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 80,
+            "target_node": 59
+          },
+          {
+            "element": 0,
+            "field": "forward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 55,
+            "target_node": 60
+          },
+          {
+            "element": 0,
+            "field": "backward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 55,
+            "target_node": 60
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "other",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 76,
+            "target_node": 70
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 51,
+            "target_node": 36
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_at_vx",
+            "pointer_class": 17,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4295,
+        "topology_sense": 43
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 81,
+        "node_type": 15,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 82,
+            "target_node": 62
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 83,
+            "target_node": 63
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4318,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 82,
+        "node_type": 17,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 81,
+            "target_node": 61
+          },
+          {
+            "element": 0,
+            "field": "forward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 82,
+            "target_node": 62
+          },
+          {
+            "element": 0,
+            "field": "backward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 82,
+            "target_node": 62
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "other",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 61,
+            "target_node": 68
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 57,
+            "target_node": 40
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_at_vx",
+            "pointer_class": 17,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4334,
+        "topology_sense": 45
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 83,
+        "node_type": 15,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 84,
+            "target_node": 64
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 15,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4357,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 84,
+        "node_type": 17,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 83,
+            "target_node": 63
+          },
+          {
+            "element": 0,
+            "field": "forward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 84,
+            "target_node": 64
+          },
+          {
+            "element": 0,
+            "field": "backward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 84,
+            "target_node": 64
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "other",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 85,
+            "target_node": 65
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 43,
+            "target_node": 66
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_at_vx",
+            "pointer_class": 17,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4373,
+        "topology_sense": 45
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 85,
+        "node_type": 17,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 86,
+            "target_node": 67
+          },
+          {
+            "element": 0,
+            "field": "forward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 85,
+            "target_node": 65
+          },
+          {
+            "element": 0,
+            "field": "backward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 85,
+            "target_node": 65
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "other",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 84,
+            "target_node": 64
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 43,
+            "target_node": 66
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_at_vx",
+            "pointer_class": 17,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4396,
+        "topology_sense": 43
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 43,
+        "node_type": 16,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 85,
+            "target_node": 65
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 51,
+            "target_node": 36
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 57,
+            "target_node": 40
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "resolved",
+            "target": 8,
+            "target_node": 32
+          },
+          {
+            "element": 0,
+            "field": "next_on_curve",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_on_curve",
+            "pointer_class": 16,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1029,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4419,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 86,
+        "node_type": 15,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 85,
+            "target_node": 65
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 62,
+            "target_node": 45
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 15,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4451,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 61,
+        "node_type": 17,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 67,
+            "target_node": 69
+          },
+          {
+            "element": 0,
+            "field": "forward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 61,
+            "target_node": 68
+          },
+          {
+            "element": 0,
+            "field": "backward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 61,
+            "target_node": 68
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "other",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 82,
+            "target_node": 62
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 57,
+            "target_node": 40
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_at_vx",
+            "pointer_class": 17,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4467,
+        "topology_sense": 43
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 67,
+        "node_type": 15,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 61,
+            "target_node": 68
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 62,
+            "target_node": 45
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 86,
+            "target_node": 67
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4490,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 76,
+        "node_type": 17,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "loop",
+            "pointer_class": 15,
+            "status": "resolved",
+            "target": 72,
+            "target_node": 53
+          },
+          {
+            "element": 0,
+            "field": "forward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 76,
+            "target_node": 70
+          },
+          {
+            "element": 0,
+            "field": "backward",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 76,
+            "target_node": 70
+          },
+          {
+            "element": 0,
+            "field": "vertex",
+            "pointer_class": 18,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "other",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 55,
+            "target_node": 60
+          },
+          {
+            "element": 0,
+            "field": "edge",
+            "pointer_class": 16,
+            "status": "resolved",
+            "target": 51,
+            "target_node": 36
+          },
+          {
+            "element": 0,
+            "field": "curve",
+            "pointer_class": 1008,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_at_vx",
+            "pointer_class": 17,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4506,
+        "topology_sense": 45
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 78,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 31,
+            "target_node": 23
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 87,
+            "target_node": 79
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 74,
+            "target_node": 56
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 73,
+            "target_node": 83
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 88,
+            "target_node": 74
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 2,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 89,
+            "target_node": 94
+          },
+          {
+            "element": 3,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 90,
+            "target_node": 95
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4529,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 65,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 21,
+            "target_node": 13
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 62,
+            "target_node": 45
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 88,
+            "target_node": 74
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 74,
+            "target_node": 56
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 91,
+            "target_node": 75
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4561,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 79,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 4587,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 88,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 31,
+            "target_node": 23
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 62,
+            "target_node": 45
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 92,
+            "target_node": 76
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 65,
+            "target_node": 72
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 78,
+            "target_node": 71
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 2,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 93,
+            "target_node": 77
+          },
+          {
+            "element": 3,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 94,
+            "target_node": 78
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4600,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 91,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 4632,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 92,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 33,
+            "target_node": 25
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 62,
+            "target_node": 45
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 88,
+            "target_node": 74
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 87,
+            "target_node": 79
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 95,
+            "target_node": 80
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 2,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4644,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 93,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 4674,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 94,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 4710,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 87,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 33,
+            "target_node": 25
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 39,
+            "target_node": 55
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 78,
+            "target_node": 71
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 96,
+            "target_node": 81
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 92,
+            "target_node": 76
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 97,
+            "target_node": 82
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 2,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4726,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 95,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 4756,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 96,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 33,
+            "target_node": 25
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 66,
+            "target_node": 51
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 73,
+            "target_node": 83
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 98,
+            "target_node": 84
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 87,
+            "target_node": 79
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 99,
+            "target_node": 85
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 2,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4788,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 97,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 4818,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 73,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 31,
+            "target_node": 23
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 66,
+            "target_node": 51
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 96,
+            "target_node": 81
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 71,
+            "target_node": 52
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 100,
+            "target_node": 86
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 78,
+            "target_node": 71
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 2,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 101,
+            "target_node": 92
+          },
+          {
+            "element": 3,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 102,
+            "target_node": 93
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4850,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 98,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 33,
+            "target_node": 25
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 68,
+            "target_node": 49
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 100,
+            "target_node": 86
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 96,
+            "target_node": 81
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 103,
+            "target_node": 87
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 2,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4882,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 99,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 4912,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 100,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 31,
+            "target_node": 23
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 68,
+            "target_node": 49
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 98,
+            "target_node": 84
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 70,
+            "target_node": 88
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 73,
+            "target_node": 83
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 2,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 104,
+            "target_node": 89
+          },
+          {
+            "element": 3,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 105,
+            "target_node": 90
+          }
+        ],
+        "region_type": null,
+        "source_offset": 4944,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 103,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 4976,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 70,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 21,
+            "target_node": 13
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 68,
+            "target_node": 49
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 100,
+            "target_node": 86
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "resolved",
+            "target": 71,
+            "target_node": 52
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 106,
+            "target_node": 91
+          }
+        ],
+        "region_type": null,
+        "source_offset": 5008,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 104,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5034,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 105,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5066,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 106,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5082,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 101,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5094,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 102,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5126,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 89,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5142,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 90,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5170,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 75,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5186,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 53,
+        "node_type": 15,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "halfedge",
+            "pointer_class": 17,
+            "status": "resolved",
+            "target": 50,
+            "target_node": 35
+          },
+          {
+            "element": 0,
+            "field": "face",
+            "pointer_class": 14,
+            "status": "resolved",
+            "target": 68,
+            "target_node": 49
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 15,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 5198,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 40,
+        "node_type": 19,
+        "references": [
+          {
+            "element": 0,
+            "field": "attributes_features",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "body",
+            "pointer_class": 12,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 19,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 19,
+            "status": "resolved",
+            "target": 9,
+            "target_node": 33
+          },
+          {
+            "element": 0,
+            "field": "shell",
+            "pointer_class": 13,
+            "status": "resolved",
+            "target": 6,
+            "target_node": 30
+          },
+          {
+            "element": 0,
+            "field": "frame",
+            "pointer_class": 230,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 12,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": 83,
+        "source_offset": 5214,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 46,
+        "node_type": 40,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5237,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 47,
+        "node_type": 41,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5777,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 48,
+        "node_type": 204,
+        "references": [],
+        "region_type": null,
+        "source_offset": 5811,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 42,
+        "node_type": 141,
+        "references": [
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1003,
+            "status": "resolved",
+            "target": 44,
+            "target_node": 39
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 107,
+            "target_node": 103
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 107,
+            "target_node": 103
+          },
+          {
+            "element": 0,
+            "field": "shared_geometry",
+            "pointer_class": 1003,
+            "status": "resolved",
+            "target": 7,
+            "target_node": 31
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6460,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 107,
+        "node_type": 141,
+        "references": [
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1003,
+            "status": "resolved",
+            "target": 8,
+            "target_node": 32
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 42,
+            "target_node": 102
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 141,
+            "status": "resolved",
+            "target": 42,
+            "target_node": 102
+          },
+          {
+            "element": 0,
+            "field": "shared_geometry",
+            "pointer_class": 1003,
+            "status": "resolved",
+            "target": 7,
+            "target_node": 31
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6472,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 38,
+        "node_type": 74,
+        "references": [
+          {
+            "element": 0,
+            "field": "next_block",
+            "pointer_class": 74,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 92,
+            "target_node": 76
+          },
+          {
+            "element": 1,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 88,
+            "target_node": 74
+          },
+          {
+            "element": 2,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 108,
+            "target_node": 105
+          },
+          {
+            "element": 3,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 109,
+            "target_node": 106
+          },
+          {
+            "element": 4,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 110,
+            "target_node": 107
+          },
+          {
+            "element": 5,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 111,
+            "target_node": 108
+          },
+          {
+            "element": 6,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 65,
+            "target_node": 72
+          },
+          {
+            "element": 7,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 112,
+            "target_node": 109
+          },
+          {
+            "element": 8,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 113,
+            "target_node": 110
+          },
+          {
+            "element": 9,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 114,
+            "target_node": 111
+          },
+          {
+            "element": 10,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 36,
+            "target_node": 112
+          },
+          {
+            "element": 11,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "resolved",
+            "target": 4,
+            "target_node": 28
+          },
+          {
+            "element": 12,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 13,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 14,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 15,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 16,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 17,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 18,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 19,
+            "field": "entries",
+            "pointer_class": 1001,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6484,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 108,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 29,
+            "target_node": 21
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 109,
+            "target_node": 106
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 115,
+            "target_node": 118
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6571,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 109,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 27,
+            "target_node": 19
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 108,
+            "target_node": 105
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 110,
+            "target_node": 107
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 116,
+            "target_node": 117
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6599,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 110,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 25,
+            "target_node": 17
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 109,
+            "target_node": 106
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 111,
+            "target_node": 108
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 117,
+            "target_node": 116
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6627,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 111,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 23,
+            "target_node": 15
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 110,
+            "target_node": 107
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 112,
+            "target_node": 109
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 118,
+            "target_node": 115
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6655,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 112,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 19,
+            "target_node": 11
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 111,
+            "target_node": 108
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 113,
+            "target_node": 110
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6683,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 113,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 17,
+            "target_node": 9
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 112,
+            "target_node": 109
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 114,
+            "target_node": 111
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 1,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6711,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 114,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 15,
+            "target_node": 7
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 113,
+            "target_node": 110
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 36,
+            "target_node": 112
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 119,
+            "target_node": 114
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6739,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 36,
+        "node_type": 81,
+        "references": [
+          {
+            "element": 0,
+            "field": "definition",
+            "pointer_class": 80,
+            "status": "resolved",
+            "target": 13,
+            "target_node": 5
+          },
+          {
+            "element": 0,
+            "field": "owner",
+            "pointer_class": 1015,
+            "status": "resolved",
+            "target": 2,
+            "target_node": 1
+          },
+          {
+            "element": 0,
+            "field": "next",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 114,
+            "target_node": 111
+          },
+          {
+            "element": 0,
+            "field": "previous",
+            "pointer_class": 1019,
+            "status": "resolved",
+            "target": 4,
+            "target_node": 28
+          },
+          {
+            "element": 0,
+            "field": "next_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "previous_of_type",
+            "pointer_class": 81,
+            "status": "null",
+            "target": 0,
+            "target_node": null
+          },
+          {
+            "element": 0,
+            "field": "fields",
+            "pointer_class": 1018,
+            "status": "resolved",
+            "target": 120,
+            "target_node": 113
+          }
+        ],
+        "region_type": null,
+        "source_offset": 6765,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 120,
+        "node_type": 83,
+        "references": [],
+        "region_type": null,
+        "source_offset": 6791,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 119,
+        "node_type": 83,
+        "references": [],
+        "region_type": null,
+        "source_offset": 6808,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 118,
+        "node_type": 98,
+        "references": [],
+        "region_type": null,
+        "source_offset": 6840,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 117,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 6873,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 116,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 6885,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 115,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 6897,
+        "topology_sense": null
+      },
+      {
+        "body_type": null,
+        "geometry": null,
+        "id": 37,
+        "node_type": 82,
+        "references": [],
+        "region_type": null,
+        "source_offset": 6909,
+        "topology_sense": null
+      }
+    ],
+    "null_reference_count": 224,
+    "references_verified": true,
+    "resolved_reference_count": 336,
+    "typed_geometry_complete": true,
+    "unsupported_geometry_count": 0,
+    "unverified_reference_count": 0,
+    "validation_scope": "references_and_supported_geometry_data",
+    "wrong_class_reference_count": 0
+  },
+  "node_count": 120,
+  "report_version": 1,
+  "schema_count": 24,
+  "source_file": "/tmp/openswx-systematic/mcp/payloads/partitions/payload-0-offset-4.x_b",
+  "terminator_offset": 6921,
+  "terminator_size": 4,
+  "uninterpreted_offset": 6925,
+  "uninterpreted_size": 0
+}

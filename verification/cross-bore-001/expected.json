@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "source_payload": 0,
+  "source_body": 2,
+  "binding_tolerance": 1e-08,
+  "chart_tolerance": 1e-07,
+  "solve_tolerance": 1e-09,
+  "source_counts": {
+    "edges": 4,
+    "face_uses": 8,
+    "faces": 4,
+    "fins": 8,
+    "loops": 8,
+    "regions": 2,
+    "shells": 2,
+    "vertices": 0,
+    "wire_edges": 0
+  },
+  "source_geometry": {
+    "circle": 2,
+    "cylinder": 2,
+    "intersection_curve": 2,
+    "plane": 2
+  },
+  "native_step_counts": {
+    "faces": 4,
+    "edges": 6,
+    "vertices": 4,
+    "solids": 1
+  },
+  "native_step_volume_mm3": 39868.28694839344,
+  "native_step_area_mm2": 8712.993664186211,
+  "independent_volume_mm3": 39868.283790038855,
+  "independent_area_mm2": 8712.993291789462,
+  "native_step_is_exact_analytic_intersection": false,
+  "current_step_status": "unsupported_non_circular_intersection",
+  "current_step_message": "Intersection circle requires a planar support",
+  "partial_output_created": false
+}

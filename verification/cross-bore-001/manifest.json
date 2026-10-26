@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "kind": "native_cross_bore_regression",
+  "origin": "original_synthetic",
+  "author": "openswx contributors",
+  "license": "MIT",
+  "producer": {
+    "revision": "33.5.0",
+    "version_major": 33,
+    "version_sp": 5
+  },
+  "command_schema": "1.12",
+  "captured_at": "2026-10-26T15:03:04.847928+00:00",
+  "description": "Original centred perpendicular cylinder cross-bore. Frozen unsupported exact STEP intersection benchmark; no private geometry.",
+  "artifacts": [
+    {
+      "path": "brep.json",
+      "bytes": 249168,
+      "sha256": "b841ceb4e4ead6cab95219465eaeb0f30978cb8b724f5d982cbb4ad225e30b08"
+    },
+    {
+      "path": "capabilities.json",
+      "bytes": 7869,
+      "sha256": "dc01cf1e1fbe8920cff81e29e198c85868b9f199d197fa1da6aa769af6277bbc"
+    },
+    {
+      "path": "capture.json",
+      "bytes": 1518709,
+      "sha256": "3b497802655e4dacf6a6695617d7e768e5b0da67e03cc7b9e782c4e4d096da0b"
+    },
+    {
+      "path": "cross-bore.sldprt",
+      "bytes": 76379,
+      "sha256": "2788c5d51cea4b719a86f2775877efe7a4fc6fb4b95c97bf4cf34d7f875c6c93"
+    },
+    {
+      "path": "cross-bore.step",
+      "bytes": 25412,
+      "sha256": "410b502c1c88d4c4e31a57efe3aaa54146a61fd91031ded2d595c5fbc65d560e"
+    },
+    {
+      "path": "cross-bore.x_b",
+      "bytes": 7289,
+      "sha256": "60a9a5d4465b532c116b14c816b0849fc2eee6debfb8a4a1652ed8ce6d87d92d"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 960,
+      "sha256": "144a767cfe75906db8ca672303e4ed1edda37e53381a4aac0173574c8bed0ff8"
+    },
+    {
+      "path": "export-error.json",
+      "bytes": 105,
+      "sha256": "1465b4dd9fc4b5b583cf5258e7e973215263d4e2f6238307c78677a86963c775"
+    },
+    {
+      "path": "receipts.json",
+      "bytes": 3272,
+      "sha256": "c3f9cdb281828be5595ba31a6f1cfe452af692da234a22ba1ba34338cf7260c6"
+    },
+    {
+      "path": "recipe.json",
+      "bytes": 454,
+      "sha256": "58e1edba5787678d5ce4a940a75506da72775b20f5523d583acdf32aa55f8967"
+    },
+    {
+      "path": "source-inspection.json",
+      "bytes": 162393,
+      "sha256": "e1cfb73c0dbdc447d04ba2e228394d9aaad477d7f4d0efb344a79b60d05e6aaa"
+    },
+    {
+      "path": "tools.json",
+      "bytes": 681033,
+      "sha256": "2d93422adbece6f04702f7aa288fc162cd3d8baaef22dc92ac2a6f3155939bce"
+    }
+  ]
+}

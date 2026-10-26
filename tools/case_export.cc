@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2026 openswx contributors
 #include <charconv>
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
+#include <cstdlib>
 #include <filesystem>
 #include <iostream>
 #include <limits>
@@ -83,6 +85,30 @@ int main(int argc, char** argv) {
   openswstep::ExportOptions options;
   options.length_unit = openswstep::LengthUnit::kMetre;
   options.tolerance = 1e-8;
+  const char* chart =
+      std::getenv("OPENSWX_CORPUS_INTERSECTION_CHART_TOLERANCE");
+  const char* solve =
+      std::getenv("OPENSWX_CORPUS_INTERSECTION_SOLVE_TOLERANCE");
+  if (chart || solve) {
+    const auto positive = [](const char* text, double& value) {
+      if (!text) return false;
+      const std::string_view input(text);
+      const auto parsed =
+          std::from_chars(input.data(), input.data() + input.size(), value);
+      return parsed.ec == std::errc{} &&
+             parsed.ptr == input.data() + input.size() &&
+             std::isfinite(value) && value > 0;
+    };
+    openparasolid::IntersectionEvaluationOptions intersection;
+    if (!positive(chart, intersection.chart_tolerance) ||
+        !positive(solve, intersection.solve_tolerance)) {
+      std::cerr << "Both OPENSWX_CORPUS_INTERSECTION_CHART_TOLERANCE and "
+                   "OPENSWX_CORPUS_INTERSECTION_SOLVE_TOLERANCE must be "
+                   "positive finite numbers when either is specified\n";
+      return 1;
+    }
+    options.binding.intersection = intersection;
+  }
   const auto step = openswstep::ExportSolidWorksFile(
       std::filesystem::path(argv[1]), static_cast<std::size_t>(payload),
       openparasolid::NodeId{static_cast<uint32_t>(body)}, options);

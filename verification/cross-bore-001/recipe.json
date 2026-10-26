@@ -1,0 +1,14 @@
+{
+  "origin": "original_synthetic",
+  "author": "openswx contributors",
+  "license": "MIT",
+  "units": "metre",
+  "outer_radius": 0.026,
+  "outer_depth": 0.02,
+  "bore_radius": 0.004,
+  "bore_cut_depth": 0.08,
+  "outer_support": "plane:front",
+  "bore_support": "plane:top",
+  "construction": "New centred cylinder, then centred perpendicular circular cut; both extrusions use mid_plane. No imported or private geometry.",
+  "configuration": "Default"
+}
