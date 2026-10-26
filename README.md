@@ -49,6 +49,13 @@ Reader binding succeeds; exact STEP export remains explicitly unsupported.
 The independent analytic oracle also records the native STEP's approximation
 error rather than treating that export as an exact curve representation.
 
+The original [partial spline trim coupons](verification/spline-trim-001/README.md)
+add two native cubic prisms with Boolean cuts inside the original spline domain.
+They exercise automatic partial intervals and a globally monotone derivative
+with a negative control. Both complete exports pass native STEP comparison;
+paired native binary/text Parasolid references also establish future text-reader
+inputs without claiming text-decoder support.
+
 ## Start locally
 
 ```sh

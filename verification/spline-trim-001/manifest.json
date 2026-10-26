@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "kind": "native_partial_spline_interval_regression",
+  "origin": "original_synthetic",
+  "author": "openswx contributors",
+  "license": "MIT",
+  "producer": {
+    "revision": "33.5.0",
+    "version_major": 33,
+    "version_sp": 5
+  },
+  "command_schema": "1.12",
+  "captured_at": "2026-10-26T15:32:24.442380+00:00",
+  "description": "Two original trimmed cubic prisms retaining full source spline domains.",
+  "artifacts": [
+    {
+      "path": "baseline-errors.json",
+      "bytes": 578,
+      "sha256": "9774bee06dd54ce356f37aea48e26b8c4d2430ba752bf59266b144e49be88d07"
+    },
+    {
+      "path": "capabilities.json",
+      "bytes": 7869,
+      "sha256": "dc01cf1e1fbe8920cff81e29e198c85868b9f199d197fa1da6aa769af6277bbc"
+    },
+    {
+      "path": "capture.json",
+      "bytes": 7277674,
+      "sha256": "5951d846d700d9d3c40f8eac64c6ad047f75f22974db62f0e19f191d505b1fa3"
+    },
+    {
+      "path": "cubic.sldprt",
+      "bytes": 63077,
+      "sha256": "e320f44ea5b76887633b8c77bd79ce1224b5645920cdc3b6e101958639676b17"
+    },
+    {
+      "path": "cubic.step",
+      "bytes": 12652,
+      "sha256": "957b28ea796c3ec882a46f468ff54f516d0f6bde272ebfc8ca51d8586bf7a9f5"
+    },
+    {
+      "path": "cubic.x_b",
+      "bytes": 6448,
+      "sha256": "2c7aa1ae105f036e2ff71c93984153b6db8d83d1ae0c64cb9e4eba7dc80c6a49"
+    },
+    {
+      "path": "cubic.x_t",
+      "bytes": 6548,
+      "sha256": "2820a4019be3130a9d66ef055a59730c4bcecb575c040ee3c8dbdb8618585dd2"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 2805,
+      "sha256": "7251a8c4429b19509aa13f88883dc44b522fd8303c8352f2d9694e811b2d870f"
+    },
+    {
+      "path": "occt.json",
+      "bytes": 1045,
+      "sha256": "e3849dd41da164e38fcb10bd407bd607afed19caf35811609a3c15e79fda2529"
+    },
+    {
+      "path": "receipts.json",
+      "bytes": 9234,
+      "sha256": "af79f15a280292cb97965d13320c1baebb49c3935c73290e5bf5662666c1e7d3"
+    },
+    {
+      "path": "recipe.json",
+      "bytes": 3038,
+      "sha256": "d803f6d3e0464600a999fa8b955a0aedb8ad5d907243a55f5f7841d8b391066d"
+    },
+    {
+      "path": "reversal.sldprt",
+      "bytes": 61396,
+      "sha256": "64edb28f92a8d9e2b5a17db711f2aca4e674ee8a033c1d845d38d058f12d411a"
+    },
+    {
+      "path": "reversal.step",
+      "bytes": 12643,
+      "sha256": "405373dd904a1c0042ba7b860f66dac4414b38f5b66e807e798bcd97296bd5d7"
+    },
+    {
+      "path": "reversal.x_b",
+      "bytes": 6448,
+      "sha256": "2a73437c0caca0b93ae34a70bc3f080f3616557064c7a84072df52f46eb46487"
+    },
+    {
+      "path": "reversal.x_t",
+      "bytes": 6562,
+      "sha256": "992af6068ba006d07d36248a3e49f8bffa72557c11f07a73a8b401f8d247a541"
+    },
+    {
+      "path": "source-inspection.json",
+      "bytes": 478490,
+      "sha256": "3f7d4b6289f44edac95c0fc2a794a2c6124ea349b852122440f21bb2e1e22c82"
+    }
+  ]
+}

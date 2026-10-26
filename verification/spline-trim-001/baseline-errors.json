@@ -1,0 +1,22 @@
+{
+  "cubic": {
+    "error": {
+      "error_code": "unsupported_format",
+      "offset": 0,
+      "message": "Body 2, face 41: Spline domain endpoints need unambiguous vertex correspondence"
+    },
+    "code_commit": "39265df",
+    "exit_code": 2,
+    "partial_output_created": false
+  },
+  "reversal": {
+    "error": {
+      "error_code": "unsupported_format",
+      "offset": 0,
+      "message": "Body 2, face 41: Spline domain endpoints need unambiguous vertex correspondence"
+    },
+    "code_commit": "39265df",
+    "exit_code": 2,
+    "partial_output_created": false
+  }
+}

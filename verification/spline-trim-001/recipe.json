@@ -1,0 +1,148 @@
+{
+  "origin": "original_synthetic",
+  "author": "openswx contributors",
+  "license": "MIT",
+  "description": "Two new cubic-profile prisms, each cut by an independently sketched rectangle; no private/imported geometry. The second curve has a negative derivative control but a globally positive projected derivative.",
+  "cases": [
+    {
+      "name": "cubic",
+      "source": "cubic.sldprt",
+      "step": "cubic.step",
+      "parasolid_binary": "cubic.x_b",
+      "profile_controls_m": [
+        [
+          0,
+          0
+        ],
+        [
+          0.004,
+          0
+        ],
+        [
+          0.008,
+          0
+        ],
+        [
+          0.012,
+          0.009
+        ]
+      ],
+      "x_polynomial_mm": [
+        0,
+        12,
+        0,
+        0
+      ],
+      "y_polynomial_mm": [
+        0,
+        0,
+        0,
+        9
+      ],
+      "cut_parameter": 0.4166666666666667,
+      "cut_parameter_fraction": "5/12",
+      "top_mm": 9,
+      "depth_mm": 8,
+      "volume_mm3": 294.5104166666667,
+      "volume_fraction_mm3": "28273/96",
+      "payload": 0,
+      "body": 2,
+      "source_counts": {
+        "edges": 9,
+        "face_uses": 10,
+        "faces": 5,
+        "fins": 18,
+        "loops": 5,
+        "regions": 2,
+        "shells": 2,
+        "vertices": 6,
+        "wire_edges": 0
+      },
+      "step_counts": {
+        "faces": 5,
+        "edges": 9,
+        "vertices": 6,
+        "solids": 1
+      },
+      "step_statistics": {
+        "faces": 5,
+        "edges": 9,
+        "vertices": 6,
+        "shells": 1,
+        "solids": 1
+      },
+      "expected_recovered_parameter": 0.41666666666666663,
+      "parasolid_text": "cubic.x_t"
+    },
+    {
+      "name": "reversal",
+      "source": "reversal.sldprt",
+      "step": "reversal.step",
+      "parasolid_binary": "reversal.x_b",
+      "profile_controls_m": [
+        [
+          0,
+          0
+        ],
+        [
+          0.01,
+          0.004
+        ],
+        [
+          0.009,
+          0.005
+        ],
+        [
+          0.02,
+          0.01
+        ]
+      ],
+      "x_polynomial_mm": [
+        0,
+        30,
+        -33,
+        23
+      ],
+      "y_polynomial_mm": [
+        0,
+        12,
+        -9,
+        7
+      ],
+      "cut_parameter": 0.5,
+      "cut_parameter_fraction": "1/2",
+      "top_mm": 10,
+      "depth_mm": 8,
+      "volume_mm3": 212.7125,
+      "volume_fraction_mm3": "17017/80",
+      "payload": 0,
+      "body": 2,
+      "source_counts": {
+        "edges": 9,
+        "face_uses": 10,
+        "faces": 5,
+        "fins": 18,
+        "loops": 5,
+        "regions": 2,
+        "shells": 2,
+        "vertices": 6,
+        "wire_edges": 0
+      },
+      "step_counts": {
+        "faces": 5,
+        "edges": 9,
+        "vertices": 6,
+        "solids": 1
+      },
+      "step_statistics": {
+        "faces": 5,
+        "edges": 9,
+        "vertices": 6,
+        "shells": 1,
+        "solids": 1
+      },
+      "expected_recovered_parameter": 0.5000000001534081,
+      "parasolid_text": "reversal.x_t"
+    }
+  ]
+}
