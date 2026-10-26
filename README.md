@@ -227,3 +227,11 @@ recovered circle's length and distance to the native sheet. Enable live recovery
 with `OPENSWX_CORPUS_TOLERANT_FIXTURES` pointing to the optional
 `openswstep_tolerant_cylinder_fixture` executable. This verifies edge recovery;
 it does not claim native tolerant topology or general B_SURF face export.
+
+The original [simple-knot rational prism](verification/rational-spans-001/README.md)
+adds a clipped weighted cubic profile whose retained partial edges cross a
+simple interior knot. It reproduces the former monotone-projection failure;
+the entire body now binds and exports. Independent piecewise rational area and
+volume oracles, unchanged source knot/weight checks and two-way native STEP
+solid differences verify the extension. Run `tests/test_rational_spans.py`
+with the existing build/exporter environment variables for live checks.

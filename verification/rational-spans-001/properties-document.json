@@ -1,0 +1,26 @@
+{
+  "id": "3d69ed44311b4e469140c0ce292e3e68",
+  "jsonrpc": "2.0",
+  "result": {
+    "content": [
+      {
+        "text": "{\"id\":\"3d69ed44311b4e469140c0ce292e3e68\",\"jsonrpc\":\"2.0\",\"result\":{\"configuration\":\"Default\",\"document\":\"doc-4c\",\"properties\":[],\"revision\":5,\"scope\":{\"kind\":\"document\"}}}",
+        "type": "text"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "id": "3d69ed44311b4e469140c0ce292e3e68",
+      "jsonrpc": "2.0",
+      "result": {
+        "configuration": "Default",
+        "document": "doc-4c",
+        "properties": [],
+        "revision": 5,
+        "scope": {
+          "kind": "document"
+        }
+      }
+    }
+  }
+}

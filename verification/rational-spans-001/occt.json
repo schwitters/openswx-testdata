@@ -1,0 +1,22 @@
+{
+  "native_counts": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "solids": 1
+  },
+  "export_counts": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "solids": 1
+  },
+  "native_volume": 380.1077016026325,
+  "native_area": 337.016684757077,
+  "export_volume": 380.1077016026325,
+  "export_area": 337.016684757077,
+  "differences": [
+    0.0,
+    0.0
+  ]
+}

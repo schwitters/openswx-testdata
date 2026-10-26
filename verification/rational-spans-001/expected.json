@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "payload_index": 0,
+  "body": 2,
+  "binding_tolerance": 1e-08,
+  "source_units": "metre",
+  "body_geometry_counts": {
+    "edges": 9,
+    "face_uses": 10,
+    "faces": 5,
+    "fins": 18,
+    "loops": 5,
+    "regions": 2,
+    "shells": 2,
+    "vertices": 6,
+    "wire_edges": 0
+  },
+  "step_statistics": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "shells": 1,
+    "solids": 1
+  },
+  "step_counts": {
+    "faces": 5,
+    "edges": 9,
+    "vertices": 6,
+    "solids": 1
+  },
+  "oracle": {
+    "volume_mm3": 380.1077016023371,
+    "area_mm2": 337.0166847564496,
+    "cut_parameter": 0.22075694269923174
+  },
+  "baseline": {
+    "code_commit": "9c87f49",
+    "error": {
+      "error_code": "unsupported_format",
+      "offset": 0,
+      "message": "Body 2, face 41: Spline inversion requires a certified monotone projection"
+    },
+    "output_created": false
+  }
+}
