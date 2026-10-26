@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "payload_index": 0,
+  "body": 1,
+  "binding_tolerance": 1e-08,
+  "body_geometry_counts": {
+    "edges": 4,
+    "face_uses": 2,
+    "faces": 1,
+    "fins": 4,
+    "loops": 1,
+    "regions": 1,
+    "shells": 1,
+    "vertices": 4,
+    "wire_edges": 0
+  },
+  "model_geometry_counts": {
+    "nurbs_curve": 4,
+    "nurbs_surface": 1,
+    "point": 4
+  },
+  "missing_next_targets": 12,
+  "saved_state_membership": "unverified_internal_payload"
+}

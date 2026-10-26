@@ -217,3 +217,13 @@ extends that original coupon to complete STEP export without changing frozen
 native artifacts. It checks exact weighted surfaces, whole-body native solid
 differences and the existing independent rational geometry oracles. Historical
 unsupported expectations remain preserved in the earlier capture.
+
+The original [tolerant cylinder carrier](verification/tolerant-cylinder-001/README.md)
+provides a native rational quarter-cylinder reference for separately constructed
+tolerant cylinder/B_SURF edge topology. Unit tests certify full pcurve traces,
+existing master branches, strict rejection and explicit source allowances.
+`tests/test_tolerant_cylinder.py` independently checks native area and the
+recovered circle's length and distance to the native sheet. Enable live recovery
+with `OPENSWX_CORPUS_TOLERANT_FIXTURES` pointing to the optional
+`openswstep_tolerant_cylinder_fixture` executable. This verifies edge recovery;
+it does not claim native tolerant topology or general B_SURF face export.

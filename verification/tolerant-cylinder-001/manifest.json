@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "origin": "original_synthetic",
+  "license": "MIT",
+  "kind": "tolerant_cylinder_mapping_verification",
+  "artifacts": [
+    {
+      "path": "README.md",
+      "bytes": 2637,
+      "sha256": "3b2687a36a60d92fbac13ff089e078b816fe12cb05da79a3690ecb08f8b12fc0"
+    },
+    {
+      "path": "brep.json",
+      "bytes": 348914,
+      "sha256": "d39bc70568268b4d92120d65183ec4c316e09be03130767a529b95f76afd2be2"
+    },
+    {
+      "path": "carrier.sldprt",
+      "bytes": 94603,
+      "sha256": "94939ddcf29f9edeca89611b8462aa14d3c9f7a6f2ea2229d4dbe1314ccb1df1"
+    },
+    {
+      "path": "carrier.step",
+      "bytes": 6904,
+      "sha256": "6acdea194d2684c44fa2802f2899ad5fc59f230f3a534e8b066e2c36a3a4c2b8"
+    },
+    {
+      "path": "carrier.x_b",
+      "bytes": 4600,
+      "sha256": "361e0dd035a99c8e798d1c8446e2c1e7ae330ca0c6fe9f8ac28a8261a5ac292c"
+    },
+    {
+      "path": "carrier.x_t",
+      "bytes": 5025,
+      "sha256": "638e96f97359475822fdf3eaecaf6b60ce2a0b070701b0ca99d63f135a703298"
+    },
+    {
+      "path": "expected.json",
+      "bytes": 465,
+      "sha256": "72b375148447e77d200522c274e1f736511d81f79878b0618b380587a899fd4b"
+    },
+    {
+      "path": "journal.json",
+      "bytes": 386400,
+      "sha256": "f103fd96f486f7ad5a630e093f9b1dffa1483f5ab0c8ba02681bf5488036faec"
+    },
+    {
+      "path": "properties-configuration.json",
+      "bytes": 771,
+      "sha256": "b51f4915c3d26679a9aa464d4303423cf11f729a7d009b162b2f7f04b4377ffa"
+    },
+    {
+      "path": "properties-document.json",
+      "bytes": 693,
+      "sha256": "708c8319b0e5d922e577bdac1324bffb1c5eed480cb3e2500de0da77494a6eeb"
+    },
+    {
+      "path": "receipts.json",
+      "bytes": 4356,
+      "sha256": "4c63679cfbf52d9e0fda4bfd12f2d548d4832b12095e2b6d573f3489ef57908d"
+    },
+    {
+      "path": "recipe.json",
+      "bytes": 1179,
+      "sha256": "428ce4280502d569b2b6f6efb8608d888cb7d03f469eef1fc89521bd3a8016eb"
+    }
+  ]
+}

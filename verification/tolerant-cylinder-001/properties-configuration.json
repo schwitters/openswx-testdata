@@ -1,0 +1,27 @@
+{
+  "id": "336c07231cb04b49841ce761ea4bb982",
+  "jsonrpc": "2.0",
+  "result": {
+    "content": [
+      {
+        "text": "{\"id\":\"336c07231cb04b49841ce761ea4bb982\",\"jsonrpc\":\"2.0\",\"result\":{\"configuration\":\"Default\",\"document\":\"doc-46\",\"properties\":[],\"revision\":1,\"scope\":{\"configuration\":\"Default\",\"kind\":\"configuration\"}}}",
+        "type": "text"
+      }
+    ],
+    "isError": false,
+    "structuredContent": {
+      "id": "336c07231cb04b49841ce761ea4bb982",
+      "jsonrpc": "2.0",
+      "result": {
+        "configuration": "Default",
+        "document": "doc-46",
+        "properties": [],
+        "revision": 1,
+        "scope": {
+          "configuration": "Default",
+          "kind": "configuration"
+        }
+      }
+    }
+  }
+}
